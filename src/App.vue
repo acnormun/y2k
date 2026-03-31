@@ -3,16 +3,20 @@
   <div class="app-shell">
     <Navbar />
     <div class="main">
-      <Sidebar />
+      <Sidebar v-if="isSidebarOpen" />
       <RouterView />
     </div>
+    <Footer @toggle-sidebar="isSidebarOpen = !isSidebarOpen" />
   </div>
 </template>
 
   <script setup lang="ts">
-  import Navbar from './components/Navbar.vue';
+  import { ref } from 'vue';
+  import Footer from './components/Footer.vue';
+import Navbar from './components/Navbar.vue';
   import Sidebar from './components/Sidebar.vue';
-  
+
+  const isSidebarOpen = ref(true)
   </script>
 
 <style>

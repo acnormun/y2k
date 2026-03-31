@@ -1,44 +1,36 @@
 <template>
-    <Modal
-      title="SYSTEM STATUS: DEVELOPER LIVE"
-      :icon="modalIcon"
-      :isOpen="isModalOpen"
-      showStatusBar
-      statusLabel="ONLINE"
-      cpuUsage="2.4%"
-      ramUsage="4.1GB/16GB"
-      shellLabel="SECURE_SHELL"
-      @close="isModalOpen = false"
-    >
-      <section class="initial-modal">
-        <div class="initial-modal__media">
-          <img :src="heroImage" alt="Developer portrait" class="initial-modal__portrait">
-          <span class="initial-modal__tag">LIVE_SRV</span>
+  <Modal title="SYSTEM STATUS: DEVELOPER LIVE" :icon="modalIcon" :isOpen="isModalOpen" showStatusBar
+    statusLabel="ONLINE" cpuUsage="2.4%" ramUsage="4.1GB/16GB" shellLabel="SECURE_SHELL" @close="isModalOpen = false">
+    <section class="initial-modal">
+      <div class="initial-modal__media">
+        <img :src="heroImage" alt="Developer portrait" class="initial-modal__portrait">
+        <span class="initial-modal__tag">LIVE_SRV</span>
+      </div>
+
+      <div class="initial-modal__content">
+        <p class="initial-modal__badge">ESTABLISHED V2.000</p>
+
+        <h1 class="initial-modal__title">
+          <span class="initial-modal__title-accent">Hi, I'm</span>
+          <span class="initial-modal__title-main">Ana_Noronha,</span>
+        </h1>
+
+        <p class="initial-modal__description">
+          Fullstack Web Developer crafting digital solutions with AI.
+          Into automation, problem-solving, and turning ideas into real products.
+        </p>
+
+        <div class="initial-modal__actions">
+          <UiButton>
+            INITIALIZE PROJECTS
+          </UiButton>
+          <UiButton variant="secondary">
+            READ MANIFEST.TXT
+          </UiButton>
         </div>
-
-        <div class="initial-modal__content">
-          <p class="initial-modal__badge">ESTABLISHED V2.000</p>
-
-          <h1 class="initial-modal__title">
-            <span class="initial-modal__title-accent">Hi, I'm</span>
-            <span class="initial-modal__title-main">Dev_Root,</span>
-          </h1>
-
-          <p class="initial-modal__description">
-            Creating the future since 2000. Senior architect specializing in pixel-perfect digital ecosystems.
-          </p>
-
-          <div class="initial-modal__actions">
-            <UiButton>
-              INITIALIZE PROJECTS
-            </UiButton>
-            <UiButton variant="secondary">
-              READ MANIFEST.TXT
-            </UiButton>
-          </div>
-        </div>
-      </section>
-    </Modal>
+      </div>
+    </section>
+  </Modal>
 </template>
 
 <script setup lang="ts">

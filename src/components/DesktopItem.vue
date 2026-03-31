@@ -8,26 +8,7 @@
     @pointerdown="handlePointerDown"
   >
     <span class="desktop-item__icon" :class="`desktop-item__icon--${kind}`">
-      <span
-        v-if="kind === 'folder'"
-        class="desktop-item__folder"
-        :style="{ '--desktop-accent': accent }"
-      />
-      <span
-        v-else-if="kind === 'file'"
-        class="desktop-item__file"
-        :style="{ '--desktop-accent': accent }"
-      />
-      <span
-        v-else-if="kind === 'app'"
-        class="desktop-item__chip"
-        :style="{ '--desktop-accent': accent }"
-      />
-      <span
-        v-else
-        class="desktop-item__script"
-        :style="{ '--desktop-accent': accent }"
-      />
+      <img :src="iconSrc" :alt="label" class="desktop-item__icon-image">
     </span>
     <span class="desktop-item__label">{{ label }}</span>
   </button>
@@ -60,6 +41,19 @@ const itemStyle = computed(() => ({
   left: `${props.x}px`,
   top: `${props.y}px`,
 }))
+
+const iconSrc = computed(() => {
+  switch (props.kind) {
+    case 'folder':
+      return new URL('../assets/folder.svg', import.meta.url).href
+    case 'file':
+      return new URL('../assets/doc.svg', import.meta.url).href
+    case 'app':
+      return new URL('../assets/brain.svg', import.meta.url).href
+    case 'script':
+      return new URL('../assets/prompt_red.svg', import.meta.url).href
+  }
+})
 
 const clamp = (value: number, min: number, max: number) => {
   if (value < min) return min

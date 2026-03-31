@@ -6,9 +6,9 @@
 
     <nav class="navbar__nav" aria-label="Main navigation">
       <ul class="navbar__list">
-        <li><a href="/">Portfolio</a></li>
-        <li><a href="/about">Terminal</a></li>
-        <li><a href="/contact">Contact</a></li>
+        <li><a href="/">PORTFOLIO</a></li>
+        <li><a href="/about">TERMINAL</a></li>
+        <li><a href="/contact">CONTACT</a></li>
       </ul>
     </nav>
 
@@ -32,13 +32,18 @@
   align-items: center;
   justify-content: space-between;
   gap: 1.5rem;
+  padding: .5REM 1rem;
   font-family: var(--font-tertiary);
+  border-right: 2px solid #000;
+  border-bottom: 2px solid #000;
+  background: #FEFEE5;
+  box-shadow: 2px 2px 0 0 #000;
 }
 
 .logo {
   display: inline-flex;
   align-items: center;
-  padding: 0.25rem 0.5rem;
+  padding: 0.5rem 0.75rem;
   background: #b300b3;
   color: var(--color-surface);
 }
@@ -52,13 +57,46 @@
   display: flex;
   align-items: center;
   gap: 1.5rem;
+  color: var(--color-text);
+  font-weight: bold;
+  ;
+}
+
+.navbar__actions {
+  gap: 0.5rem;
+  margin-left: -0.35rem;
+}
+
+.navbar__list a {
+  position: relative;
+  display: inline-block;
+  color: inherit;
+  transition: color 180ms ease;
+}
+
+.navbar__list a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -0.2rem;
+  width: 100%;
+  height: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 220ms ease;
+}
+
+.navbar__list a:hover {
+  color: #027500;
+}
+
+.navbar__list a:hover::after {
+  transform: scaleX(1);
 }
 
 .icon-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.25rem;
+  display: flex;
   background: transparent;
   border: 0;
   cursor: pointer;

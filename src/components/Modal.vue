@@ -77,7 +77,7 @@ const emit = defineEmits<{
 }
 
 .modal {
-    width: min(720px, 100%);
+    width: min(960px, 100%);
     min-height: 360px;
     border: 2px solid #000;
     background: #fefee5;

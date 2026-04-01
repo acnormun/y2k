@@ -39,9 +39,9 @@ const selectedItem = ref(0)
 
 const items = [
   { label: 'DESKTOP', icon: new URL('../assets/computer.svg', import.meta.url).href },
-  { label: 'Projects', icon: new URL('../assets/code.svg', import.meta.url).href },
-  { label: 'Skills', icon: new URL('../assets/skills.svg', import.meta.url).href },
-  { label: 'Contact', icon: new URL('../assets/contact.svg', import.meta.url).href },
+  // { label: 'Projects', icon: new URL('../assets/code.svg', import.meta.url).href },
+  // { label: 'Skills', icon: new URL('../assets/skills.svg', import.meta.url).href },
+  // { label: 'Contact', icon: new URL('../assets/contact.svg', import.meta.url).href },
 ]
 </script>
 

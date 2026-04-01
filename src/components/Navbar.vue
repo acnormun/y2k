@@ -7,8 +7,16 @@
     <nav class="navbar__nav" aria-label="Main navigation">
       <ul class="navbar__list">
         <li><a href="/">PORTFOLIO</a></li>
-        <li><a href="/about">TERMINAL</a></li>
-        <li><a href="/contact">CONTACT</a></li>
+        <li>
+          <button type="button" class="navbar__link-button" @click="emit('open-modal', 'about')">
+            TERMINAL
+          </button>
+        </li>
+        <li>
+          <button type="button" class="navbar__link-button" @click="emit('open-modal', 'contact')">
+            CONTACT
+          </button>
+        </li>
       </ul>
     </nav>
 
@@ -24,6 +32,9 @@
 </template>
 
 <script lang="ts" setup>
+const emit = defineEmits<{
+  (e: 'open-modal', modal: 'about' | 'contact'): void
+}>()
 </script>
 
 <style scoped>
@@ -67,14 +78,21 @@
   margin-left: -0.35rem;
 }
 
-.navbar__list a {
+.navbar__list a,
+.navbar__link-button {
   position: relative;
   display: inline-block;
+  padding: 0;
+  border: 0;
+  background: transparent;
   color: inherit;
+  font: inherit;
+  cursor: pointer;
   transition: color 180ms ease;
 }
 
-.navbar__list a::after {
+.navbar__list a::after,
+.navbar__link-button::after {
   content: '';
   position: absolute;
   left: 0;
@@ -87,11 +105,13 @@
   transition: transform 220ms ease;
 }
 
-.navbar__list a:hover {
+.navbar__list a:hover,
+.navbar__link-button:hover {
   color: #027500;
 }
 
-.navbar__list a:hover::after {
+.navbar__list a:hover::after,
+.navbar__link-button:hover::after {
   transform: scaleX(1);
 }
 

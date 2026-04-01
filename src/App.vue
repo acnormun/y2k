@@ -7,7 +7,10 @@
         <component :is="Component" @open-modal="openModal" />
       </RouterView>
     </div>
-    <Footer @toggle-sidebar="isSidebarOpen = !isSidebarOpen" />
+    <Footer
+      @toggle-sidebar="isSidebarOpen = !isSidebarOpen"
+      @open-modal="openModal"
+    />
     <InitialModal
       :is-open="activeModal === 'welcome'"
       @open-my-work="openModal('my-work')"
@@ -29,6 +32,11 @@
       :is-open="activeModal === 'snake'"
       @close="closeModal"
     />
+    <Terminal
+      :is-open="isTerminalOpen"
+      @close="closeTerminal"
+      @open-modal="openModal"
+    />
   </div>
 </template>
 
@@ -41,17 +49,28 @@ import MyWork from './components/MyWork.vue';
 import Navbar from './components/Navbar.vue';
 import Sidebar from './components/Sidebar.vue';
 import Snake from './components/Snake.vue';
+import Terminal from './components/Terminal.vue';
 import InitialModal from './components/InitialModal.vue';
 
 const isSidebarOpen = ref(true)
+const isTerminalOpen = ref(false)
 const activeModal = ref<'welcome' | 'my-work' | 'about' | 'contact' | 'snake' | null>('welcome')
 
-const openModal = (modal: 'welcome' | 'my-work' | 'about' | 'contact' | 'snake') => {
+const openModal = (modal: 'welcome' | 'my-work' | 'about' | 'contact' | 'snake' | 'terminal') => {
+  if (modal === 'terminal') {
+    isTerminalOpen.value = true
+    return
+  }
+
   activeModal.value = modal
 }
 
 const closeModal = () => {
   activeModal.value = null
+}
+
+const closeTerminal = () => {
+  isTerminalOpen.value = false
 }
 </script>
 

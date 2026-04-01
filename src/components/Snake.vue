@@ -70,7 +70,7 @@
             </ul>
 
             <p class="snake-modal__hint">
-              coma os pixels magenta, cresça e não bata nas bordas nem em você mesma.
+              Eat the magenta pixels, grow, and don’t hit the edges or yourself.
             </p>
 
             <div class="snake-modal__actions">

@@ -1,6 +1,15 @@
 <template>
-  <Modal title="SYSTEM STATUS: DEVELOPER LIVE" :icon="modalIcon" :isOpen="isModalOpen" showStatusBar
-    statusLabel="ONLINE" cpuUsage="2.4%" ramUsage="4.1GB/16GB" shellLabel="SECURE_SHELL" @close="isModalOpen = false">
+  <Modal
+    title="SYSTEM STATUS: DEVELOPER LIVE"
+    :icon="modalIcon"
+    :isOpen="isOpen"
+    showStatusBar
+    statusLabel="ONLINE"
+    cpuUsage="2.4%"
+    ramUsage="4.1GB/16GB"
+    shellLabel="SECURE_SHELL"
+    @close="emit('close')"
+  >
     <section class="initial-modal">
       <div class="initial-modal__media">
         <img :src="heroImage" alt="Developer portrait" class="initial-modal__portrait">
@@ -21,10 +30,10 @@
         </p>
 
         <div class="initial-modal__actions">
-          <UiButton>
+          <UiButton @click="emit('openMyWork')">
             INITIALIZE PROJECTS
           </UiButton>
-          <UiButton variant="secondary">
+          <UiButton variant="secondary" @click="emit('close')">
             READ MANIFEST.TXT
           </UiButton>
         </div>
@@ -34,11 +43,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
 import Modal from './Modal.vue';
 import UiButton from './UiButton.vue';
 
-const isModalOpen = ref(true);
+defineProps<{
+  isOpen: boolean
+}>()
+
+const emit = defineEmits<{
+  (e: 'close'): void
+  (e: 'openMyWork'): void
+}>()
+
 const modalIcon = new URL('../assets/computer.svg', import.meta.url).href;
 const heroImage = new URL('../assets/hero.png', import.meta.url).href;
 </script>

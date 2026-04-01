@@ -6,6 +6,9 @@
     :style="itemStyle"
     type="button"
     @pointerdown="handlePointerDown"
+    @pointerup="handlePointerUp"
+    @keydown.enter.prevent="emit('activate')"
+    @keydown.space.prevent="emit('activate')"
   >
     <span class="desktop-item__icon" :class="`desktop-item__icon--${kind}`">
       <img :src="iconSrc" :alt="label" class="desktop-item__icon-image">
@@ -29,6 +32,7 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   (e: 'update:position', position: { x: number; y: number }): void
+  (e: 'activate'): void
 }>()
 
 const itemRef = ref<HTMLElement | null>(null)
@@ -36,6 +40,10 @@ const isDragging = ref(false)
 
 let dragOffsetX = 0
 let dragOffsetY = 0
+let pointerStartX = 0
+let pointerStartY = 0
+let pointerMoved = false
+const dragThreshold = 8
 
 const itemStyle = computed(() => ({
   left: `${props.x}px`,
@@ -70,6 +78,17 @@ const handlePointerMove = (event: PointerEvent) => {
   }
 
   const parentRect = parentEl.getBoundingClientRect()
+  const deltaX = event.clientX - pointerStartX
+  const deltaY = event.clientY - pointerStartY
+
+  if (!pointerMoved && Math.hypot(deltaX, deltaY) >= dragThreshold) {
+    pointerMoved = true
+  }
+
+  if (!pointerMoved) {
+    return
+  }
+
   const maxX = Math.max(0, parentRect.width - itemEl.offsetWidth)
   const maxY = Math.max(0, parentRect.height - itemEl.offsetHeight)
   const nextX = clamp(event.clientX - parentRect.left - dragOffsetX, 0, maxX)
@@ -93,12 +112,21 @@ const handlePointerDown = (event: PointerEvent) => {
   }
 
   const parentRect = parentEl.getBoundingClientRect()
+  pointerStartX = event.clientX
+  pointerStartY = event.clientY
+  pointerMoved = false
   dragOffsetX = event.clientX - parentRect.left - props.x
   dragOffsetY = event.clientY - parentRect.top - props.y
   isDragging.value = true
 
   window.addEventListener('pointermove', handlePointerMove)
   window.addEventListener('pointerup', stopDragging)
+}
+
+const handlePointerUp = () => {
+  if (!pointerMoved) {
+    emit('activate')
+  }
 }
 
 onBeforeUnmount(() => {

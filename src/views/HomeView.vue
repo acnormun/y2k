@@ -8,6 +8,7 @@
       :label="item.label"
       :x="item.x"
       :y="item.y"
+      @activate="openItem(item.id)"
       @update:position="updateItemPosition(item.id, $event)"
     />
   </section>
@@ -33,12 +34,22 @@ const desktopItems = ref<DesktopEntry[]>([
   { id: 'mail', label: 'Mail.sh', kind: 'script', accent: '#ff3b6b', x: 28, y: 376 },
 ])
 
+const emit = defineEmits<{
+  (e: 'open-modal', modal: 'welcome' | 'my-work'): void
+}>()
+
 const updateItemPosition = (id: string, position: { x: number; y: number }) => {
   desktopItems.value = desktopItems.value.map((item) =>
     item.id === id
       ? { ...item, x: position.x, y: position.y }
       : item,
   )
+}
+
+const openItem = (id: string) => {
+  if (id === 'my-work') {
+    emit('open-modal', 'my-work')
+  }
 }
 </script>
 

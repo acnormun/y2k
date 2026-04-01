@@ -1,11 +1,11 @@
 <template>
-  <aside class="sidebar" aria-label="Sidebar">
+  <aside class="sidebar" :aria-label="t('sidebar.aria')">
     <div class="sidebar__brand">
       <img class="sidebar__logo" src="../assets/win_chairs.jpg" alt="Win Chairs">
       <p class="sidebar__text">USER_ROOT</p>
     </div>
 
-    <nav class="sidebar__nav" aria-label="Sidebar navigation">
+    <nav class="sidebar__nav" :aria-label="t('sidebar.navAria')">
       <ul class="sidebar__list">
         <li
           v-for="(item, index) in items"
@@ -16,7 +16,7 @@
             href="#"
             class="sidebar__link"
             :class="{ 'sidebar__link--active': selectedItem === index }"
-            @click.prevent="selectedItem = index"
+            @click.prevent="handleSelect(index, item.action)"
           >
             <img
               v-if="item.icon"
@@ -24,6 +24,7 @@
               :alt="item.label"
               class="sidebar__icon"
             >
+            <span v-else class="sidebar__glyph" aria-hidden="true">{{ item.glyph }}</span>
             <p class="sidebar__text">{{ item.label }}</p>
           </a>
         </li>
@@ -33,16 +34,27 @@
 </template>
 
 <script setup lang="ts" name="Sidebar">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 const selectedItem = ref(0)
+const { t } = useI18n()
+const emit = defineEmits<{
+  (e: 'open-modal', modal: 'media-player'): void
+}>()
 
-const items = [
-  { label: 'DESKTOP', icon: new URL('../assets/computer.svg', import.meta.url).href },
-  // { label: 'Projects', icon: new URL('../assets/code.svg', import.meta.url).href },
-  // { label: 'Skills', icon: new URL('../assets/skills.svg', import.meta.url).href },
-  // { label: 'Contact', icon: new URL('../assets/contact.svg', import.meta.url).href },
-]
+const items = computed(() => [
+  { label: t('sidebar.desktop'), icon: new URL('../assets/computer.svg', import.meta.url).href, glyph: '', action: 'desktop' },
+  { label: t('sidebar.player'), icon: '', glyph: '<>', action: 'media-player' },
+])
+
+const handleSelect = (index: number, action: string) => {
+  selectedItem.value = index
+
+  if (action === 'media-player') {
+    emit('open-modal', 'media-player')
+  }
+}
 </script>
 
 <style scoped>
@@ -124,6 +136,18 @@ const items = [
   filter: brightness(0) saturate(100%);
 }
 
+.sidebar__glyph {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  font-family: var(--font-secondary);
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
 .sidebar__link:hover {
   background: #027500;
   color: #fff;
@@ -140,5 +164,54 @@ const items = [
 
 .sidebar__link--active .sidebar__icon {
   filter: brightness(0) invert(1);
+}
+
+@media (max-width: 720px) {
+  .sidebar {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    right: 0.75rem;
+    z-index: 12;
+    width: auto;
+    min-height: 0;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: space-between;
+    padding: 0.75rem;
+    border: 2px solid #000;
+    box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.14);
+  }
+
+  .sidebar__brand {
+    width: auto;
+    min-width: 72px;
+    padding: 0;
+  }
+
+  .sidebar__logo {
+    width: 48px;
+  }
+
+  .sidebar__nav {
+    width: auto;
+    flex: 1;
+  }
+
+  .sidebar__list {
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 0.75rem;
+  }
+
+  .sidebar__item {
+    width: auto;
+  }
+
+  .sidebar__link {
+    min-height: 0;
+    min-width: 88px;
+    padding: 0.55rem;
+  }
 }
 </style>

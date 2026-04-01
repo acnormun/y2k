@@ -1,40 +1,37 @@
 <template>
   <Modal
-    title="SYSTEM STATUS: DEVELOPER LIVE"
+    :title="t('welcome.title')"
     :icon="modalIcon"
     :isOpen="isOpen"
     showStatusBar
-    statusLabel="ONLINE"
+    :statusLabel="t('welcome.statusLabel')"
     cpuUsage="2.4%"
     ramUsage="4.1GB/16GB"
-    shellLabel="SECURE_SHELL"
+    :shellLabel="t('welcome.shellLabel')"
     @close="emit('close')"
   >
     <section class="initial-modal">
       <div class="initial-modal__media">
-        <img :src="heroImage" alt="Developer portrait" class="initial-modal__portrait">
-        <span class="initial-modal__tag">LIVE_SRV</span>
+        <img :src="heroImage" :alt="t('welcome.portraitAlt')" class="initial-modal__portrait">
+        <span class="initial-modal__tag">{{ t('welcome.liveTag') }}</span>
       </div>
 
       <div class="initial-modal__content">
-        <p class="initial-modal__badge">ESTABLISHED V2.000</p>
+        <p class="initial-modal__badge">{{ t('welcome.badge') }}</p>
 
         <h1 class="initial-modal__title">
-          <span class="initial-modal__title-accent">Hi, I'm</span>
+          <span class="initial-modal__title-accent">{{ t('welcome.headingAccent') }}</span>
           <span class="initial-modal__title-main">Ana_Noronha,</span>
         </h1>
 
-        <p class="initial-modal__description">
-          Fullstack Web Developer crafting digital solutions with AI.
-          Into automation, problem-solving, and turning ideas into real products.
-        </p>
+        <p class="initial-modal__description">{{ t('welcome.description') }}</p>
 
         <div class="initial-modal__actions">
           <UiButton @click="emit('openMyWork')">
-            INITIALIZE PROJECTS
+            {{ t('welcome.ctaPrimary') }}
           </UiButton>
-          <UiButton variant="secondary" @click="emit('close')">
-            READ MANIFEST.TXT
+          <UiButton variant="secondary" @click="emit('openAbout')">
+            {{ t('welcome.ctaSecondary') }}
           </UiButton>
         </div>
       </div>
@@ -43,6 +40,7 @@
 </template>
 
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
 import Modal from './Modal.vue';
 import UiButton from './UiButton.vue';
 
@@ -53,10 +51,12 @@ defineProps<{
 const emit = defineEmits<{
   (e: 'close'): void
   (e: 'openMyWork'): void
+  (e: 'openAbout'): void
 }>()
 
+const { t } = useI18n()
 const modalIcon = new URL('../assets/computer.svg', import.meta.url).href;
-const heroImage = new URL('../assets/hero.png', import.meta.url).href;
+const heroImage = new URL('../assets/hero.jpeg', import.meta.url).href;
 </script>
 
 <style scoped>

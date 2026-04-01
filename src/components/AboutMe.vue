@@ -1,25 +1,22 @@
 <template>
   <Modal
-    title="IDENTITY: ANA CLARA NORONHA"
+    :title="t('about.title')"
     :icon="modalIcon"
     :is-open="isOpen"
     @close="emit('close')"
   >
-    <section class="about-dump" aria-label="Identity system dump">
+    <section class="about-dump" :aria-label="t('about.aria')">
       <header class="about-dump__header">
         <p class="about-dump__eyebrow">
           <span class="about-dump__star" aria-hidden="true">*</span>
-          IDENTITY: ANA CLARA NORONHA
+          {{ t('about.eyebrow') }}
         </p>
 
-        <p class="about-dump__username">[ USERNAME: ACnormun ]</p>
+        <p class="about-dump__username">{{ t('about.username') }}</p>
 
         <p class="about-dump__intro">
           <span class="about-dump__dropcap">I</span>
-          initializing developer profile... Professional Web Developer specializing in
-          creating interactive and nostalgic digital experiences. My journey is
-          defined by the intersection of high-performance code and the evocative
-          aesthetics of the early web.
+          {{ t('about.intro') }}
         </p>
       </header>
 
@@ -67,7 +64,7 @@
         <span class="about-dump__log-icon" aria-hidden="true">+</span>
 
         <div class="about-dump__log-content">
-          <p class="about-dump__log-title">ENVIRONMENTAL_LOGS:</p>
+          <p class="about-dump__log-title">{{ t('about.logTitle') }}</p>
           <div class="about-dump__channels">
             <a class="about-dump__channel about-dump__channel--email" href="mailto:anaclaranoronha.@gmail.com">
               <span class="about-dump__channel-icon" aria-hidden="true">[]</span>
@@ -87,6 +84,8 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import Modal from './Modal.vue'
 
 defineProps<{
@@ -97,19 +96,20 @@ const emit = defineEmits<{
   (e: 'close'): void
 }>()
 
+const { t } = useI18n()
 const modalIcon = new URL('../assets/brain.svg', import.meta.url).href
 
-const metrics = [
-  { label: 'PROCESS: TYPESCRIPT', value: '95%', tone: 'green' },
-  { label: 'PROCESS: REACT', value: '92%', tone: 'magenta' },
-  { label: 'PROCESS: VUE_JS', value: '90%', tone: 'green' },
-]
+const metrics = computed(() => [
+  { label: t('about.metrics.typescript'), value: '95%', tone: 'green' },
+  { label: t('about.metrics.react'), value: '92%', tone: 'magenta' },
+  { label: t('about.metrics.vue'), value: '90%', tone: 'green' },
+])
 
-const secondaryMetrics = [
-  { label: 'NODE.JS', value: '85%' },
-  { label: 'PYTHON', value: '80%' },
-  { label: 'FIGMA', value: '88%' },
-]
+const secondaryMetrics = computed(() => [
+  { label: t('about.metrics.node'), value: '85%' },
+  { label: t('about.metrics.python'), value: '80%' },
+  { label: t('about.metrics.figma'), value: '88%' },
+])
 </script>
 
 <style scoped>

@@ -3,7 +3,7 @@
         <div class="left">
             <button class="start" type="button" @click="emit('toggle-sidebar')">
                 <img src="../assets/start.svg" alt="">
-                <p>START</p>
+                <p>{{ t('footer.start') }}</p>
             </button>
             <img src="../assets/Vertical Divider.svg" alt="">
             <div class="topics">
@@ -27,31 +27,36 @@
 </template>
 
 <script lang="ts" setup name="Footer">
-import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 const emit = defineEmits<{
     (e: 'toggle-sidebar'): void
-    (e: 'open-modal', modal: 'terminal'): void
+    (e: 'open-modal', modal: 'terminal' | 'my-work'): void
 }>()
 
+const { t, locale } = useI18n()
 const currentTime = ref('')
 let clockTimer: number | null = null
 
 const updateClock = () => {
-    currentTime.value = new Date().toLocaleTimeString('pt-BR', {
+    currentTime.value = new Date().toLocaleTimeString(locale.value, {
         hour: '2-digit',
         minute: '2-digit',
         second: '2-digit',
     })
 }
 
-const topics = [
-    { label: 'Files', icon: new URL('../assets/files.svg', import.meta.url).href, action: 'files' },
-    { label: 'Cmd', icon: new URL('../assets/prompt.svg', import.meta.url).href, action: 'terminal' },
-    { label: 'Status', icon: new URL('../assets/stats.svg', import.meta.url).href, action: 'status' },
-]
+const topics = computed(() => [
+    { label: t('footer.files'), icon: new URL('../assets/files.svg', import.meta.url).href, action: 'files' },
+    { label: t('footer.cmd'), icon: new URL('../assets/prompt.svg', import.meta.url).href, action: 'terminal' },
+])
 
 const handleTopicClick = (action: string) => {
+    if (action === 'files') {
+        emit('open-modal', 'my-work')
+    }
+
     if (action === 'terminal') {
         emit('open-modal', 'terminal')
     }
@@ -61,6 +66,8 @@ onMounted(() => {
     updateClock()
     clockTimer = window.setInterval(updateClock, 1000)
 })
+
+watch(locale, updateClock)
 
 onBeforeUnmount(() => {
     if (clockTimer !== null) {
@@ -78,10 +85,11 @@ onBeforeUnmount(() => {
     justify-content: space-between;
     padding: 1rem;
     font-family: var(--font-secondary);
-    height: 40px;
+    min-height: 40px;
     border-top: 2px solid #FFF;
     background: #C0C0C0;
     box-shadow: 1px 1px 0 0 #DFDFDF inset, 1px 1px 0 0 #000;
+    gap: 0.75rem;
 }
 
 .left {
@@ -143,5 +151,41 @@ onBeforeUnmount(() => {
      box-shadow: 0 2px 4px 2px rgba(0, 0, 0, 0.05) inset;
      color: #000;
      font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 720px) {
+    .footer {
+        flex-wrap: wrap;
+        align-items: stretch;
+        padding: 0.75rem;
+    }
+
+    .left {
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+
+    .left > img {
+        display: none;
+    }
+
+    .start,
+    .clock {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .topics {
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .topic {
+        flex: 1 1 calc(50% - 0.25rem);
+        justify-content: center;
+        min-width: 0;
+    }
 }
 </style>

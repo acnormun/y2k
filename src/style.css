@@ -47,6 +47,28 @@ body {
   color: var(--color-text);
 }
 
+body,
+#app {
+  transition: background 220ms ease, color 220ms ease, filter 220ms ease;
+}
+
+body.theme-dark {
+  background:
+    radial-gradient(circle at top, rgba(0, 255, 255, 0.14), transparent 32%),
+    linear-gradient(180deg, #08110d 0%, #111a18 100%);
+}
+
+body.theme-dark #app {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+body.theme-dark img,
+body.theme-dark picture,
+body.theme-dark video,
+body.theme-dark canvas {
+  filter: invert(1) hue-rotate(180deg);
+}
+
 h1,
 h2,
 h3,

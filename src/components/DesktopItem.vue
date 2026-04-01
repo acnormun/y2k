@@ -104,6 +104,10 @@ const stopDragging = () => {
 }
 
 const handlePointerDown = (event: PointerEvent) => {
+  if (typeof window !== 'undefined' && window.innerWidth <= 720) {
+    return
+  }
+
   const itemEl = itemRef.value
   const parentEl = itemEl?.offsetParent as HTMLElement | null
 
@@ -280,5 +284,23 @@ onBeforeUnmount(() => {
   border-top: 5px solid transparent;
   border-bottom: 5px solid transparent;
   border-left: 8px solid var(--desktop-accent);
+}
+
+@media (max-width: 720px) {
+  .desktop-item {
+    position: static;
+    width: 100%;
+    min-height: 112px;
+    justify-content: center;
+    padding: 0.85rem 0.5rem;
+    border: 2px solid #000;
+    background: rgba(255, 254, 229, 0.88);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.12);
+    cursor: pointer;
+  }
+
+  .desktop-item__label {
+    text-align: center;
+  }
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <Modal
-    title="SNAKE_OS // RETRO_GRID"
+    :title="t('snake.title')"
     :icon="modalIcon"
     :is-open="isOpen"
     :show-status-bar="true"
@@ -10,18 +10,18 @@
     :shell-label="shellLabel"
     @close="emit('close')"
   >
-    <section class="snake-modal" aria-label="Retro snake game">
+    <section class="snake-modal" :aria-label="t('snake.aria')">
       <div class="snake-modal__shell">
         <header class="snake-modal__header">
           <div>
-            <p class="snake-modal__eyebrow">ARCADE.EXE</p>
-            <h3 class="snake-modal__title">snake protocol online</h3>
+            <p class="snake-modal__eyebrow">{{ t('snake.eyebrow') }}</p>
+            <h3 class="snake-modal__title">{{ t('snake.heading') }}</h3>
           </div>
 
-          <div class="snake-modal__stats" aria-label="Game stats">
-            <span>score {{ score.toString().padStart(3, '0') }}</span>
-            <span>high {{ highScore.toString().padStart(3, '0') }}</span>
-            <span>speed {{ tickMs }}ms</span>
+          <div class="snake-modal__stats" :aria-label="t('snake.statsAria')">
+            <span>{{ t('snake.score') }} {{ score.toString().padStart(3, '0') }}</span>
+            <span>{{ t('snake.high') }} {{ highScore.toString().padStart(3, '0') }}</span>
+            <span>{{ t('snake.speed') }} {{ tickMs }}ms</span>
           </div>
         </header>
 
@@ -30,7 +30,7 @@
             <div
               class="snake-modal__board"
               role="application"
-              aria-label="Snake board"
+              :aria-label="t('snake.boardAria')"
               tabindex="0"
               @keydown="handleKeydown"
             >
@@ -42,47 +42,45 @@
               />
 
               <div v-if="gameOver" class="snake-modal__overlay">
-                <p class="snake-modal__overlay-title">signal lost</p>
-                <p class="snake-modal__overlay-copy">pressione restart para jogar de novo</p>
+                <p class="snake-modal__overlay-title">{{ t('snake.overlayGameOverTitle') }}</p>
+                <p class="snake-modal__overlay-copy">{{ t('snake.overlayGameOverText') }}</p>
               </div>
 
               <div v-else-if="!hasStarted" class="snake-modal__overlay">
-                <p class="snake-modal__overlay-title">ready player one</p>
-                <p class="snake-modal__overlay-copy">use as setas ou wasd para iniciar</p>
+                <p class="snake-modal__overlay-title">{{ t('snake.overlayReadyTitle') }}</p>
+                <p class="snake-modal__overlay-copy">{{ t('snake.overlayReadyText') }}</p>
               </div>
 
               <div v-else-if="isPaused" class="snake-modal__overlay">
-                <p class="snake-modal__overlay-title">paused</p>
-                <p class="snake-modal__overlay-copy">aperte space para continuar</p>
+                <p class="snake-modal__overlay-title">{{ t('snake.overlayPausedTitle') }}</p>
+                <p class="snake-modal__overlay-copy">{{ t('snake.overlayPausedText') }}</p>
               </div>
             </div>
           </div>
 
           <aside class="snake-modal__panel">
-            <p class="snake-modal__panel-title">control matrix</p>
+            <p class="snake-modal__panel-title">{{ t('snake.panelTitle') }}</p>
 
             <ul class="snake-modal__keys">
-              <li><strong>w / ↑</strong> move up</li>
-              <li><strong>s / ↓</strong> move down</li>
-              <li><strong>a / ←</strong> move left</li>
-              <li><strong>d / →</strong> move right</li>
-              <li><strong>space</strong> pause</li>
+              <li><strong>W / Up</strong> {{ t('snake.moveUp') }}</li>
+              <li><strong>S / Down</strong> {{ t('snake.moveDown') }}</li>
+              <li><strong>A / Left</strong> {{ t('snake.moveLeft') }}</li>
+              <li><strong>D / Right</strong> {{ t('snake.moveRight') }}</li>
+              <li><strong>Space</strong> {{ t('snake.pause') }}</li>
             </ul>
 
-            <p class="snake-modal__hint">
-              Eat the magenta pixels, grow, and don’t hit the edges or yourself.
-            </p>
+            <p class="snake-modal__hint">{{ t('snake.hint') }}</p>
 
             <div class="snake-modal__actions">
               <button type="button" class="snake-modal__button" @click="startGame(true)">
-                restart
+                {{ t('snake.restart') }}
               </button>
               <button
                 type="button"
                 class="snake-modal__button snake-modal__button--secondary"
                 @click="togglePause"
               >
-                {{ isPaused ? 'resume' : 'pause' }}
+                {{ isPaused ? t('snake.resume') : t('snake.pause') }}
               </button>
             </div>
           </aside>
@@ -94,6 +92,7 @@
 
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import Modal from './Modal.vue'
 
 const props = defineProps<{
@@ -103,6 +102,8 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: 'close'): void
 }>()
+
+const { t } = useI18n()
 
 type Direction = 'up' | 'down' | 'left' | 'right'
 type CellClass = 'snake-modal__cell--snake' | 'snake-modal__cell--head' | 'snake-modal__cell--food' | ''
@@ -330,14 +331,14 @@ const cells = computed(() => {
 })
 
 const statusLabel = computed(() => {
-  if (gameOver.value) return 'GAME OVER'
-  if (isPaused.value) return 'PAUSED'
-  if (!hasStarted.value) return 'READY'
-  return 'RUNNING'
+  if (gameOver.value) return t('snake.statusGameOver')
+  if (isPaused.value) return t('snake.statusPaused')
+  if (!hasStarted.value) return t('snake.statusReady')
+  return t('snake.statusRunning')
 })
 
 const shellLabel = computed(() => {
-  return hasStarted.value && !isPaused.value ? 'ARCADE_LINKED' : 'WAITING_INPUT'
+  return hasStarted.value && !isPaused.value ? t('snake.shellLinked') : t('snake.shellWaiting')
 })
 
 watch(tickMs, () => {

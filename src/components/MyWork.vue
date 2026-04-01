@@ -1,19 +1,19 @@
 <template>
   <Modal
-    title="C:\\Portfolio\\My_Projects\\Active_Developments"
+    :title="t('myWork.title')"
     :icon="windowIcon"
     :isOpen="isOpen"
     @close="emit('close')"
   >
-    <section class="file-manager" aria-label="My Work file manager">
+    <section class="file-manager" :aria-label="t('myWork.aria')">
       <header class="file-manager__toolbar">
         <label class="file-manager__address">
-          <span class="file-manager__label">Address</span>
+          <span class="file-manager__label">{{ t('myWork.address') }}</span>
           <div class="file-manager__input-wrap">
-            <span class="file-manager__path">C:\Portfolio\My_Projects\Active_Developments</span>
+            <span class="file-manager__path">{{ t('myWork.path') }}</span>
           </div>
         </label>
-        <button class="file-manager__go" type="button">GO</button>
+        <button class="file-manager__go" type="button">{{ t('myWork.go') }}</button>
       </header>
 
       <div class="file-manager__content">
@@ -22,13 +22,19 @@
           :key="project.name"
           class="file-manager__item"
           type="button"
+          :aria-label="`${project.name} - ${project.description}`"
+          @click="redirectTo(project.link)"
         >
           <span class="file-manager__icon-frame" :class="`file-manager__icon-frame--${project.variant}`">
-            <span class="file-manager__icon-card" v-on:click="redirectTo(project.link)">
+            <span class="file-manager__icon-card">
               <span class="file-manager__icon-badge">{{ project.badge }}</span>
             </span>
           </span>
           <span class="file-manager__name">{{ project.name }}</span>
+          <span class="file-manager__tooltip" role="tooltip">
+            <strong>{{ t('myWork.tooltipLabel') }}</strong>
+            <span>{{ project.description }}</span>
+          </span>
         </button>
       </div>
     </section>
@@ -36,6 +42,8 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import Modal from './Modal.vue'
 
 defineProps<{
@@ -46,28 +54,32 @@ const emit = defineEmits<{
   (e: 'close'): void
 }>()
 
+const { t } = useI18n()
 const windowIcon = new URL('../assets/folder.svg', import.meta.url).href
 
-const projects = [
+const projects = computed(() => [
   {
     name: 'Health_memo.vue',
     variant: 'vue',
     badge: 'VUE',
-    link: 'https://memorando-saude.up.railway.app/'
+    link: 'https://memorando-saude.up.railway.app/',
+    description: t('myWork.projects.healthMemo'),
   },
   {
     name: 'Missing_pearsons_registry.exe',
     variant: 'exe',
     badge: 'EXE',
-    link: 'https://pjcmt-desaparecidos.up.railway.app/'
+    link: 'https://pjcmt-desaparecidos.up.railway.app/',
+    description: t('myWork.projects.missingPearsons'),
   },
   {
     name: 'Star_Trek.html',
     variant: 'html',
     badge: 'HTML',
-    link: 'https://star-trek.up.railway.app/'
+    link: 'https://star-trek.up.railway.app/',
+    description: t('myWork.projects.starTrek'),
   }
-]
+])
 
 function redirectTo(link: string) {
   window.open(link, '_blank')
@@ -153,6 +165,7 @@ function redirectTo(link: string) {
 }
 
 .file-manager__item {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -161,6 +174,7 @@ function redirectTo(link: string) {
   border: 0;
   background: transparent;
   color: #4f4a37;
+  cursor: pointer;
 }
 
 .file-manager__item:hover,
@@ -171,6 +185,12 @@ function redirectTo(link: string) {
 .file-manager__item:hover .file-manager__icon-frame,
 .file-manager__item:focus-visible .file-manager__icon-frame {
   transform: translateY(-2px);
+}
+
+.file-manager__item:hover .file-manager__tooltip,
+.file-manager__item:focus-visible .file-manager__tooltip {
+  opacity: 1;
+  transform: translate(-50%, 0);
 }
 
 .file-manager__icon-frame {
@@ -239,6 +259,51 @@ function redirectTo(link: string) {
   word-break: break-word;
 }
 
+.file-manager__tooltip {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 0.9rem);
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  width: 220px;
+  padding: 0.75rem 0.8rem;
+  border: 2px solid #000;
+  background:
+    linear-gradient(180deg, #fff9db 0%, #efe5b6 100%);
+  box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.16);
+  color: #49432f;
+  font-family: var(--font-secondary);
+  font-size: 0.68rem;
+  line-height: 1.45;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 8px);
+  transition: opacity 150ms ease, transform 150ms ease;
+}
+
+.file-manager__tooltip::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  width: 14px;
+  height: 14px;
+  border-right: 2px solid #000;
+  border-bottom: 2px solid #000;
+  background: #efe5b6;
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.file-manager__tooltip strong {
+  color: #c600c4;
+  font-family: var(--font-tertiary);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
 @media (max-width: 720px) {
   .file-manager__toolbar {
     grid-template-columns: 1fr;
@@ -256,6 +321,10 @@ function redirectTo(link: string) {
     grid-template-columns: repeat(auto-fit, minmax(88px, 1fr));
     gap: 1.4rem 0.8rem;
     min-height: 320px;
+  }
+
+  .file-manager__tooltip {
+    width: min(220px, calc(100vw - 3rem));
   }
 }
 </style>

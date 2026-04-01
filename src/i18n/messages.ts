@@ -35,6 +35,11 @@ export const messages = {
       files: 'Files',
       cmd: 'Cmd',
     },
+    mascot: {
+      aria: 'Open mascot message',
+      alt: 'Paperclip mascot',
+      bubble: 'It looks like you’re looking for a web developer. Would you like some help?',
+    },
     modal: {
       windowActions: 'Window actions',
       minimize: 'Minimize',
@@ -250,6 +255,11 @@ export const messages = {
       start: 'INICIAR',
       files: 'Arquivos',
       cmd: 'Cmd',
+    },
+    mascot: {
+      aria: 'Abrir mensagem do mascote',
+      alt: 'Mascote clipe',
+      bubble: 'It looks like you’re looking for a web developer. Would you like some help?',
     },
     modal: {
       windowActions: 'Acoes da janela',
@@ -467,6 +477,11 @@ export const messages = {
       start: 'INICIO',
       files: 'Archivos',
       cmd: 'Cmd',
+    },
+    mascot: {
+      aria: 'Abrir mensaje del asistente',
+      alt: 'Mascota clip',
+      bubble: 'It looks like you’re looking for a web developer. Would you like some help?',
     },
     modal: {
       windowActions: 'Acciones de ventana',

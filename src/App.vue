@@ -11,6 +11,7 @@
         <component :is="Component" @open-modal="openModal" />
       </RouterView>
     </div>
+    <PaperclipMascot />
     <Footer
       @toggle-sidebar="isSidebarOpen = !isSidebarOpen"
       @open-modal="openModal"
@@ -57,6 +58,7 @@ import Contact from './components/Contact.vue';
 import Footer from './components/Footer.vue';
 import MyWork from './components/MyWork.vue';
 import Navbar from './components/Navbar.vue';
+import PaperclipMascot from './components/PaperclipMascot.vue';
 import Sidebar from './components/Sidebar.vue';
 import Snake from './components/Snake.vue';
 import MediaPlayer from './components/MediaPlayer.vue';

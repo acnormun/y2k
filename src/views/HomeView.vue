@@ -105,4 +105,15 @@ const openItem = (id: string) => {
   background-size: 22px 22px;
   pointer-events: none;
 }
+
+@media (max-width: 720px) {
+  .desktop {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    align-content: start;
+    overflow-y: auto;
+    padding: 6.25rem 1rem 1rem;
+  }
+}
 </style>

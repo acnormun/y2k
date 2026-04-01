@@ -51,7 +51,7 @@ export const messages = {
       badge: 'ESTABLISHED V2.000',
       headingAccent: "Hi, I'm",
       description:
-        'Full-stack & AI Engineer building scalable web platforms, design systems, and automation tools. Focused on performance, clean architecture, and turning ideas into impactful digital products.',
+        'Full-stack & AI Engineer building scalable web platforms, design systems, and automation tools. Focused on performance and turning ideas into impactful digital products.',
       ctaPrimary: 'INITIALIZE PROJECTS',
       ctaSecondary: 'READ MANIFEST.TXT',
       statusLabel: 'ONLINE',
@@ -234,7 +234,7 @@ export const messages = {
       badge: 'ESTABELECIDA V2.000',
       headingAccent: 'Oi, eu sou',
       description:
-        'Engenheira Full-stack e de IA desenvolvendo plataformas web escaláveis, design systems e ferramentas de automação. Foco em performance, arquitetura limpa e em transformar ideias em produtos digitais de impacto.',
+        'Engenheira Full-stack e de IA desenvolvendo plataformas web escaláveis, design systems e ferramentas de automação. Foco em performance e em transformar ideias em produtos digitais de impacto.',
       ctaPrimary: 'INICIALIZAR PROJETOS',
       ctaSecondary: 'LER MANIFESTO.TXT',
       statusLabel: 'ONLINE',
@@ -417,7 +417,7 @@ export const messages = {
       badge: 'ESTABLECIDA V2.000',
       headingAccent: 'Hola, soy',
       description:
-        'Ingeniera Full-stack y de IA desarrollando plataformas web escalables, sistemas de diseño y herramientas de automatización. Enfocada en rendimiento, arquitectura limpia y en convertir ideas en productos digitales de impacto.',
+        'Ingeniera Full-stack y de IA desarrollando plataformas web escalables, sistemas de diseño y herramientas de automatización. Enfocada en rendimiento y en convertir ideas en productos digitales de impacto.',
       ctaPrimary: 'INICIALIZAR PROYECTOS',
       ctaSecondary: 'LEER MANIFESTO.TXT',
       statusLabel: 'EN LINEA',

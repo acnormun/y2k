@@ -143,4 +143,53 @@ const items = computed(() => [
 .sidebar__link--active .sidebar__icon {
   filter: brightness(0) invert(1);
 }
+
+@media (max-width: 720px) {
+  .sidebar {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    right: 0.75rem;
+    z-index: 12;
+    width: auto;
+    min-height: 0;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: space-between;
+    padding: 0.75rem;
+    border: 2px solid #000;
+    box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.14);
+  }
+
+  .sidebar__brand {
+    width: auto;
+    min-width: 72px;
+    padding: 0;
+  }
+
+  .sidebar__logo {
+    width: 48px;
+  }
+
+  .sidebar__nav {
+    width: auto;
+    flex: 1;
+  }
+
+  .sidebar__list {
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 0.75rem;
+  }
+
+  .sidebar__item {
+    width: auto;
+  }
+
+  .sidebar__link {
+    min-height: 0;
+    min-width: 88px;
+    padding: 0.55rem;
+  }
+}
 </style>

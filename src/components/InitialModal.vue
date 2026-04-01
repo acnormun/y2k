@@ -55,7 +55,7 @@ const emit = defineEmits<{
 
 const { t } = useI18n()
 const modalIcon = new URL('../assets/computer.svg', import.meta.url).href;
-const heroImage = new URL('../assets/hero.png', import.meta.url).href;
+const heroImage = new URL('../assets/hero.jpeg', import.meta.url).href;
 </script>
 
 <style scoped>

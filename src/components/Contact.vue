@@ -134,7 +134,7 @@ const emit = defineEmits<{
 
 const { t, locale } = useI18n()
 const modalIcon = new URL('../assets/contact.svg', import.meta.url).href
-const avatar = new URL('../assets/hero.png', import.meta.url).href
+const avatar = new URL('../assets/hero.jpeg', import.meta.url).href
 
 const contactNodes = computed(() => [
   {
@@ -272,7 +272,7 @@ watch(
 .contact-terminal {
   display: grid;
   grid-template-columns: 160px minmax(0, 1fr) 170px;
-  height: 580px;
+  min-height: 580px;
   border: 2px solid #000;
   background: #fbf9db;
   overflow: hidden;
@@ -665,20 +665,28 @@ watch(
 @media (max-width: 920px) {
   .contact-terminal {
     grid-template-columns: 140px minmax(0, 1fr);
-    height: 680px;
+    min-height: 0;
   }
 
   .contact-terminal__profile {
     grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 120px minmax(0, 1fr) minmax(180px, 220px);
+    align-items: start;
     border-top: 2px solid #000;
     border-left: 0;
+  }
+
+  .contact-terminal__terminal-card {
+    margin-top: 0;
   }
 }
 
 @media (max-width: 680px) {
   .contact-terminal {
     grid-template-columns: 1fr;
-    height: 800px;
+    min-height: 0;
+    gap: 0;
   }
 
   .contact-terminal__rail,
@@ -691,8 +699,31 @@ watch(
     border-bottom: 2px solid #000;
   }
 
+  .contact-terminal__rail,
+  .contact-terminal__main,
+  .contact-terminal__profile {
+    min-height: auto;
+  }
+
+  .contact-terminal__nav {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .contact-terminal__channels {
+    margin-top: 0;
+  }
+
+  .contact-terminal__main {
+    min-height: 380px;
+  }
+
   .contact-terminal__composer-row {
     grid-template-columns: 1fr;
+  }
+
+  .contact-terminal__composer-actions {
+    flex-wrap: wrap;
   }
 
   .contact-terminal__send {
@@ -701,6 +732,74 @@ watch(
 
   .contact-terminal__message {
     max-width: 100%;
+  }
+
+  .contact-terminal__profile {
+    display: flex;
+    gap: 0.8rem;
+  }
+
+  .contact-terminal__avatar-frame {
+    max-width: 180px;
+    align-self: center;
+  }
+}
+
+@media (max-width: 520px) {
+  .contact-terminal {
+    border-width: 1px;
+  }
+
+  .contact-terminal__panel-title,
+  .contact-terminal__topbar,
+  .contact-terminal__composer,
+  .contact-terminal__profile,
+  .contact-terminal__channels {
+    padding-left: 0.65rem;
+    padding-right: 0.65rem;
+  }
+
+  .contact-terminal__nav {
+    grid-template-columns: 1fr;
+    padding: 0.7rem 0.65rem;
+  }
+
+  .contact-terminal__node {
+    padding: 0.55rem 0.35rem;
+  }
+
+  .contact-terminal__messages {
+    padding: 0.75rem 0.65rem;
+  }
+
+  .contact-terminal__message {
+    padding: 0.65rem 0.7rem;
+  }
+
+  .contact-terminal__meta {
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .contact-terminal__input-wrap textarea {
+    min-height: 110px;
+    padding: 0.8rem 0.85rem;
+  }
+
+  .contact-terminal__send {
+    min-height: 54px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .contact-terminal__profile {
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+  }
+
+  .contact-terminal__avatar-frame {
+    max-width: 150px;
   }
 }
 </style>

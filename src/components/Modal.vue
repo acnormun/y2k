@@ -229,4 +229,46 @@ const emit = defineEmits<{
     font-size: 0.9rem;
     line-height: 1;
 }
+
+@media (max-width: 720px) {
+    .modal-overlay {
+        padding: 0.75rem;
+        align-items: stretch;
+    }
+
+    .modal {
+        width: 100%;
+        min-height: calc(100dvh - 1.5rem);
+        display: flex;
+        flex-direction: column;
+        box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.16);
+    }
+
+    .modal__header {
+        padding: 0.65rem 0.75rem;
+    }
+
+    .modal__title {
+        font-size: 0.9rem;
+    }
+
+    .modal__body {
+        flex: 1;
+        min-height: 0;
+        overflow: auto;
+        padding: 0.75rem;
+    }
+
+    .modal__status {
+        flex-direction: column;
+        align-items: flex-start;
+        font-size: 0.72rem;
+    }
+
+    .modal__status-left,
+    .modal__status-right {
+        flex-wrap: wrap;
+        gap: 0.6rem;
+    }
+}
 </style>

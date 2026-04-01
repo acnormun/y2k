@@ -41,7 +41,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AboutMe from './components/AboutMe.vue';
 import Contact from './components/Contact.vue';
@@ -54,6 +54,7 @@ import Terminal from './components/Terminal.vue';
 import InitialModal from './components/InitialModal.vue';
 import { LOCALE_STORAGE_KEY } from './i18n';
 
+const MOBILE_BREAKPOINT = 720
 const isSidebarOpen = ref(true)
 const isTerminalOpen = ref(false)
 const activeModal = ref<'welcome' | 'my-work' | 'about' | 'contact' | 'snake' | null>('welcome')
@@ -76,6 +77,12 @@ const closeTerminal = () => {
   isTerminalOpen.value = false
 }
 
+onMounted(() => {
+  if (typeof window !== 'undefined') {
+    isSidebarOpen.value = window.innerWidth > MOBILE_BREAKPOINT
+  }
+})
+
 watch(
   locale,
   (value) => {
@@ -96,6 +103,7 @@ watch(
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .main {
@@ -103,5 +111,17 @@ watch(
   flex: 1;
   flex-direction: row;
   min-height: 0;
+  position: relative;
+}
+
+@media (max-width: 720px) {
+  .app-shell {
+    min-height: 100dvh;
+  }
+
+  .main {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
 }
 </style>

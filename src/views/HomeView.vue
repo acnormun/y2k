@@ -35,7 +35,7 @@ const desktopItems = ref<DesktopEntry[]>([
 ])
 
 const emit = defineEmits<{
-  (e: 'open-modal', modal: 'welcome' | 'my-work' | 'about'): void
+  (e: 'open-modal', modal: 'welcome' | 'my-work' | 'about' | 'contact'): void
 }>()
 
 const updateItemPosition = (id: string, position: { x: number; y: number }) => {
@@ -54,6 +54,11 @@ const openItem = (id: string) => {
 
   if (id === 'about') {
     emit('open-modal', 'about')
+    return
+  }
+
+  if (id === 'mail') {
+    emit('open-modal', 'contact')
   }
 }
 </script>

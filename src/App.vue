@@ -1,6 +1,6 @@
 <template>
   <div class="app-shell">
-    <Navbar />
+    <Navbar @open-modal="openModal" />
     <div class="main">
       <Sidebar v-if="isSidebarOpen" />
       <RouterView v-slot="{ Component }">
@@ -21,12 +21,17 @@
       :is-open="activeModal === 'about'"
       @close="closeModal"
     />
+    <Contact
+      :is-open="activeModal === 'contact'"
+      @close="closeModal"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 import AboutMe from './components/AboutMe.vue';
+import Contact from './components/Contact.vue';
 import Footer from './components/Footer.vue';
 import MyWork from './components/MyWork.vue';
 import Navbar from './components/Navbar.vue';
@@ -34,9 +39,9 @@ import Sidebar from './components/Sidebar.vue';
 import InitialModal from './components/InitialModal.vue';
 
 const isSidebarOpen = ref(true)
-const activeModal = ref<'welcome' | 'my-work' | 'about' | null>('welcome')
+const activeModal = ref<'welcome' | 'my-work' | 'about' | 'contact' | null>('welcome')
 
-const openModal = (modal: 'welcome' | 'my-work' | 'about') => {
+const openModal = (modal: 'welcome' | 'my-work' | 'about' | 'contact') => {
   activeModal.value = modal
 }
 

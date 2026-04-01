@@ -262,7 +262,7 @@ function redirectTo(link: string) {
 .file-manager__tooltip {
   position: absolute;
   left: 50%;
-  bottom: calc(100% + 0.9rem);
+  top: calc(100% + 0.9rem);
   z-index: 5;
   display: flex;
   flex-direction: column;
@@ -279,7 +279,7 @@ function redirectTo(link: string) {
   line-height: 1.45;
   opacity: 0;
   pointer-events: none;
-  transform: translate(-50%, 8px);
+  transform: translate(-50%, -8px);
   transition: opacity 150ms ease, transform 150ms ease;
 }
 
@@ -287,11 +287,11 @@ function redirectTo(link: string) {
   content: '';
   position: absolute;
   left: 50%;
-  top: 100%;
+  bottom: 100%;
   width: 14px;
   height: 14px;
-  border-right: 2px solid #000;
-  border-bottom: 2px solid #000;
+  border-top: 2px solid #000;
+  border-left: 2px solid #000;
   background: #efe5b6;
   transform: translateX(-50%) rotate(45deg);
 }

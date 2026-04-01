@@ -1,6 +1,10 @@
 <template>
   <div class="app-shell">
-    <Navbar @open-modal="openModal" />
+    <Navbar
+      :is-dark-mode="isDarkMode"
+      @open-modal="openModal"
+      @toggle-dark-mode="isDarkMode = !isDarkMode"
+    />
     <div class="main">
       <Sidebar v-if="isSidebarOpen" />
       <RouterView v-slot="{ Component }">
@@ -55,9 +59,11 @@ import InitialModal from './components/InitialModal.vue';
 import { LOCALE_STORAGE_KEY } from './i18n';
 
 const MOBILE_BREAKPOINT = 720
+const THEME_STORAGE_KEY = 'portfolio-dark-mode'
 const isSidebarOpen = ref(true)
 const isTerminalOpen = ref(false)
 const activeModal = ref<'welcome' | 'my-work' | 'about' | 'contact' | 'snake' | null>('welcome')
+const isDarkMode = ref(false)
 const { locale } = useI18n()
 
 const openModal = (modal: 'welcome' | 'my-work' | 'about' | 'contact' | 'snake' | 'terminal') => {
@@ -80,6 +86,7 @@ const closeTerminal = () => {
 onMounted(() => {
   if (typeof window !== 'undefined') {
     isSidebarOpen.value = window.innerWidth > MOBILE_BREAKPOINT
+    isDarkMode.value = window.localStorage.getItem(THEME_STORAGE_KEY) === 'true'
   }
 })
 
@@ -92,6 +99,21 @@ watch(
 
     if (typeof document !== 'undefined') {
       document.documentElement.lang = value
+    }
+  },
+  { immediate: true },
+)
+
+watch(
+  isDarkMode,
+  (value) => {
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem(THEME_STORAGE_KEY, String(value))
+    }
+
+    if (typeof document !== 'undefined') {
+      document.body.classList.toggle('theme-dark', value)
+      document.documentElement.style.colorScheme = value ? 'dark' : 'light'
     }
   },
   { immediate: true },

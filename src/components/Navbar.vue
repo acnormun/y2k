@@ -47,7 +47,13 @@
         </div>
       </div>
 
-      <button class="icon-button" type="button" :aria-label="t('navbar.toggleMode')">
+      <button
+        class="icon-button"
+        :class="{ 'icon-button--active': isDarkMode }"
+        type="button"
+        :aria-label="t('navbar.toggleMode')"
+        @click="emit('toggle-dark-mode')"
+      >
         <img src="../assets/on.svg" alt="">
       </button>
     </div>
@@ -61,6 +67,11 @@ import type { AppLocale } from '../i18n'
 
 const emit = defineEmits<{
   (e: 'open-modal', modal: 'about' | 'contact' | 'terminal'): void
+  (e: 'toggle-dark-mode'): void
+}>()
+
+defineProps<{
+  isDarkMode: boolean
 }>()
 
 const { t, locale } = useI18n()
@@ -191,6 +202,14 @@ onBeforeUnmount(() => {
 
 .icon-button:hover {
   background: #ece3b7;
+}
+
+.icon-button--active {
+  background: #0b8d1b;
+}
+
+.icon-button--active img {
+  filter: brightness(0) invert(1);
 }
 
 .icon-button img {

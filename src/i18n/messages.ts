@@ -15,7 +15,7 @@ export const messages = {
       navAria: 'Main navigation',
       actionsAria: 'Actions',
       openSettings: 'Open language settings',
-      toggleMode: 'Toggle mode',
+      toggleMode: 'Toggle dark mode',
     },
     sidebar: {
       aria: 'Sidebar',
@@ -198,7 +198,7 @@ export const messages = {
       navAria: 'Navegacao principal',
       actionsAria: 'Acoes',
       openSettings: 'Abrir configuracoes de idioma',
-      toggleMode: 'Alternar modo',
+      toggleMode: 'Alternar modo escuro',
     },
     sidebar: {
       aria: 'Barra lateral',
@@ -381,7 +381,7 @@ export const messages = {
       navAria: 'Navegacion principal',
       actionsAria: 'Acciones',
       openSettings: 'Abrir configuracion de idioma',
-      toggleMode: 'Cambiar modo',
+      toggleMode: 'Cambiar modo oscuro',
     },
     sidebar: {
       aria: 'Barra lateral',

@@ -6,14 +6,14 @@
                     <img :src="icon" alt="" class="modal__icon">
                     <h2 class="modal__title">{{ title }}</h2>
                 </div>
-                <div class="modal__actions" aria-label="Window actions">
-                    <button class="modal__action modal__action--minimize" type="button" aria-label="Minimizar">
+                <div class="modal__actions" :aria-label="t('modal.windowActions')">
+                    <button class="modal__action modal__action--minimize" type="button" :aria-label="t('modal.minimize')">
                         <span />
                     </button>
-                    <button class="modal__action modal__action--maximize" type="button" aria-label="Maximizar">
+                    <button class="modal__action modal__action--maximize" type="button" :aria-label="t('modal.maximize')">
                         <span />
                     </button>
-                    <button class="modal__action modal__action--close" type="button" aria-label="Fechar" @click="emit('close')">
+                    <button class="modal__action modal__action--close" type="button" :aria-label="t('modal.close')" @click="emit('close')">
                         <span />
                     </button>
                 </div>
@@ -21,7 +21,7 @@
 
             <div class="modal__body">
                 <slot>
-                    <p class="modal__empty">Sem conteudo ainda.</p>
+                    <p class="modal__empty">{{ t('modal.empty') }}</p>
                 </slot>
             </div>
 
@@ -29,8 +29,8 @@
                 <div class="modal__status-left">
                     <span class="modal__status-online" aria-hidden="true" />
                     <span>{{ statusLabel }}</span>
-                    <span class="modal__status-muted">CPU: {{ cpuUsage }}</span>
-                    <span class="modal__status-muted">RAM: {{ ramUsage }}</span>
+                    <span class="modal__status-muted">{{ t('modal.cpu') }}: {{ cpuUsage }}</span>
+                    <span class="modal__status-muted">{{ t('modal.ram') }}: {{ ramUsage }}</span>
                 </div>
 
                 <div class="modal__status-right">
@@ -43,6 +43,10 @@
 </template>
 
 <script lang="ts" setup name="Modal">
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+
 withDefaults(defineProps<{
     title: string
     icon: string

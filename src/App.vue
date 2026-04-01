@@ -41,7 +41,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
 import AboutMe from './components/AboutMe.vue';
 import Contact from './components/Contact.vue';
 import Footer from './components/Footer.vue';
@@ -51,10 +52,12 @@ import Sidebar from './components/Sidebar.vue';
 import Snake from './components/Snake.vue';
 import Terminal from './components/Terminal.vue';
 import InitialModal from './components/InitialModal.vue';
+import { LOCALE_STORAGE_KEY } from './i18n';
 
 const isSidebarOpen = ref(true)
 const isTerminalOpen = ref(false)
 const activeModal = ref<'welcome' | 'my-work' | 'about' | 'contact' | 'snake' | null>('welcome')
+const { locale } = useI18n()
 
 const openModal = (modal: 'welcome' | 'my-work' | 'about' | 'contact' | 'snake' | 'terminal') => {
   if (modal === 'terminal') {
@@ -72,6 +75,20 @@ const closeModal = () => {
 const closeTerminal = () => {
   isTerminalOpen.value = false
 }
+
+watch(
+  locale,
+  (value) => {
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem(LOCALE_STORAGE_KEY, value)
+    }
+
+    if (typeof document !== 'undefined') {
+      document.documentElement.lang = value
+    }
+  },
+  { immediate: true },
+)
 </script>
 
 <style>

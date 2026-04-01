@@ -1,15 +1,15 @@
 <template>
   <Modal
-    title="CONTACT_NODES"
+    :title="t('contact.title')"
     :icon="modalIcon"
     :isOpen="isOpen"
     @close="emit('close')"
   >
-    <section class="contact-terminal" aria-label="Contact messaging terminal">
+    <section class="contact-terminal" :aria-label="t('contact.aria')">
       <aside class="contact-terminal__rail">
-        <div class="contact-terminal__panel-title">CONTACT_NODES</div>
+        <div class="contact-terminal__panel-title">{{ t('contact.panelTitle') }}</div>
 
-        <nav class="contact-terminal__nav" aria-label="Social contact links">
+        <nav class="contact-terminal__nav" :aria-label="t('contact.navAria')">
           <a
             v-for="node in contactNodes"
             :key="node.label"
@@ -27,7 +27,7 @@
         </nav>
 
         <div class="contact-terminal__channels">
-          <p class="contact-terminal__caption">CHANNELS</p>
+          <p class="contact-terminal__caption">{{ t('contact.channels') }}</p>
           <ul class="contact-terminal__channel-list">
             <li v-for="channel in channels" :key="channel">
               # {{ channel }}
@@ -38,8 +38,8 @@
 
       <div class="contact-terminal__main">
         <header class="contact-terminal__topbar">
-          <span class="contact-terminal__topbar-label">SYSTEM</span>
-          <span class="contact-terminal__topbar-time">10:42 AM</span>
+          <span class="contact-terminal__topbar-label">{{ t('contact.topbar') }}</span>
+          <span class="contact-terminal__topbar-time">{{ currentTime }}</span>
         </header>
 
         <div ref="messagesPanelRef" class="contact-terminal__messages">
@@ -58,7 +58,7 @@
         </div>
 
         <footer class="contact-terminal__composer">
-          <div class="contact-terminal__composer-actions" aria-label="Composer shortcuts">
+          <div class="contact-terminal__composer-actions" :aria-label="t('contact.composerActions')">
             <button v-for="action in composerActions" :key="action.label" type="button">
               <img v-if="action.iconSrc" :src="action.iconSrc" :alt="action.label">
               <span v-else>{{ action.label }}</span>
@@ -67,11 +67,11 @@
 
           <form class="contact-terminal__composer-row" @submit.prevent="sendMessage">
             <label class="contact-terminal__input-wrap">
-              <span class="sr-only">Message input</span>
+              <span class="sr-only">{{ t('contact.inputLabel') }}</span>
               <textarea
                 v-model="draftMessage"
                 rows="2"
-                placeholder="Type your message here..."
+                :placeholder="t('contact.placeholder')"
                 @keydown.enter.exact.prevent="sendMessage"
               />
             </label>
@@ -82,7 +82,7 @@
               :disabled="!draftMessage.trim()"
             >
               <span>&gt;</span>
-              <strong>SEND</strong>
+              <strong>{{ t('contact.send') }}</strong>
             </button>
           </form>
         </footer>
@@ -90,31 +90,29 @@
 
       <aside class="contact-terminal__profile">
         <div class="contact-terminal__avatar-frame">
-          <img :src="avatar" alt="Ana Clara Noronha avatar">
+          <img :src="avatar" :alt="t('contact.avatarAlt')">
           <span class="contact-terminal__avatar-status" />
         </div>
 
         <div class="contact-terminal__profile-copy">
-          <p class="contact-terminal__handle">ROOT_OPERATOR</p>
-          <p class="contact-terminal__role">Full-stack Developer</p>
+          <p class="contact-terminal__handle">{{ t('contact.handle') }}</p>
+          <p class="contact-terminal__role">{{ t('contact.role') }}</p>
         </div>
 
         <div class="contact-terminal__status-card">
-          <p class="contact-terminal__status-title">STATUS</p>
+          <p class="contact-terminal__status-title">{{ t('contact.status') }}</p>
           <div class="contact-terminal__status-row">
-            <span>ONLINE</span>
-            <span class="contact-terminal__status-pill">LIVE</span>
+            <span>{{ t('contact.online') }}</span>
+            <span class="contact-terminal__status-pill">{{ t('contact.live') }}</span>
           </div>
-          <p class="contact-terminal__status-text">
-            Compiling the future, one pixel at a time. Available for hire.
-          </p>
+          <p class="contact-terminal__status-text">{{ t('contact.statusText') }}</p>
         </div>
 
         <div class="contact-terminal__terminal-card">
           <p>CPU_USE: [||||||||--]</p>
           <p>SYS: OK</p>
           <p>UPTIME: 1,421 HRS</p>
-          <p>LOCATION: NODE_SEA_01</p>
+          <p>{{ t('contact.location') }}</p>
         </div>
       </aside>
     </section>
@@ -122,10 +120,11 @@
 </template>
 
 <script setup lang="ts">
-import { nextTick, ref } from 'vue'
+import { computed, nextTick, ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import Modal from './Modal.vue'
 
-defineProps<{
+const props = defineProps<{
   isOpen: boolean
 }>()
 
@@ -133,25 +132,26 @@ const emit = defineEmits<{
   (e: 'close'): void
 }>()
 
+const { t, locale } = useI18n()
 const modalIcon = new URL('../assets/contact.svg', import.meta.url).href
 const avatar = new URL('../assets/hero.png', import.meta.url).href
 
-const contactNodes = [
+const contactNodes = computed(() => [
   {
     label: 'LinkedIn',
-    status: 'Online',
+    status: t('contact.linkedinStatus'),
     icon: 'in',
     href: 'https://www.linkedin.com/in/acnoronha/'
   },
   {
     label: 'GitHub',
-    status: 'Active',
+    status: t('contact.githubStatus'),
     icon: 'GH',
     href: 'https://github.com/acnormun'
   }
-]
+])
 
-const channels = ['general_chat', 'debug_logs']
+const channels = computed(() => [t('contact.channelGeneral'), t('contact.channelDebug')])
 
 type ChatMessage = {
   id: number
@@ -161,33 +161,34 @@ type ChatMessage = {
   text: string
 }
 
-const initialMessages: ChatMessage[] = [
+const createInitialMessages = (): ChatMessage[] => [
   {
     id: 1,
     role: 'system',
-    author: 'SYSTEM',
-    time: '10:42 AM',
-    text: 'Connection established. Welcome to the messaging terminal. How can I assist with your project inquiry today?'
+    author: t('contact.systemUser'),
+    time: getCurrentTime(),
+    text: t('contact.initialMessages.welcome')
   },
   {
     id: 2,
     role: 'guest',
-    author: 'GUEST_USER',
-    time: '10:45 AM',
-    text: 'Looking for a collaboration on a new retro-futurist web app.'
+    author: t('contact.guestUser'),
+    time: getCurrentTime(),
+    text: t('contact.initialMessages.guest')
   },
   {
     id: 3,
     role: 'system',
-    author: 'SYSTEM',
-    time: '10:46 AM',
-    text: 'Processing... Please use the transmission box below to send your details.'
+    author: t('contact.systemUser'),
+    time: getCurrentTime(),
+    text: t('contact.initialMessages.prompt')
   }
 ]
 
-const messages = ref<ChatMessage[]>([...initialMessages])
+const messages = ref<ChatMessage[]>(createInitialMessages())
 const draftMessage = ref('')
 const messagesPanelRef = ref<HTMLElement | null>(null)
+const currentTime = ref('')
 const composerActions = [
   {
     label: 'emoji',
@@ -204,7 +205,7 @@ const composerActions = [
 ]
 
 function getCurrentTime() {
-  return new Date().toLocaleTimeString('en-US', {
+  return new Date().toLocaleTimeString(locale.value, {
     hour: '2-digit',
     minute: '2-digit',
   })
@@ -223,9 +224,9 @@ function queueSystemReply() {
     messages.value.push({
       id: Date.now() + 1,
       role: 'system',
-      author: 'SYSTEM',
+      author: t('contact.systemUser'),
       time: getCurrentTime(),
-      text: 'Transmission received. I will get back to you soon. You can also reach me through the contact nodes on the left.'
+      text: t('contact.autoReply')
     })
 
     await scrollMessagesToBottom()
@@ -242,7 +243,7 @@ async function sendMessage() {
   messages.value.push({
     id: Date.now(),
     role: 'guest',
-    author: 'GUEST_USER',
+    author: t('contact.guestUser'),
     time: getCurrentTime(),
     text
   })
@@ -251,6 +252,20 @@ async function sendMessage() {
   await scrollMessagesToBottom()
   queueSystemReply()
 }
+
+const resetMessages = () => {
+  currentTime.value = getCurrentTime()
+  messages.value = createInitialMessages()
+}
+
+watch(locale, resetMessages, { immediate: true })
+watch(
+  () => props.isOpen,
+  () => {
+    currentTime.value = getCurrentTime()
+  },
+  { immediate: true },
+)
 </script>
 
 <style scoped>

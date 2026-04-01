@@ -1,11 +1,11 @@
 <template>
-  <aside class="sidebar" aria-label="Sidebar">
+  <aside class="sidebar" :aria-label="t('sidebar.aria')">
     <div class="sidebar__brand">
       <img class="sidebar__logo" src="../assets/win_chairs.jpg" alt="Win Chairs">
       <p class="sidebar__text">USER_ROOT</p>
     </div>
 
-    <nav class="sidebar__nav" aria-label="Sidebar navigation">
+    <nav class="sidebar__nav" :aria-label="t('sidebar.navAria')">
       <ul class="sidebar__list">
         <li
           v-for="(item, index) in items"
@@ -33,16 +33,18 @@
 </template>
 
 <script setup lang="ts" name="Sidebar">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 const selectedItem = ref(0)
+const { t } = useI18n()
 
-const items = [
-  { label: 'DESKTOP', icon: new URL('../assets/computer.svg', import.meta.url).href },
+const items = computed(() => [
+  { label: t('sidebar.desktop'), icon: new URL('../assets/computer.svg', import.meta.url).href },
   // { label: 'Projects', icon: new URL('../assets/code.svg', import.meta.url).href },
   // { label: 'Skills', icon: new URL('../assets/skills.svg', import.meta.url).href },
   // { label: 'Contact', icon: new URL('../assets/contact.svg', import.meta.url).href },
-]
+])
 </script>
 
 <style scoped>

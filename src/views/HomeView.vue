@@ -1,7 +1,7 @@
 <template>
-  <section class="desktop" aria-label="Desktop">
+  <section class="desktop" :aria-label="t('desktop.aria')">
     <DesktopItem
-      v-for="item in desktopItems"
+      v-for="item in localizedDesktopItems"
       :key="item.id"
       :accent="item.accent"
       :kind="item.kind"
@@ -15,24 +15,40 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import DesktopItem from '../components/DesktopItem.vue'
 
 type DesktopEntry = {
   accent: string
   id: string
   kind: 'folder' | 'file' | 'app' | 'script'
-  label: string
   x: number
   y: number
 }
 
+const { t } = useI18n()
+
 const desktopItems = ref<DesktopEntry[]>([
-  { id: 'my-work', label: 'My Work', kind: 'folder', accent: '#d400d4', x: 28, y: 28 },
-  { id: 'about', label: 'About.txt', kind: 'file', accent: '#45b649', x: 28, y: 144 },
-  { id: 'snake', label: 'Snake_Game.exe', kind: 'app', accent: '#00a8e8', x: 28, y: 260 },
-  { id: 'mail', label: 'Mail.sh', kind: 'script', accent: '#ff3b6b', x: 28, y: 376 },
+  { id: 'my-work', kind: 'folder', accent: '#d400d4', x: 28, y: 28 },
+  { id: 'about', kind: 'file', accent: '#45b649', x: 28, y: 144 },
+  { id: 'snake', kind: 'app', accent: '#00a8e8', x: 28, y: 260 },
+  { id: 'mail', kind: 'script', accent: '#ff3b6b', x: 28, y: 376 },
 ])
+
+const localizedDesktopItems = computed(() =>
+  desktopItems.value.map((item) => ({
+    ...item,
+    label:
+      item.id === 'my-work'
+        ? t('desktop.myWork')
+        : item.id === 'about'
+          ? t('desktop.about')
+          : item.id === 'snake'
+            ? t('desktop.snake')
+            : t('desktop.mail'),
+  })),
+)
 
 const emit = defineEmits<{
   (e: 'open-modal', modal: 'welcome' | 'my-work' | 'about' | 'contact' | 'snake'): void

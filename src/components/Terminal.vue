@@ -1,5 +1,5 @@
 <template>
-  <aside v-if="isOpen" class="terminal-window" aria-label="Portfolio terminal">
+  <aside v-if="isOpen" class="terminal-window" :aria-label="t('terminal.aria')">
     <header class="terminal-window__header">
       <div class="terminal-window__traffic" aria-hidden="true">
         <span class="terminal-window__dot terminal-window__dot--red" />
@@ -7,12 +7,12 @@
         <span class="terminal-window__dot terminal-window__dot--green" />
       </div>
 
-      <p class="terminal-window__title">CMD.EXE</p>
+      <p class="terminal-window__title">{{ t('terminal.title') }}</p>
 
       <button
         type="button"
         class="terminal-window__close"
-        aria-label="Fechar terminal"
+        :aria-label="t('terminal.close')"
         @click="emit('close')"
       >
         x
@@ -55,14 +55,14 @@
             class="terminal-window__input"
             autocomplete="off"
             spellcheck="false"
-            placeholder="type help, ls, open about..."
+            :placeholder="t('terminal.placeholder')"
             @keydown.up.prevent="browseHistory('up')"
             @keydown.down.prevent="browseHistory('down')"
           >
         </label>
 
         <button type="submit" class="terminal-window__submit">
-          run
+          {{ t('terminal.run') }}
         </button>
       </form>
     </div>
@@ -70,7 +70,8 @@
 </template>
 
 <script setup lang="ts">
-import { nextTick, ref, watch } from 'vue'
+import { computed, nextTick, ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 type ModalTarget = 'welcome' | 'my-work' | 'about' | 'contact' | 'snake'
 type LineTone = 'boot' | 'success' | 'command' | 'info' | 'error' | 'accent'
@@ -90,22 +91,24 @@ const emit = defineEmits<{
   (e: 'open-modal', modal: ModalTarget): void
 }>()
 
+const { t, locale } = useI18n()
+
 const bootLines = (): TerminalLine[] => [
-  { id: 1, prefix: '>', text: 'loading portfolio_assets...', tone: 'boot' },
-  { id: 2, prefix: '>', text: 'index.html [OK]', tone: 'success' },
-  { id: 3, prefix: '>', text: 'styles.css [OK]', tone: 'success' },
-  { id: 4, prefix: '>', text: 'commands.sys [OK]', tone: 'success' },
+  { id: 1, prefix: '>', text: t('terminal.boot.loading'), tone: 'boot' },
+  { id: 2, prefix: '>', text: t('terminal.boot.index'), tone: 'success' },
+  { id: 3, prefix: '>', text: t('terminal.boot.styles'), tone: 'success' },
+  { id: 4, prefix: '>', text: t('terminal.boot.commands'), tone: 'success' },
   { id: 5, prefix: '>', text: '_', tone: 'boot' },
-  { id: 6, prefix: '>', text: 'system check: optimal', tone: 'accent' },
-  { id: 7, prefix: '>', text: 'type help to list available commands', tone: 'info' },
+  { id: 6, prefix: '>', text: t('terminal.boot.check'), tone: 'accent' },
+  { id: 7, prefix: '>', text: t('terminal.boot.hint'), tone: 'info' },
 ]
 
-const shortcuts = [
-  { label: 'MY_WORK/', command: 'open my-work' },
-  { label: 'ABOUT/', command: 'open about' },
-  { label: 'CONTACT/', command: 'open contact' },
-  { label: 'SNAKE/', command: 'run snake' },
-]
+const shortcuts = computed(() => [
+  { label: t('terminal.shortcuts.myWork'), command: 'open my-work' },
+  { label: t('terminal.shortcuts.about'), command: 'open about' },
+  { label: t('terminal.shortcuts.contact'), command: 'open contact' },
+  { label: t('terminal.shortcuts.snake'), command: 'run snake' },
+])
 
 const command = ref('')
 const terminalLines = ref<TerminalLine[]>(bootLines())
@@ -135,7 +138,7 @@ const scrollToBottom = async () => {
 
 const openSection = (target: ModalTarget, label: string) => {
   emit('open-modal', target)
-  pushLine(`opening ${label}...`, 'success')
+  pushLine(t('terminal.responses.opening', { label }), 'success')
   void scrollToBottom()
 }
 
@@ -153,12 +156,12 @@ const executeCommand = (rawCommand: string) => {
   }
 
   if (normalized === 'help') {
-    pushLine('available: help, ls, dir, clear, exit, open about, open my-work, open contact, run snake', 'info')
+    pushLine(t('terminal.responses.help'), 'info')
     return
   }
 
   if (normalized === 'ls' || normalized === 'dir') {
-    pushLine('directories -> MY_WORK/ ABOUT/ CONTACT/ SNAKE/', 'info')
+    pushLine(t('terminal.responses.directories'), 'info')
     return
   }
 
@@ -168,32 +171,32 @@ const executeCommand = (rawCommand: string) => {
   }
 
   if (normalized === 'exit' || normalized === 'close') {
-    pushLine('closing terminal session...', 'info')
+    pushLine(t('terminal.responses.closing'), 'info')
     emit('close')
     return
   }
 
   if (normalized === 'open about') {
-    openSection('about', 'about')
+    openSection('about', t('terminal.labels.about'))
     return
   }
 
   if (normalized === 'open my-work' || normalized === 'open work' || normalized === 'open portfolio') {
-    openSection('my-work', 'my-work')
+    openSection('my-work', t('terminal.labels.myWork'))
     return
   }
 
   if (normalized === 'open contact' || normalized === 'open mail') {
-    openSection('contact', 'contact')
+    openSection('contact', t('terminal.labels.contact'))
     return
   }
 
   if (normalized === 'run snake' || normalized === 'open snake' || normalized === 'play snake') {
-    openSection('snake', 'snake')
+    openSection('snake', t('terminal.labels.snake'))
     return
   }
 
-  pushLine(`unknown command: ${normalized}`, 'error')
+  pushLine(t('terminal.responses.unknown', { command: normalized }), 'error')
 }
 
 const submitCommand = () => {
@@ -244,6 +247,10 @@ watch(
   },
   { immediate: true },
 )
+
+watch(locale, () => {
+  resetTerminal()
+})
 </script>
 
 <style scoped>

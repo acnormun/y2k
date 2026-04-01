@@ -1,19 +1,19 @@
 <template>
   <Modal
-    title="C:\\Portfolio\\My_Projects\\Active_Developments"
+    :title="t('myWork.title')"
     :icon="windowIcon"
     :isOpen="isOpen"
     @close="emit('close')"
   >
-    <section class="file-manager" aria-label="My Work file manager">
+    <section class="file-manager" :aria-label="t('myWork.aria')">
       <header class="file-manager__toolbar">
         <label class="file-manager__address">
-          <span class="file-manager__label">Address</span>
+          <span class="file-manager__label">{{ t('myWork.address') }}</span>
           <div class="file-manager__input-wrap">
-            <span class="file-manager__path">C:\Portfolio\My_Projects\Active_Developments</span>
+            <span class="file-manager__path">{{ t('myWork.path') }}</span>
           </div>
         </label>
-        <button class="file-manager__go" type="button">GO</button>
+        <button class="file-manager__go" type="button">{{ t('myWork.go') }}</button>
       </header>
 
       <div class="file-manager__content">
@@ -36,6 +36,7 @@
 </template>
 
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
 import Modal from './Modal.vue'
 
 defineProps<{
@@ -46,6 +47,7 @@ const emit = defineEmits<{
   (e: 'close'): void
 }>()
 
+const { t } = useI18n()
 const windowIcon = new URL('../assets/folder.svg', import.meta.url).href
 
 const projects = [

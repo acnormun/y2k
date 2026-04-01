@@ -3,7 +3,7 @@
         <div class="left">
             <button class="start" type="button" @click="emit('toggle-sidebar')">
                 <img src="../assets/start.svg" alt="">
-                <p>START</p>
+                <p>{{ t('footer.start') }}</p>
             </button>
             <img src="../assets/Vertical Divider.svg" alt="">
             <div class="topics">
@@ -27,29 +27,31 @@
 </template>
 
 <script lang="ts" setup name="Footer">
-import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 const emit = defineEmits<{
     (e: 'toggle-sidebar'): void
     (e: 'open-modal', modal: 'terminal'): void
 }>()
 
+const { t, locale } = useI18n()
 const currentTime = ref('')
 let clockTimer: number | null = null
 
 const updateClock = () => {
-    currentTime.value = new Date().toLocaleTimeString('pt-BR', {
+    currentTime.value = new Date().toLocaleTimeString(locale.value, {
         hour: '2-digit',
         minute: '2-digit',
         second: '2-digit',
     })
 }
 
-const topics = [
-    { label: 'Files', icon: new URL('../assets/files.svg', import.meta.url).href, action: 'files' },
-    { label: 'Cmd', icon: new URL('../assets/prompt.svg', import.meta.url).href, action: 'terminal' },
-    { label: 'Status', icon: new URL('../assets/stats.svg', import.meta.url).href, action: 'status' },
-]
+const topics = computed(() => [
+    { label: t('footer.files'), icon: new URL('../assets/files.svg', import.meta.url).href, action: 'files' },
+    { label: t('footer.cmd'), icon: new URL('../assets/prompt.svg', import.meta.url).href, action: 'terminal' },
+    { label: t('footer.status'), icon: new URL('../assets/stats.svg', import.meta.url).href, action: 'status' },
+])
 
 const handleTopicClick = (action: string) => {
     if (action === 'terminal') {
@@ -61,6 +63,8 @@ onMounted(() => {
     updateClock()
     clockTimer = window.setInterval(updateClock, 1000)
 })
+
+watch(locale, updateClock)
 
 onBeforeUnmount(() => {
     if (clockTimer !== null) {

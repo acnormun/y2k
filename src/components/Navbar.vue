@@ -1,30 +1,53 @@
 <template>
   <header class="navbar">
-    <a class="logo" href="/" aria-label="Go to homepage">
+    <a class="logo" href="/" :aria-label="t('navbar.homeAria')">
       <span>NORMUN_V0.1</span>
     </a>
 
-    <nav class="navbar__nav" aria-label="Main navigation">
+    <nav class="navbar__nav" :aria-label="t('navbar.navAria')">
       <ul class="navbar__list">
-        <li><a href="/">PORTFOLIO</a></li>
+        <li><a href="/">{{ t('navbar.home') }}</a></li>
         <li>
           <button type="button" class="navbar__link-button" @click="emit('open-modal', 'terminal')">
-            TERMINAL
+            {{ t('navbar.terminal') }}
           </button>
         </li>
         <li>
           <button type="button" class="navbar__link-button" @click="emit('open-modal', 'contact')">
-            CONTACT
+            {{ t('navbar.contact') }}
           </button>
         </li>
       </ul>
     </nav>
 
-    <div class="navbar__actions" aria-label="Actions">
-      <button class="icon-button" type="button" aria-label="Open settings">
-        <img src="../assets/gear.svg" alt="">
-      </button>
-      <button class="icon-button" type="button" aria-label="Toggle mode">
+    <div class="navbar__actions" :aria-label="t('navbar.actionsAria')">
+      <div class="navbar__settings">
+        <button
+          class="icon-button"
+          type="button"
+          :aria-label="t('navbar.openSettings')"
+          @click="isLanguageMenuOpen = !isLanguageMenuOpen"
+        >
+          <img src="../assets/gear.svg" alt="">
+        </button>
+
+        <div v-if="isLanguageMenuOpen" class="navbar__language-menu">
+          <p class="navbar__language-title">{{ t('language.label') }}</p>
+          <button
+            v-for="option in languageOptions"
+            :key="option.value"
+            class="navbar__language-option"
+            :class="{ 'navbar__language-option--active': locale === option.value }"
+            type="button"
+            @click="setLanguage(option.value)"
+          >
+            <span>{{ option.shortLabel }}</span>
+            <small>{{ option.label }}</small>
+          </button>
+        </div>
+      </div>
+
+      <button class="icon-button" type="button" :aria-label="t('navbar.toggleMode')">
         <img src="../assets/on.svg" alt="">
       </button>
     </div>
@@ -32,9 +55,43 @@
 </template>
 
 <script lang="ts" setup>
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+import type { AppLocale } from '../i18n'
+
 const emit = defineEmits<{
   (e: 'open-modal', modal: 'about' | 'contact' | 'terminal'): void
 }>()
+
+const { t, locale } = useI18n()
+const isLanguageMenuOpen = ref(false)
+
+const languageOptions = computed(() => [
+  { value: 'en' as AppLocale, shortLabel: 'EN', label: t('language.en') },
+  { value: 'pt-BR' as AppLocale, shortLabel: 'PT', label: t('language.ptBR') },
+  { value: 'es' as AppLocale, shortLabel: 'ES', label: t('language.es') },
+])
+
+const setLanguage = (nextLocale: AppLocale) => {
+  locale.value = nextLocale
+  isLanguageMenuOpen.value = false
+}
+
+const handleDocumentClick = (event: MouseEvent) => {
+  const target = event.target as HTMLElement | null
+
+  if (!target?.closest('.navbar__settings')) {
+    isLanguageMenuOpen.value = false
+  }
+}
+
+onMounted(() => {
+  document.addEventListener('click', handleDocumentClick)
+})
+
+onBeforeUnmount(() => {
+  document.removeEventListener('click', handleDocumentClick)
+})
 </script>
 
 <style scoped>
@@ -76,6 +133,10 @@ const emit = defineEmits<{
 .navbar__actions {
   gap: 0.5rem;
   margin-left: -0.35rem;
+}
+
+.navbar__settings {
+  position: relative;
 }
 
 .navbar__list a,
@@ -129,5 +190,61 @@ const emit = defineEmits<{
 .icon-button img {
   width: 1.25rem;
   height: 1.25rem;
+}
+
+.navbar__language-menu {
+  position: absolute;
+  top: calc(100% + 0.45rem);
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  min-width: 180px;
+  padding: 0.75rem;
+  border: 2px solid #000;
+  background: #fffef4;
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.16);
+  z-index: 20;
+}
+
+.navbar__language-title {
+  color: #6b6654;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.navbar__language-option {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.65rem;
+  align-items: center;
+  padding: 0.5rem 0.6rem;
+  border: 2px solid #000;
+  background: #f6f1ca;
+  color: #2e2a22;
+  text-align: left;
+  cursor: pointer;
+}
+
+.navbar__language-option span {
+  font-family: var(--font-tertiary);
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.navbar__language-option small {
+  color: #6e6858;
+  font-size: 0.7rem;
+}
+
+.navbar__language-option--active {
+  background: #0b8d1b;
+  color: #fffef6;
+}
+
+.navbar__language-option--active small {
+  color: #eefce9;
 }
 </style>

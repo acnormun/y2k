@@ -7,10 +7,16 @@
             </button>
             <img src="../assets/Vertical Divider.svg" alt="">
             <div class="topics">
-                <div v-for="value in topics" :key="value.label" class="topic">
+                <button
+                    v-for="value in topics"
+                    :key="value.label"
+                    class="topic"
+                    type="button"
+                    @click="handleTopicClick(value.action)"
+                >
                     <img :src="value.icon" :alt="value.label">
                     <p>{{ value.label }}</p>
-                </div>
+                </button>
             </div>
         </div>
         <div class="clock">
@@ -25,6 +31,7 @@ import { onBeforeUnmount, onMounted, ref } from 'vue'
 
 const emit = defineEmits<{
     (e: 'toggle-sidebar'): void
+    (e: 'open-modal', modal: 'terminal'): void
 }>()
 
 const currentTime = ref('')
@@ -39,10 +46,16 @@ const updateClock = () => {
 }
 
 const topics = [
-    { label: 'Files', icon: new URL('../assets/files.svg', import.meta.url).href },
-    { label: 'Builds', icon: new URL('../assets/prompt.svg', import.meta.url).href },
-    { label: 'Status', icon: new URL('../assets/stats.svg', import.meta.url).href },
+    { label: 'Files', icon: new URL('../assets/files.svg', import.meta.url).href, action: 'files' },
+    { label: 'Cmd', icon: new URL('../assets/prompt.svg', import.meta.url).href, action: 'terminal' },
+    { label: 'Status', icon: new URL('../assets/stats.svg', import.meta.url).href, action: 'status' },
 ]
+
+const handleTopicClick = (action: string) => {
+    if (action === 'terminal') {
+        emit('open-modal', 'terminal')
+    }
+}
 
 onMounted(() => {
     updateClock()
@@ -103,6 +116,13 @@ onBeforeUnmount(() => {
     align-items: center;
     gap: 8px;
     border: 2px solid #9CA3AF;
+    background: #C0C0C0;
+    cursor: pointer;
+    font: inherit;
+}
+
+.topic:hover {
+    filter: brightness(1.04);
 }
 
 .topics {

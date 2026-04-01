@@ -8,7 +8,7 @@
       <ul class="navbar__list">
         <li><a href="/">PORTFOLIO</a></li>
         <li>
-          <button type="button" class="navbar__link-button" @click="emit('open-modal', 'about')">
+          <button type="button" class="navbar__link-button" @click="emit('open-modal', 'terminal')">
             TERMINAL
           </button>
         </li>
@@ -33,7 +33,7 @@
 
 <script lang="ts" setup>
 const emit = defineEmits<{
-  (e: 'open-modal', modal: 'about' | 'contact'): void
+  (e: 'open-modal', modal: 'about' | 'contact' | 'terminal'): void
 }>()
 </script>
 

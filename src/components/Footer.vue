@@ -32,7 +32,7 @@ import { useI18n } from 'vue-i18n'
 
 const emit = defineEmits<{
     (e: 'toggle-sidebar'): void
-    (e: 'open-modal', modal: 'terminal'): void
+    (e: 'open-modal', modal: 'terminal' | 'my-work'): void
 }>()
 
 const { t, locale } = useI18n()
@@ -50,10 +50,13 @@ const updateClock = () => {
 const topics = computed(() => [
     { label: t('footer.files'), icon: new URL('../assets/files.svg', import.meta.url).href, action: 'files' },
     { label: t('footer.cmd'), icon: new URL('../assets/prompt.svg', import.meta.url).href, action: 'terminal' },
-    { label: t('footer.status'), icon: new URL('../assets/stats.svg', import.meta.url).href, action: 'status' },
 ])
 
 const handleTopicClick = (action: string) => {
+    if (action === 'files') {
+        emit('open-modal', 'my-work')
+    }
+
     if (action === 'terminal') {
         emit('open-modal', 'terminal')
     }

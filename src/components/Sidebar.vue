@@ -16,7 +16,7 @@
             href="#"
             class="sidebar__link"
             :class="{ 'sidebar__link--active': selectedItem === index }"
-            @click.prevent="selectedItem = index"
+            @click.prevent="handleSelect(index, item.action)"
           >
             <img
               v-if="item.icon"
@@ -24,6 +24,7 @@
               :alt="item.label"
               class="sidebar__icon"
             >
+            <span v-else class="sidebar__glyph" aria-hidden="true">{{ item.glyph }}</span>
             <p class="sidebar__text">{{ item.label }}</p>
           </a>
         </li>
@@ -38,13 +39,22 @@ import { useI18n } from 'vue-i18n'
 
 const selectedItem = ref(0)
 const { t } = useI18n()
+const emit = defineEmits<{
+  (e: 'open-modal', modal: 'media-player'): void
+}>()
 
 const items = computed(() => [
-  { label: t('sidebar.desktop'), icon: new URL('../assets/computer.svg', import.meta.url).href },
-  // { label: 'Projects', icon: new URL('../assets/code.svg', import.meta.url).href },
-  // { label: 'Skills', icon: new URL('../assets/skills.svg', import.meta.url).href },
-  // { label: 'Contact', icon: new URL('../assets/contact.svg', import.meta.url).href },
+  { label: t('sidebar.desktop'), icon: new URL('../assets/computer.svg', import.meta.url).href, glyph: '', action: 'desktop' },
+  { label: t('sidebar.player'), icon: '', glyph: '<>', action: 'media-player' },
 ])
+
+const handleSelect = (index: number, action: string) => {
+  selectedItem.value = index
+
+  if (action === 'media-player') {
+    emit('open-modal', 'media-player')
+  }
+}
 </script>
 
 <style scoped>
@@ -124,6 +134,18 @@ const items = computed(() => [
   width: 28px;
   height: 28px;
   filter: brightness(0) saturate(100%);
+}
+
+.sidebar__glyph {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  font-family: var(--font-secondary);
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1;
 }
 
 .sidebar__link:hover {

@@ -30,7 +30,7 @@
           <UiButton @click="emit('openMyWork')">
             {{ t('welcome.ctaPrimary') }}
           </UiButton>
-          <UiButton variant="secondary" @click="emit('close')">
+          <UiButton variant="secondary" @click="emit('openAbout')">
             {{ t('welcome.ctaSecondary') }}
           </UiButton>
         </div>
@@ -51,6 +51,7 @@ defineProps<{
 const emit = defineEmits<{
   (e: 'close'): void
   (e: 'openMyWork'): void
+  (e: 'openAbout'): void
 }>()
 
 const { t } = useI18n()

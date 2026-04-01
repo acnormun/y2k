@@ -21,6 +21,7 @@ export const messages = {
       aria: 'Sidebar',
       navAria: 'Sidebar navigation',
       desktop: 'DESKTOP',
+      player: 'PLAYER',
     },
     desktop: {
       aria: 'Desktop',
@@ -33,7 +34,6 @@ export const messages = {
       start: 'START',
       files: 'Files',
       cmd: 'Cmd',
-      status: 'Status',
     },
     modal: {
       windowActions: 'Window actions',
@@ -63,6 +63,14 @@ export const messages = {
       address: 'Address',
       go: 'GO',
       path: 'C:\\Portfolio\\My_Projects\\Active_Developments',
+      tooltipLabel: 'Project details',
+      projects: {
+        healthMemo: 'Decision-support app for healthcare rulings in compliance with CNJ regulation.',
+        missingPearsons:
+          'Real-time search app for missing-person records in Mato Grosso, including a map with each person’s last seen location.',
+        starTrek:
+          'Pure HTML and CSS app built to practice those skills, with responsive design and a polished front-end structure.',
+      },
     },
     about: {
       title: 'IDENTITY: ANA CLARA NORONHA',
@@ -181,6 +189,31 @@ export const messages = {
         snake: 'snake',
       },
     },
+    player: {
+      title: 'WINDOWS MEDIA PLAYER // RETRO MIX',
+      aria: 'Retro media player',
+      statusPlaying: 'PLAYING',
+      statusPaused: 'IDLE',
+      shellLabel: 'AUDIO_MATRIX',
+      nowPlayingLabel: 'NOW: {track}',
+      playlistCount: 'QUEUE: {count}',
+      prev: 'prev',
+      play: 'play',
+      pause: 'pause',
+      next: 'next',
+      equalizer: 'equalizer',
+      nowPlaying: 'now playing',
+      shuffle: 'shuffle',
+      skip: 'skip',
+      playlist: 'playlist',
+      tracks: {
+        neonMemory: { title: 'Neon Memory', artist: 'Ana Noronha' },
+        disketteDreams: { title: 'Diskette Dreams', artist: 'Pixel Signal' },
+        crtGlow: { title: 'CRT Glow', artist: 'Future Static' },
+        pixelHeart: { title: 'Pixel Heartbeat', artist: 'Retro Current' },
+        startMenuSunset: { title: 'Start Menu Sunset', artist: 'Midnight Boot' },
+      },
+    },
   },
   'pt-BR': {
     language: {
@@ -204,6 +237,7 @@ export const messages = {
       aria: 'Barra lateral',
       navAria: 'Navegacao da barra lateral',
       desktop: 'DESKTOP',
+      player: 'PLAYER',
     },
     desktop: {
       aria: 'Desktop',
@@ -216,7 +250,6 @@ export const messages = {
       start: 'INICIAR',
       files: 'Arquivos',
       cmd: 'Cmd',
-      status: 'Status',
     },
     modal: {
       windowActions: 'Acoes da janela',
@@ -246,6 +279,15 @@ export const messages = {
       address: 'Endereco',
       go: 'IR',
       path: 'C:\\Portfolio\\Meus_Projetos\\Desenvolvimentos_Ativos',
+      tooltipLabel: 'Detalhes do projeto',
+      projects: {
+        healthMemo:
+          'Aplicativo de auxilio às decisoes de saude em conformidade com a regulamentacao do CNJ.',
+        missingPearsons:
+          'Aplicativo de pesquisa em tempo real por registro de pessoas desaparecidas em Mato Grosso, com mapa dos ultimos locais em que cada pessoa foi vista.',
+        starTrek:
+          'App em HTML e CSS puro que usei para treinar essas habilidades, com design responsivo e uma interface bem acabada.',
+      },
     },
     about: {
       title: 'IDENTIDADE: ANA CLARA NORONHA',
@@ -364,6 +406,31 @@ export const messages = {
         snake: 'snake',
       },
     },
+    player: {
+      title: 'WINDOWS MEDIA PLAYER // MIX RETRO',
+      aria: 'Media player retrô',
+      statusPlaying: 'TOCANDO',
+      statusPaused: 'PARADO',
+      shellLabel: 'MATRIZ_DE_AUDIO',
+      nowPlayingLabel: 'AGORA: {track}',
+      playlistCount: 'FILA: {count}',
+      prev: 'ant',
+      play: 'play',
+      pause: 'pause',
+      next: 'prox',
+      equalizer: 'equalizador',
+      nowPlaying: 'tocando agora',
+      shuffle: 'aleatorio',
+      skip: 'pular',
+      playlist: 'playlist',
+      tracks: {
+        neonMemory: { title: 'Memoria Neon', artist: 'Ana Noronha' },
+        disketteDreams: { title: 'Sonhos de Disquete', artist: 'Pixel Signal' },
+        crtGlow: { title: 'Brilho de CRT', artist: 'Future Static' },
+        pixelHeart: { title: 'Batida Pixel', artist: 'Retro Current' },
+        startMenuSunset: { title: 'Por do Sol do Menu Iniciar', artist: 'Midnight Boot' },
+      },
+    },
   },
   es: {
     language: {
@@ -387,6 +454,7 @@ export const messages = {
       aria: 'Barra lateral',
       navAria: 'Navegacion de la barra lateral',
       desktop: 'DESKTOP',
+      player: 'PLAYER',
     },
     desktop: {
       aria: 'Escritorio',
@@ -399,7 +467,6 @@ export const messages = {
       start: 'INICIO',
       files: 'Archivos',
       cmd: 'Cmd',
-      status: 'Estado',
     },
     modal: {
       windowActions: 'Acciones de ventana',
@@ -429,6 +496,15 @@ export const messages = {
       address: 'Direccion',
       go: 'IR',
       path: 'C:\\Portfolio\\Mis_Proyectos\\Desarrollos_Activos',
+      tooltipLabel: 'Detalles del proyecto',
+      projects: {
+        healthMemo:
+          'Aplicacion de apoyo a decisiones de salud conforme a la regulacion del CNJ.',
+        missingPearsons:
+          'Aplicacion de busqueda en tiempo real de registros de personas desaparecidas en Mato Grosso, con mapa de los ultimos puntos donde fueron vistas.',
+        starTrek:
+          'App en HTML y CSS puro que hice para practicar esas habilidades, con diseno responsivo y una interfaz bien cuidada.',
+      },
     },
     about: {
       title: 'IDENTIDAD: ANA CLARA NORONHA',
@@ -545,6 +621,31 @@ export const messages = {
         myWork: 'mis-proyectos',
         contact: 'contacto',
         snake: 'snake',
+      },
+    },
+    player: {
+      title: 'WINDOWS MEDIA PLAYER // MIX RETRO',
+      aria: 'Reproductor retro',
+      statusPlaying: 'REPRODUCIENDO',
+      statusPaused: 'EN ESPERA',
+      shellLabel: 'MATRIZ_DE_AUDIO',
+      nowPlayingLabel: 'AHORA: {track}',
+      playlistCount: 'COLA: {count}',
+      prev: 'prev',
+      play: 'play',
+      pause: 'pause',
+      next: 'sig',
+      equalizer: 'ecualizador',
+      nowPlaying: 'sonando ahora',
+      shuffle: 'mezclar',
+      skip: 'saltar',
+      playlist: 'playlist',
+      tracks: {
+        neonMemory: { title: 'Memoria Neon', artist: 'Ana Noronha' },
+        disketteDreams: { title: 'Suenos de Disquete', artist: 'Pixel Signal' },
+        crtGlow: { title: 'Brillo CRT', artist: 'Future Static' },
+        pixelHeart: { title: 'Latido Pixel', artist: 'Retro Current' },
+        startMenuSunset: { title: 'Atardecer del Menu Inicio', artist: 'Midnight Boot' },
       },
     },
   },

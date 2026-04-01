@@ -6,7 +6,7 @@
       @toggle-dark-mode="isDarkMode = !isDarkMode"
     />
     <div class="main">
-      <Sidebar v-if="isSidebarOpen" />
+      <Sidebar v-if="isSidebarOpen" @open-modal="openModal" />
       <RouterView v-slot="{ Component }">
         <component :is="Component" @open-modal="openModal" />
       </RouterView>
@@ -18,6 +18,7 @@
     <InitialModal
       :is-open="activeModal === 'welcome'"
       @open-my-work="openModal('my-work')"
+      @open-about="openModal('about')"
       @close="closeModal"
     />
     <MyWork
@@ -34,6 +35,10 @@
     />
     <Snake
       :is-open="activeModal === 'snake'"
+      @close="closeModal"
+    />
+    <MediaPlayer
+      :is-open="activeModal === 'media-player'"
       @close="closeModal"
     />
     <Terminal
@@ -54,6 +59,7 @@ import MyWork from './components/MyWork.vue';
 import Navbar from './components/Navbar.vue';
 import Sidebar from './components/Sidebar.vue';
 import Snake from './components/Snake.vue';
+import MediaPlayer from './components/MediaPlayer.vue';
 import Terminal from './components/Terminal.vue';
 import InitialModal from './components/InitialModal.vue';
 import { LOCALE_STORAGE_KEY } from './i18n';
@@ -62,11 +68,11 @@ const MOBILE_BREAKPOINT = 720
 const THEME_STORAGE_KEY = 'portfolio-dark-mode'
 const isSidebarOpen = ref(true)
 const isTerminalOpen = ref(false)
-const activeModal = ref<'welcome' | 'my-work' | 'about' | 'contact' | 'snake' | null>('welcome')
+const activeModal = ref<'welcome' | 'my-work' | 'about' | 'contact' | 'snake' | 'media-player' | null>('welcome')
 const isDarkMode = ref(false)
 const { locale } = useI18n()
 
-const openModal = (modal: 'welcome' | 'my-work' | 'about' | 'contact' | 'snake' | 'terminal') => {
+const openModal = (modal: 'welcome' | 'my-work' | 'about' | 'contact' | 'snake' | 'media-player' | 'terminal') => {
   if (modal === 'terminal') {
     isTerminalOpen.value = true
     return

@@ -17,11 +17,16 @@
       :is-open="activeModal === 'my-work'"
       @close="closeModal"
     />
+    <AboutMe
+      :is-open="activeModal === 'about'"
+      @close="closeModal"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import AboutMe from './components/AboutMe.vue';
 import Footer from './components/Footer.vue';
 import MyWork from './components/MyWork.vue';
 import Navbar from './components/Navbar.vue';
@@ -29,9 +34,9 @@ import Sidebar from './components/Sidebar.vue';
 import InitialModal from './components/InitialModal.vue';
 
 const isSidebarOpen = ref(true)
-const activeModal = ref<'welcome' | 'my-work' | null>('welcome')
+const activeModal = ref<'welcome' | 'my-work' | 'about' | null>('welcome')
 
-const openModal = (modal: 'welcome' | 'my-work') => {
+const openModal = (modal: 'welcome' | 'my-work' | 'about') => {
   activeModal.value = modal
 }
 

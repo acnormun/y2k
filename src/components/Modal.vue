@@ -78,15 +78,19 @@ const emit = defineEmits<{
     place-items: center;
     background: rgba(17, 17, 17, 0.18);
     padding: 1.5rem;
+    overflow: auto;
 }
 
 .modal {
     width: min(960px, 100%);
     min-height: 360px;
+    max-height: calc(100dvh - 3rem);
     border: 2px solid #000;
     background: #fefee5;
     box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.18);
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 .modal__header {
@@ -184,8 +188,10 @@ const emit = defineEmits<{
 }
 
 .modal__body {
-    min-height: 308px;
+    flex: 1;
+    min-height: 0;
     padding: 1rem;
+    overflow: auto;
 }
 
 .modal__empty {
@@ -239,8 +245,7 @@ const emit = defineEmits<{
     .modal {
         width: 100%;
         min-height: calc(100dvh - 1.5rem);
-        display: flex;
-        flex-direction: column;
+        max-height: calc(100dvh - 1.5rem);
         box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.16);
     }
 
@@ -253,9 +258,6 @@ const emit = defineEmits<{
     }
 
     .modal__body {
-        flex: 1;
-        min-height: 0;
-        overflow: auto;
         padding: 0.75rem;
     }
 

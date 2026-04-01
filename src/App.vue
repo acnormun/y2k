@@ -25,6 +25,10 @@
       :is-open="activeModal === 'contact'"
       @close="closeModal"
     />
+    <Snake
+      :is-open="activeModal === 'snake'"
+      @close="closeModal"
+    />
   </div>
 </template>
 
@@ -36,12 +40,13 @@ import Footer from './components/Footer.vue';
 import MyWork from './components/MyWork.vue';
 import Navbar from './components/Navbar.vue';
 import Sidebar from './components/Sidebar.vue';
+import Snake from './components/Snake.vue';
 import InitialModal from './components/InitialModal.vue';
 
 const isSidebarOpen = ref(true)
-const activeModal = ref<'welcome' | 'my-work' | 'about' | 'contact' | null>('welcome')
+const activeModal = ref<'welcome' | 'my-work' | 'about' | 'contact' | 'snake' | null>('welcome')
 
-const openModal = (modal: 'welcome' | 'my-work' | 'about' | 'contact') => {
+const openModal = (modal: 'welcome' | 'my-work' | 'about' | 'contact' | 'snake') => {
   activeModal.value = modal
 }
 

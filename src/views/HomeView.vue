@@ -30,12 +30,12 @@ type DesktopEntry = {
 const desktopItems = ref<DesktopEntry[]>([
   { id: 'my-work', label: 'My Work', kind: 'folder', accent: '#d400d4', x: 28, y: 28 },
   { id: 'about', label: 'About.txt', kind: 'file', accent: '#45b649', x: 28, y: 144 },
-  { id: 'brain-dump', label: 'Brain_Dump.exe', kind: 'app', accent: '#00a8e8', x: 28, y: 260 },
+  { id: 'snake', label: 'Snake_Game.exe', kind: 'app', accent: '#00a8e8', x: 28, y: 260 },
   { id: 'mail', label: 'Mail.sh', kind: 'script', accent: '#ff3b6b', x: 28, y: 376 },
 ])
 
 const emit = defineEmits<{
-  (e: 'open-modal', modal: 'welcome' | 'my-work' | 'about' | 'contact'): void
+  (e: 'open-modal', modal: 'welcome' | 'my-work' | 'about' | 'contact' | 'snake'): void
 }>()
 
 const updateItemPosition = (id: string, position: { x: number; y: number }) => {
@@ -54,6 +54,11 @@ const openItem = (id: string) => {
 
   if (id === 'about') {
     emit('open-modal', 'about')
+    return
+  }
+
+  if (id === 'snake') {
+    emit('open-modal', 'snake')
     return
   }
 

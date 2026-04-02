@@ -265,7 +265,11 @@ watch(locale, () => {
   top: 5.5rem;
   right: 1.25rem;
   z-index: 55;
+  display: flex;
+  flex-direction: column;
   width: min(430px, calc(100vw - 1.5rem));
+  height: clamp(420px, 72dvh, 620px);
+  max-height: calc(100dvh - 7rem);
   border: 3px solid #050505;
   background: #111707;
   box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.28);
@@ -336,6 +340,8 @@ watch(locale, () => {
 .terminal-window__body {
   display: flex;
   flex-direction: column;
+  flex: 1;
+  min-height: 0;
   gap: 0.9rem;
   padding: 1rem;
   background:
@@ -343,7 +349,8 @@ watch(locale, () => {
 }
 
 .terminal-window__output {
-  max-height: 270px;
+  flex: 1;
+  min-height: 0;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -473,6 +480,8 @@ watch(locale, () => {
     left: 0.75rem;
     bottom: 4.75rem;
     width: auto;
+    height: auto;
+    max-height: calc(100dvh - 5.75rem);
   }
 
   .terminal-window__folders {
@@ -480,7 +489,7 @@ watch(locale, () => {
   }
 
   .terminal-window__output {
-    max-height: 220px;
+    flex: 1;
   }
 }
 </style>

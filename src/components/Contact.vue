@@ -272,7 +272,7 @@ watch(
 .contact-terminal {
   display: grid;
   grid-template-columns: 160px minmax(0, 1fr) 170px;
-  min-height: 580px;
+  height: min(580px, calc(100dvh - 13rem));
   border: 2px solid #000;
   background: #fbf9db;
   overflow: hidden;
@@ -665,7 +665,7 @@ watch(
 @media (max-width: 920px) {
   .contact-terminal {
     grid-template-columns: 140px minmax(0, 1fr);
-    min-height: 0;
+    height: min(700px, calc(100dvh - 13rem));
   }
 
   .contact-terminal__profile {
@@ -685,7 +685,9 @@ watch(
 @media (max-width: 680px) {
   .contact-terminal {
     grid-template-columns: 1fr;
+    height: auto;
     min-height: 0;
+    max-height: none;
     gap: 0;
   }
 
@@ -716,6 +718,7 @@ watch(
 
   .contact-terminal__main {
     min-height: 380px;
+    max-height: 55dvh;
   }
 
   .contact-terminal__composer-row {

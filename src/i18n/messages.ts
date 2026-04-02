@@ -27,6 +27,7 @@ export const messages = {
       aria: 'Desktop',
       myWork: 'My Work',
       about: 'About.txt',
+      resume: 'Resume.doc',
       snake: 'Snake_Game.exe',
       mail: 'Mail.sh',
     },
@@ -93,6 +94,119 @@ export const messages = {
         python: 'PYTHON',
         figma: 'FIGMA',
       },
+    },
+    resume: {
+      title: 'C:\\Portfolio\\Resume.doc',
+      aria: 'Resume document viewer',
+      name: 'ANA CLARA NORONHA',
+      roleLine:
+        'AI Software Engineer | Fullstack Developer | Generative AI, RAG and Legal Automation | Vue.js, React, Node, Python | Public Sector',
+      menu: ['File', 'Edit', 'View', 'Insert', 'Format', 'Tools', 'Table', 'Window', 'Help'],
+      savePdf: 'Save as PDF',
+      sections: {
+        summary: 'EXECUTIVE_SUMMARY',
+        capabilities: 'SYSTEM_CAPABILITIES',
+        experience: 'EXECUTION_LOG',
+        education: 'EDUCATION',
+        notes: 'FIELD_NOTES',
+      },
+      summary:
+        'Software Engineer specialized in fullstack AI-driven applications, focused on legal automation and secure deployment for institutional environments. Currently leading an internal legal intelligence platform at the Court of Justice of Mato Grosso, integrating semantic jurisprudence retrieval, document drafting, and automated generative reporting through custom Python pipelines and local LLM inference via Ollama, with no dependency on external APIs.',
+      stackLabel: 'Tech stack:',
+      capabilities: [
+        { icon: 'AI', title: 'AI ENGINEERING' },
+        { icon: 'RAG', title: 'RAG // LLMs' },
+        { icon: 'PY', title: 'PYTHON // FASTAPI' },
+        { icon: 'VUE', title: 'VUE.JS // TS' },
+      ],
+      experiences: [
+        {
+          company: 'TRIBUNAL DE JUSTICE OF MATO GROSSO',
+          role: 'AI Software Engineer',
+          period: 'MAY 2025 - PRESENT',
+          location: 'Cuiaba, MT',
+          summary:
+            'Leading the design and development of an internal legal intelligence platform for appellate court workflows, with emphasis on document automation, jurisprudence retrieval, and generative reporting.',
+          highlights: [
+            'Architected a fullstack platform combining semantic jurisprudence search, document draft generation, and automated reporting through custom Python pipelines.',
+            'Deployed local LLM inference via Ollama with low latency, strong privacy guarantees, and secure offline operation.',
+            'Automated conflict-of-interest analysis and draft correction, reducing case processing time by 50 to 70% and removing about 5 manual hours weekly for a team handling around 110 appellate cases.',
+            'Led integration, testing, and deployment under strict internal security and institutional compliance policies.',
+          ],
+          stack: 'Python, FastAPI, Ollama, Vue.js, TypeScript, Tailwind CSS, Vite, PostgreSQL',
+        },
+        {
+          company: 'WENI BY VTEX',
+          role: 'Front-end Engineer',
+          period: 'NOV 2023 - MAY 2025',
+          location: 'Maceio, Alagoas, Brazil',
+          summary:
+            'Frontend engineer in an AI-driven communication and automation company, contributing to complex web applications integrated with the VTEX ecosystem.',
+          highlights: [
+            'Built and deployed modern applications with Vue.js 3, React.js, TypeScript, Tailwind CSS, Webpack, and Vite.',
+            'Implemented Redux and Pinia state management patterns to improve predictability and data traceability.',
+            'Helped establish frontend quality standards through code review and consistent engineering practices.',
+            'Raised automated test coverage to 100%, reducing production regression risk across multiple projects.',
+          ],
+          stack: 'Vue.js 3, React.js, TypeScript, JavaScript, Tailwind CSS, Pinia, Redux, Webpack, Vite',
+        },
+        {
+          company: 'PUBLIC DEFENDERS OFFICE OF THE STATE OF MINAS GERAIS',
+          role: 'Front-end Developer',
+          period: 'AUG 2022 - NOV 2023',
+          location: 'Belo Horizonte, Minas Gerais, Brazil',
+          summary:
+            'Frontend developer for public justice systems, focused on performance, accessibility, and maintainable interfaces for broad public usage.',
+          highlights: [
+            'Designed and maintained high-performance frontends in Vue.js and TypeScript with strong usability and cross-device compatibility.',
+            'Standardized action-based state management with VueX and Pinia for more consistent application behavior.',
+            'Participated in software architecture discussions and implemented technical improvements for scalability.',
+            'Contributed to the modernization of critical systems used by the population of Minas Gerais.',
+          ],
+          stack: 'Vue.js, TypeScript, JavaScript, VueX, Pinia, Jest, Git',
+        },
+        {
+          company: 'CNH INDUSTRIAL',
+          role: 'Purchase Intern',
+          period: 'NOV 2021 - JUN 2022',
+          location: 'Contagem, MG',
+          summary:
+            'Procurement internship supporting acquisition routines, supplier analysis, and documentation in a multinational industrial environment.',
+          highlights: [
+            'Conducted market research and evaluated supplier proposals to support procurement decisions.',
+            'Assisted in purchase order processing, inventory monitoring, and delivery follow-up.',
+            'Participated in supplier negotiations, cost analysis, and contract documentation support.',
+          ],
+          stack: 'Microsoft Excel, Microsoft Office, Kanban',
+        },
+      ],
+      education: [
+        {
+          institution: 'The Johns Hopkins University',
+          program: 'Specialization, Applied Machine Learning',
+          period: 'May 2025 - December 2025',
+        },
+        {
+          institution: 'Pontificia Universidade Catolica do Rio de Janeiro',
+          program: 'Postgraduate Education, Full-Stack Development',
+          period: 'October 2024 - July 2025',
+        },
+        {
+          institution: 'Universidade Federal de Minas Gerais',
+          program: 'Bachelor of Mechanical Engineering',
+          period: '2019 - 2024',
+        },
+        {
+          institution: 'Universidade Federal de Sao Joao del-Rei - UFSJ',
+          program: 'Bachelor of Engineering - BE, Mechatronics, Robotics and Control and Automation Engineering',
+          period: 'July 2017 - January 2019',
+        },
+      ],
+      notes: [
+        'Building legal AI with local LLM inference, semantic retrieval, and document automation in offline institutional environments.',
+        'Previous frontend work spans scalable product teams, public justice systems, accessibility, and design-system implementation.',
+        'Motivated by responsible AI in high-impact environments where security, privacy, and measurable operational gains all matter.',
+      ],
     },
     contact: {
       title: 'CONTACT_NODES',
@@ -169,6 +283,7 @@ export const messages = {
       shortcuts: {
         myWork: 'MY_WORK/',
         about: 'ABOUT/',
+        resume: 'RESUME/',
         contact: 'CONTACT/',
         snake: 'SNAKE/',
       },
@@ -181,14 +296,15 @@ export const messages = {
         hint: 'type help to list available commands',
       },
       responses: {
-        help: 'available: help, ls, dir, clear, exit, open about, open my-work, open contact, run snake',
-        directories: 'directories -> MY_WORK/ ABOUT/ CONTACT/ SNAKE/',
+        help: 'available: help, ls, dir, clear, exit, open about, open resume, open my-work, open contact, run snake',
+        directories: 'directories -> MY_WORK/ ABOUT/ RESUME/ CONTACT/ SNAKE/',
         closing: 'closing terminal session...',
         opening: 'opening {label}...',
         unknown: 'unknown command: {command}',
       },
       labels: {
         about: 'about',
+        resume: 'resume',
         myWork: 'my-work',
         contact: 'contact',
         snake: 'snake',
@@ -248,6 +364,7 @@ export const messages = {
       aria: 'Desktop',
       myWork: 'Meus Trabalhos',
       about: 'Sobre.txt',
+      resume: 'Resume.doc',
       snake: 'Snake_Game.exe',
       mail: 'Contato.sh',
     },
@@ -315,6 +432,119 @@ export const messages = {
         python: 'PYTHON',
         figma: 'FIGMA',
       },
+    },
+    resume: {
+      title: 'C:\\Portfolio\\Resume.doc',
+      aria: 'Visualizador do curriculo',
+      name: 'ANA CLARA NORONHA',
+      roleLine:
+        'Engenheira de Software em IA | Desenvolvedora Fullstack | IA Generativa, RAG e Automacao Juridica | Vue.js, React, Node, Python | Setor Publico',
+      menu: ['Arquivo', 'Editar', 'Visualizar', 'Inserir', 'Formatar', 'Ferramentas', 'Tabela', 'Janela', 'Ajuda'],
+      savePdf: 'Salvar em PDF',
+      sections: {
+        summary: 'RESUMO_EXECUTIVO',
+        capabilities: 'CAPACIDADES_DO_SISTEMA',
+        experience: 'LOG_DE_EXECUCAO',
+        education: 'FORMACAO',
+        notes: 'ANOTACOES_DE_CAMPO',
+      },
+      summary:
+        'Engenheira de Software especializada em aplicacoes fullstack guiadas por IA, com foco em automacao juridica e deploy seguro em ambientes institucionais. Atualmente lidero o desenvolvimento de uma plataforma interna de inteligencia juridica no Tribunal de Justica de Mato Grosso, integrando recuperacao semantica de jurisprudencia, redacao assistida de documentos e relatorios generativos automatizados por meio de pipelines customizados em Python e inferencia local com Ollama, sem dependencia de APIs externas.',
+      stackLabel: 'Stack:',
+      capabilities: [
+        { icon: 'AI', title: 'ENGENHARIA DE IA' },
+        { icon: 'RAG', title: 'RAG // LLMs' },
+        { icon: 'PY', title: 'PYTHON // FASTAPI' },
+        { icon: 'VUE', title: 'VUE.JS // TS' },
+      ],
+      experiences: [
+        {
+          company: 'TRIBUNAL DE JUSTICA DE MATO GROSSO',
+          role: 'AI Software Engineer',
+          period: 'MAI 2025 - ATUAL',
+          location: 'Cuiaba, MT',
+          summary:
+            'Liderando o desenho e o desenvolvimento de uma plataforma interna de inteligencia juridica para fluxos de trabalho em segundo grau, com foco em automacao documental, recuperacao de jurisprudencia e relatorios generativos.',
+          highlights: [
+            'Arquitetei uma plataforma fullstack que combina busca semantica de jurisprudencia, geracao de minutas e relatorios automatizados com pipelines customizados em Python.',
+            'Implantei inferencia local de LLMs com Ollama, garantindo baixa latencia, privacidade de dados e operacao segura em ambiente institucional offline.',
+            'Automatizei analise de conflito de interesses e correcao de minutas, reduzindo o tempo de processamento dos casos entre 50% e 70% e eliminando cerca de 5 horas manuais por semana em uma equipe que lida com aproximadamente 110 processos por semana.',
+            'Conduzi integracao, testes e deploy sob politicas rigorosas de seguranca interna e conformidade institucional.',
+          ],
+          stack: 'Python, FastAPI, Ollama, Vue.js, TypeScript, Tailwind CSS, Vite, PostgreSQL',
+        },
+        {
+          company: 'WENI BY VTEX',
+          role: 'Front-end Engineer',
+          period: 'NOV 2023 - MAI 2025',
+          location: 'Maceio, Alagoas, Brasil',
+          summary:
+            'Engenheira frontend em uma empresa de comunicacao e automacao com IA, contribuindo para aplicacoes web complexas integradas ao ecossistema VTEX.',
+          highlights: [
+            'Desenvolvi e publiquei aplicacoes modernas com Vue.js 3, React.js, TypeScript, Tailwind CSS, Webpack e Vite.',
+            'Implementei padroes de gerenciamento de estado com Redux e Pinia para aumentar previsibilidade e rastreabilidade dos dados.',
+            'Contribui para padroes de qualidade frontend com code review e boas praticas consistentes de engenharia.',
+            'Elevei a cobertura de testes automatizados para 100%, reduzindo o risco de regressao em producao em diferentes projetos.',
+          ],
+          stack: 'Vue.js 3, React.js, TypeScript, JavaScript, Tailwind CSS, Pinia, Redux, Webpack, Vite',
+        },
+        {
+          company: 'DEFENSORIA PUBLICA DO ESTADO DE MINAS GERAIS',
+          role: 'Front-end Developer',
+          period: 'AGO 2022 - NOV 2023',
+          location: 'Belo Horizonte, Minas Gerais, Brasil',
+          summary:
+            'Desenvolvedora frontend para sistemas da justica publica, com foco em performance, acessibilidade e interfaces sustentaveis para uso em larga escala.',
+          highlights: [
+            'Desenhei e mantive frontends de alta performance em Vue.js e TypeScript com forte foco em usabilidade e compatibilidade entre dispositivos.',
+            'Padronizei praticas de gerenciamento de estado com VueX e Pinia para tornar o comportamento das aplicacoes mais consistente.',
+            'Participei de discussoes de arquitetura e implementei melhorias tecnicas relevantes para escalabilidade.',
+            'Contribui para a modernizacao de sistemas criticos usados pela populacao de Minas Gerais.',
+          ],
+          stack: 'Vue.js, TypeScript, JavaScript, VueX, Pinia, Jest, Git',
+        },
+        {
+          company: 'CNH INDUSTRIAL',
+          role: 'Purchase Intern',
+          period: 'NOV 2021 - JUN 2022',
+          location: 'Contagem, MG',
+          summary:
+            'Estagio em compras apoiando rotinas de aquisicao, analise de fornecedores e documentacao em um ambiente industrial multinacional.',
+          highlights: [
+            'Realizei pesquisa de mercado e avaliacao de propostas de fornecedores para apoiar decisoes de compras.',
+            'Auxiliei no processamento de pedidos, monitoramento de estoque e acompanhamento de entregas.',
+            'Participei de negociacoes com fornecedores, analise de custos e apoio documental de contratos.',
+          ],
+          stack: 'Microsoft Excel, Microsoft Office, Kanban',
+        },
+      ],
+      education: [
+        {
+          institution: 'The Johns Hopkins University',
+          program: 'Especializacao, Applied Machine Learning',
+          period: 'Maio 2025 - Dezembro 2025',
+        },
+        {
+          institution: 'Pontificia Universidade Catolica do Rio de Janeiro',
+          program: 'Pos-graduacao, Full-Stack Development',
+          period: 'Outubro 2024 - Julho 2025',
+        },
+        {
+          institution: 'Universidade Federal de Minas Gerais',
+          program: 'Bacharelado em Engenharia Mecanica',
+          period: '2019 - 2024',
+        },
+        {
+          institution: 'Universidade Federal de Sao Joao del-Rei - UFSJ',
+          program: 'Bacharelado em Engenharia, Mecatronica, Robotica e Engenharia de Controle e Automacao',
+          period: 'Julho 2017 - Janeiro 2019',
+        },
+      ],
+      notes: [
+        'Construindo IA juridica com inferencia local de LLMs, recuperacao semantica e automacao documental em ambientes institucionais offline.',
+        'A experiencia anterior em frontend abrange times de produto escalaveis, sistemas de justica publica, acessibilidade e implementacao de design systems.',
+        'Movida pela aplicacao responsavel de IA em ambientes de alto impacto, onde seguranca, privacidade e ganhos operacionais mensuraveis importam ao mesmo tempo.',
+      ],
     },
     contact: {
       title: 'NODOS_DE_CONTATO',
@@ -391,6 +621,7 @@ export const messages = {
       shortcuts: {
         myWork: 'PROJETOS/',
         about: 'SOBRE/',
+        resume: 'RESUME/',
         contact: 'CONTATO/',
         snake: 'SNAKE/',
       },
@@ -403,14 +634,15 @@ export const messages = {
         hint: 'digite help para listar os comandos disponiveis',
       },
       responses: {
-        help: 'disponiveis: help, ls, dir, clear, exit, open about, open my-work, open contact, run snake',
-        directories: 'diretorios -> PROJETOS/ SOBRE/ CONTATO/ SNAKE/',
+        help: 'disponiveis: help, ls, dir, clear, exit, open about, open resume, open my-work, open contact, run snake',
+        directories: 'diretorios -> PROJETOS/ SOBRE/ RESUME/ CONTATO/ SNAKE/',
         closing: 'fechando sessao do terminal...',
         opening: 'abrindo {label}...',
         unknown: 'comando desconhecido: {command}',
       },
       labels: {
         about: 'sobre',
+        resume: 'resume',
         myWork: 'meus-trabalhos',
         contact: 'contato',
         snake: 'snake',
@@ -470,6 +702,7 @@ export const messages = {
       aria: 'Escritorio',
       myWork: 'Mis Proyectos',
       about: 'SobreMi.txt',
+      resume: 'Resume.doc',
       snake: 'Snake_Game.exe',
       mail: 'Contacto.sh',
     },
@@ -537,6 +770,119 @@ export const messages = {
         python: 'PYTHON',
         figma: 'FIGMA',
       },
+    },
+    resume: {
+      title: 'C:\\Portfolio\\Resume.doc',
+      aria: 'Visor del curriculum',
+      name: 'ANA CLARA NORONHA',
+      roleLine:
+        'Ingeniera de Software en IA | Desarrolladora Fullstack | IA Generativa, RAG y Automatizacion Legal | Vue.js, React, Node, Python | Sector Publico',
+      menu: ['Archivo', 'Editar', 'Ver', 'Insertar', 'Formato', 'Herramientas', 'Tabla', 'Ventana', 'Ayuda'],
+      savePdf: 'Guardar en PDF',
+      sections: {
+        summary: 'RESUMEN_EJECUTIVO',
+        capabilities: 'CAPACIDADES_DEL_SISTEMA',
+        experience: 'REGISTRO_DE_EJECUCION',
+        education: 'EDUCACION',
+        notes: 'NOTAS_DE_CAMPO',
+      },
+      summary:
+        'Ingeniera de Software especializada en aplicaciones fullstack impulsadas por IA, enfocada en automatizacion legal y despliegue seguro en entornos institucionales. Actualmente lidero el desarrollo de una plataforma interna de inteligencia juridica en el Tribunal de Justicia de Mato Grosso, integrando recuperacion semantica de jurisprudencia, redaccion asistida de documentos e informes generativos automatizados mediante pipelines personalizados en Python e inferencia local con Ollama, sin dependencia de APIs externas.',
+      stackLabel: 'Stack:',
+      capabilities: [
+        { icon: 'AI', title: 'INGENIERIA DE IA' },
+        { icon: 'RAG', title: 'RAG // LLMs' },
+        { icon: 'PY', title: 'PYTHON // FASTAPI' },
+        { icon: 'VUE', title: 'VUE.JS // TS' },
+      ],
+      experiences: [
+        {
+          company: 'TRIBUNAL DE JUSTICIA DE MATO GROSSO',
+          role: 'AI Software Engineer',
+          period: 'MAY 2025 - ACTUALIDAD',
+          location: 'Cuiaba, MT',
+          summary:
+            'Liderando el diseno y desarrollo de una plataforma interna de inteligencia juridica para flujos del tribunal de apelacion, enfocada en automatizacion documental, recuperacion de jurisprudencia e informes generativos.',
+          highlights: [
+            'Arquitecte una plataforma fullstack que combina busqueda semantica de jurisprudencia, generacion de borradores y reportes automatizados con pipelines personalizados en Python.',
+            'Implemente inferencia local de LLMs con Ollama, garantizando baja latencia, privacidad de datos y operacion segura en un entorno institucional offline.',
+            'Automaticé analisis de conflicto de intereses y correccion de borradores, reduciendo el tiempo de procesamiento entre 50% y 70% y eliminando alrededor de 5 horas manuales por semana para un equipo que maneja aproximadamente 110 casos semanales.',
+            'Lidere integracion, pruebas y despliegue bajo estrictas politicas internas de seguridad y cumplimiento institucional.',
+          ],
+          stack: 'Python, FastAPI, Ollama, Vue.js, TypeScript, Tailwind CSS, Vite, PostgreSQL',
+        },
+        {
+          company: 'WENI BY VTEX',
+          role: 'Front-end Engineer',
+          period: 'NOV 2023 - MAY 2025',
+          location: 'Maceio, Alagoas, Brasil',
+          summary:
+            'Ingeniera frontend en una empresa de comunicacion y automatizacion con IA, contribuyendo a aplicaciones web complejas integradas al ecosistema VTEX.',
+          highlights: [
+            'Desarrolle y publique aplicaciones modernas con Vue.js 3, React.js, TypeScript, Tailwind CSS, Webpack y Vite.',
+            'Implemente patrones de manejo de estado con Redux y Pinia para mejorar la previsibilidad y la trazabilidad de los datos.',
+            'Contribui a los estandares de calidad frontend mediante code review y practicas consistentes de ingenieria.',
+            'Eleve la cobertura de pruebas automatizadas al 100%, reduciendo el riesgo de regresiones en produccion.',
+          ],
+          stack: 'Vue.js 3, React.js, TypeScript, JavaScript, Tailwind CSS, Pinia, Redux, Webpack, Vite',
+        },
+        {
+          company: 'DEFENSORIA PUBLICA DEL ESTADO DE MINAS GERAIS',
+          role: 'Front-end Developer',
+          period: 'AGO 2022 - NOV 2023',
+          location: 'Belo Horizonte, Minas Gerais, Brasil',
+          summary:
+            'Desarrolladora frontend para sistemas de justicia publica, con foco en rendimiento, accesibilidad e interfaces mantenibles para uso masivo.',
+          highlights: [
+            'Disene y mantuve frontends de alto rendimiento en Vue.js y TypeScript con fuerte enfoque en usabilidad y compatibilidad entre dispositivos.',
+            'Estandarice practicas de manejo de estado con VueX y Pinia para un comportamiento mas consistente de las aplicaciones.',
+            'Participe en discusiones de arquitectura e implemente mejoras tecnicas relevantes para escalabilidad.',
+            'Contribui a la modernizacion de sistemas criticos utilizados por la poblacion de Minas Gerais.',
+          ],
+          stack: 'Vue.js, TypeScript, JavaScript, VueX, Pinia, Jest, Git',
+        },
+        {
+          company: 'CNH INDUSTRIAL',
+          role: 'Purchase Intern',
+          period: 'NOV 2021 - JUN 2022',
+          location: 'Contagem, MG',
+          summary:
+            'Pasantia en compras apoyando rutinas de adquisicion, analisis de proveedores y documentacion en un entorno industrial multinacional.',
+          highlights: [
+            'Realice investigacion de mercado y evaluacion de propuestas de proveedores para apoyar decisiones de compra.',
+            'Apoye procesamiento de ordenes, monitoreo de inventario y seguimiento de entregas.',
+            'Participe en negociaciones con proveedores, analisis de costos y soporte documental de contratos.',
+          ],
+          stack: 'Microsoft Excel, Microsoft Office, Kanban',
+        },
+      ],
+      education: [
+        {
+          institution: 'The Johns Hopkins University',
+          program: 'Especializacion, Applied Machine Learning',
+          period: 'Mayo 2025 - Diciembre 2025',
+        },
+        {
+          institution: 'Pontificia Universidade Catolica do Rio de Janeiro',
+          program: 'Posgrado, Full-Stack Development',
+          period: 'Octubre 2024 - Julio 2025',
+        },
+        {
+          institution: 'Universidade Federal de Minas Gerais',
+          program: 'Licenciatura en Ingenieria Mecanica',
+          period: '2019 - 2024',
+        },
+        {
+          institution: 'Universidade Federal de Sao Joao del-Rei - UFSJ',
+          program: 'Licenciatura en Ingenieria, Mecatronica, Robotica e Ingenieria de Control y Automatizacion',
+          period: 'Julio 2017 - Enero 2019',
+        },
+      ],
+      notes: [
+        'Construyendo IA legal con inferencia local de LLMs, recuperacion semantica y automatizacion documental en entornos institucionales offline.',
+        'La experiencia previa en frontend abarca equipos de producto escalables, sistemas de justicia publica, accesibilidad e implementacion de design systems.',
+        'Motivada por la aplicacion responsable de IA en entornos de alto impacto, donde seguridad, privacidad y ganancias operativas medibles importan al mismo tiempo.',
+      ],
     },
     contact: {
       title: 'NODOS_DE_CONTACTO',
@@ -613,6 +959,7 @@ export const messages = {
       shortcuts: {
         myWork: 'PROYECTOS/',
         about: 'SOBRE/',
+        resume: 'RESUME/',
         contact: 'CONTACTO/',
         snake: 'SNAKE/',
       },
@@ -625,14 +972,15 @@ export const messages = {
         hint: 'escribe help para listar los comandos disponibles',
       },
       responses: {
-        help: 'disponibles: help, ls, dir, clear, exit, open about, open my-work, open contact, run snake',
-        directories: 'directorios -> PROYECTOS/ SOBRE/ CONTACTO/ SNAKE/',
+        help: 'disponibles: help, ls, dir, clear, exit, open about, open resume, open my-work, open contact, run snake',
+        directories: 'directorios -> PROYECTOS/ SOBRE/ RESUME/ CONTACTO/ SNAKE/',
         closing: 'cerrando sesion del terminal...',
         opening: 'abriendo {label}...',
         unknown: 'comando desconocido: {command}',
       },
       labels: {
         about: 'sobre',
+        resume: 'resume',
         myWork: 'mis-proyectos',
         contact: 'contacto',
         snake: 'snake',

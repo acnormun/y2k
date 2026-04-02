@@ -8,15 +8,15 @@
     <nav class="sidebar__nav" :aria-label="t('sidebar.navAria')">
       <ul class="sidebar__list">
         <li
-          v-for="(item, index) in items"
+          v-for="item in items"
           :key="item.label"
           class="sidebar__item"
         >
           <a
             href="#"
             class="sidebar__link"
-            :class="{ 'sidebar__link--active': selectedItem === index }"
-            @click.prevent="handleSelect(index, item.action)"
+            :class="{ 'sidebar__link--active': activeSection === item.section }"
+            @click.prevent="handleSelect(item.action)"
           >
             <img
               v-if="item.icon"
@@ -34,23 +34,24 @@
 </template>
 
 <script setup lang="ts" name="Sidebar">
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-const selectedItem = ref(0)
+defineProps<{
+  activeSection: 'desktop' | 'player'
+}>()
+
 const { t } = useI18n()
 const emit = defineEmits<{
   (e: 'open-modal', modal: 'media-player'): void
 }>()
 
 const items = computed(() => [
-  { label: t('sidebar.desktop'), icon: new URL('../assets/computer.svg', import.meta.url).href, glyph: '', action: 'desktop' },
-  { label: t('sidebar.player'), icon: '', glyph: '<>', action: 'media-player' },
+  { label: t('sidebar.desktop'), icon: new URL('../assets/computer.svg', import.meta.url).href, glyph: '', action: 'desktop', section: 'desktop' as const },
+  { label: t('sidebar.player'), icon: '', glyph: '<>', action: 'media-player', section: 'player' as const },
 ])
 
-const handleSelect = (index: number, action: string) => {
-  selectedItem.value = index
-
+const handleSelect = (action: string) => {
   if (action === 'media-player') {
     emit('open-modal', 'media-player')
   }

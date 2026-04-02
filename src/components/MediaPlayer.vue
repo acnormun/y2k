@@ -290,6 +290,7 @@ const shuffleTrack = () => {
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
+  cursor: pointer;
 }
 
 .media-player__transport-button--play {
@@ -607,6 +608,7 @@ const shuffleTrack = () => {
   background: rgba(245, 255, 228, 0.72);
   color: #294017;
   text-align: left;
+  cursor: pointer;
 }
 
 .media-player__track-copy {

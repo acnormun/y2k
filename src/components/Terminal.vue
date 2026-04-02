@@ -73,7 +73,7 @@
 import { computed, nextTick, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-type ModalTarget = 'welcome' | 'my-work' | 'about' | 'contact' | 'snake'
+type ModalTarget = 'welcome' | 'my-work' | 'about' | 'resume' | 'contact' | 'snake'
 type LineTone = 'boot' | 'success' | 'command' | 'info' | 'error' | 'accent'
 type TerminalLine = {
   id: number
@@ -106,6 +106,7 @@ const bootLines = (): TerminalLine[] => [
 const shortcuts = computed(() => [
   { label: t('terminal.shortcuts.myWork'), command: 'open my-work' },
   { label: t('terminal.shortcuts.about'), command: 'open about' },
+  { label: t('terminal.shortcuts.resume'), command: 'open resume' },
   { label: t('terminal.shortcuts.contact'), command: 'open contact' },
   { label: t('terminal.shortcuts.snake'), command: 'run snake' },
 ])
@@ -178,6 +179,11 @@ const executeCommand = (rawCommand: string) => {
 
   if (normalized === 'open about') {
     openSection('about', t('terminal.labels.about'))
+    return
+  }
+
+  if (normalized === 'open resume' || normalized === 'open cv' || normalized === 'open doc') {
+    openSection('resume', t('terminal.labels.resume'))
     return
   }
 

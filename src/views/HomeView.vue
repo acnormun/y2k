@@ -32,8 +32,9 @@ const { t } = useI18n()
 const desktopItems = ref<DesktopEntry[]>([
   { id: 'my-work', kind: 'folder', accent: '#d400d4', x: 28, y: 28 },
   { id: 'about', kind: 'file', accent: '#45b649', x: 28, y: 144 },
-  { id: 'snake', kind: 'app', accent: '#00a8e8', x: 28, y: 260 },
-  { id: 'mail', kind: 'script', accent: '#ff3b6b', x: 28, y: 376 },
+  { id: 'resume', kind: 'file', accent: '#ff27d5', x: 28, y: 260 },
+  { id: 'snake', kind: 'app', accent: '#00a8e8', x: 28, y: 376 },
+  { id: 'mail', kind: 'script', accent: '#ff3b6b', x: 28, y: 492 },
 ])
 
 const localizedDesktopItems = computed(() =>
@@ -44,6 +45,8 @@ const localizedDesktopItems = computed(() =>
         ? t('desktop.myWork')
         : item.id === 'about'
           ? t('desktop.about')
+          : item.id === 'resume'
+            ? t('desktop.resume')
           : item.id === 'snake'
             ? t('desktop.snake')
             : t('desktop.mail'),
@@ -51,7 +54,7 @@ const localizedDesktopItems = computed(() =>
 )
 
 const emit = defineEmits<{
-  (e: 'open-modal', modal: 'welcome' | 'my-work' | 'about' | 'contact' | 'snake'): void
+  (e: 'open-modal', modal: 'welcome' | 'my-work' | 'about' | 'resume' | 'contact' | 'snake'): void
 }>()
 
 const updateItemPosition = (id: string, position: { x: number; y: number }) => {
@@ -70,6 +73,11 @@ const openItem = (id: string) => {
 
   if (id === 'about') {
     emit('open-modal', 'about')
+    return
+  }
+
+  if (id === 'resume') {
+    emit('open-modal', 'resume')
     return
   }
 

@@ -72,6 +72,7 @@ export const messages = {
       tooltipLabel: 'Project details',
       projects: {
         healthMemo: 'Decision-support app for healthcare rulings in compliance with CNJ regulation.',
+        promptShield: 'Web app with real-time scanning and alerting for malicious inputs, built with Python.',
         missingPearsons:
           'Real-time search app for missing-person records in Mato Grosso, including a map with each person’s last seen location.',
         starTrek:
@@ -410,6 +411,7 @@ export const messages = {
       projects: {
         healthMemo:
           'Aplicativo de auxilio às decisoes de saude em conformidade com a regulamentacao do CNJ.',
+        promptShield: 'Aplicativo web com escaneamento em tempo real e alertas para inputs maliciosos, construído com Python.',
         missingPearsons:
           'Aplicativo de pesquisa em tempo real por registro de pessoas desaparecidas em Mato Grosso, com mapa dos ultimos locais em que cada pessoa foi vista.',
         starTrek:

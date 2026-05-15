@@ -66,6 +66,13 @@ const projects = computed(() => [
     description: t('myWork.projects.healthMemo'),
   },
   {
+    name: 'Prompt_shield.py',
+    variant: 'python',
+    badge: 'PY',
+    link: 'https://injection-detector.up.railway.app/',
+    description: t('myWork.projects.promptShield'),
+  },
+  {
     name: 'Missing_pearsons_registry.exe',
     variant: 'exe',
     badge: 'EXE',

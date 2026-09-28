@@ -16,12 +16,14 @@ export const messages = {
       actionsAria: 'Actions',
       openSettings: 'Open language settings',
       toggleMode: 'Toggle dark mode',
+      toggle3d: 'Toggle 3D effects',
     },
     sidebar: {
       aria: 'Sidebar',
       navAria: 'Sidebar navigation',
       desktop: 'DESKTOP',
       player: 'PLAYER',
+      saver: '3D_PIPES',
     },
     desktop: {
       aria: 'Desktop',
@@ -287,6 +289,7 @@ export const messages = {
         resume: 'RESUME/',
         contact: 'CONTACT/',
         snake: 'SNAKE/',
+        pipes: 'PIPES.SCR/',
       },
       boot: {
         loading: 'loading portfolio_assets...',
@@ -297,11 +300,13 @@ export const messages = {
         hint: 'type help to list available commands',
       },
       responses: {
-        help: 'available: help, ls, dir, clear, exit, open about, open resume, open my-work, open contact, run snake',
-        directories: 'directories -> MY_WORK/ ABOUT/ RESUME/ CONTACT/ SNAKE/',
+        help: 'available: help, ls, dir, clear, exit, open about, open resume, open my-work, open contact, run snake, run pipes, reboot',
+        directories: 'directories -> MY_WORK/ ABOUT/ RESUME/ CONTACT/ SNAKE/ PIPES.SCR',
         closing: 'closing terminal session...',
         opening: 'opening {label}...',
         unknown: 'unknown command: {command}',
+        screensaver: 'launching 3D_PIPES.SCR... move the mouse to wake up',
+        reboot: 'rebooting NORMUN OS...',
       },
       labels: {
         about: 'about',
@@ -310,6 +315,16 @@ export const messages = {
         contact: 'contact',
         snake: 'snake',
       },
+    },
+    boot: {
+      kicker: 'STARTING UP',
+      edition: 'Millennium Edition',
+      skip: 'click or press any key to skip',
+      loading: 'Loading NORMUN OS...',
+    },
+    screensaver: {
+      aria: '3D Pipes screensaver',
+      hint: 'move the mouse or press any key to return',
     },
     player: {
       title: 'WINDOWS MEDIA PLAYER // RETRO MIX',
@@ -354,12 +369,14 @@ export const messages = {
       actionsAria: 'Acoes',
       openSettings: 'Abrir configuracoes de idioma',
       toggleMode: 'Alternar modo escuro',
+      toggle3d: 'Alternar efeitos 3D',
     },
     sidebar: {
       aria: 'Barra lateral',
       navAria: 'Navegacao da barra lateral',
       desktop: 'DESKTOP',
       player: 'PLAYER',
+      saver: '3D_PIPES',
     },
     desktop: {
       aria: 'Desktop',
@@ -626,6 +643,7 @@ export const messages = {
         resume: 'RESUME/',
         contact: 'CONTATO/',
         snake: 'SNAKE/',
+        pipes: 'PIPES.SCR/',
       },
       boot: {
         loading: 'carregando portfolio_assets...',
@@ -636,11 +654,13 @@ export const messages = {
         hint: 'digite help para listar os comandos disponiveis',
       },
       responses: {
-        help: 'disponiveis: help, ls, dir, clear, exit, open about, open resume, open my-work, open contact, run snake',
-        directories: 'diretorios -> PROJETOS/ SOBRE/ RESUME/ CONTATO/ SNAKE/',
+        help: 'disponiveis: help, ls, dir, clear, exit, open about, open resume, open my-work, open contact, run snake, run pipes, reboot',
+        directories: 'diretorios -> PROJETOS/ SOBRE/ RESUME/ CONTATO/ SNAKE/ PIPES.SCR',
         closing: 'fechando sessao do terminal...',
         opening: 'abrindo {label}...',
         unknown: 'comando desconhecido: {command}',
+        screensaver: 'iniciando 3D_PIPES.SCR... mova o mouse para voltar',
+        reboot: 'reiniciando NORMUN OS...',
       },
       labels: {
         about: 'sobre',
@@ -649,6 +669,16 @@ export const messages = {
         contact: 'contato',
         snake: 'snake',
       },
+    },
+    boot: {
+      kicker: 'INICIANDO',
+      edition: 'Edição Millennium',
+      skip: 'clique ou pressione qualquer tecla para pular',
+      loading: 'Carregando NORMUN OS...',
+    },
+    screensaver: {
+      aria: 'Protetor de tela 3D Pipes',
+      hint: 'mova o mouse ou pressione qualquer tecla para voltar',
     },
     player: {
       title: 'WINDOWS MEDIA PLAYER // MIX RETRO',
@@ -693,12 +723,14 @@ export const messages = {
       actionsAria: 'Acciones',
       openSettings: 'Abrir configuracion de idioma',
       toggleMode: 'Cambiar modo oscuro',
+      toggle3d: 'Alternar efectos 3D',
     },
     sidebar: {
       aria: 'Barra lateral',
       navAria: 'Navegacion de la barra lateral',
       desktop: 'DESKTOP',
       player: 'PLAYER',
+      saver: '3D_PIPES',
     },
     desktop: {
       aria: 'Escritorio',
@@ -964,6 +996,7 @@ export const messages = {
         resume: 'RESUME/',
         contact: 'CONTACTO/',
         snake: 'SNAKE/',
+        pipes: 'PIPES.SCR/',
       },
       boot: {
         loading: 'cargando portfolio_assets...',
@@ -974,11 +1007,13 @@ export const messages = {
         hint: 'escribe help para listar los comandos disponibles',
       },
       responses: {
-        help: 'disponibles: help, ls, dir, clear, exit, open about, open resume, open my-work, open contact, run snake',
-        directories: 'directorios -> PROYECTOS/ SOBRE/ RESUME/ CONTACTO/ SNAKE/',
+        help: 'disponibles: help, ls, dir, clear, exit, open about, open resume, open my-work, open contact, run snake, run pipes, reboot',
+        directories: 'directorios -> PROYECTOS/ SOBRE/ RESUME/ CONTACTO/ SNAKE/ PIPES.SCR',
         closing: 'cerrando sesion del terminal...',
         opening: 'abriendo {label}...',
         unknown: 'comando desconocido: {command}',
+        screensaver: 'iniciando 3D_PIPES.SCR... mueve el mouse para volver',
+        reboot: 'reiniciando NORMUN OS...',
       },
       labels: {
         about: 'sobre',
@@ -987,6 +1022,16 @@ export const messages = {
         contact: 'contacto',
         snake: 'snake',
       },
+    },
+    boot: {
+      kicker: 'INICIANDO',
+      edition: 'Edición Millennium',
+      skip: 'haz clic o presiona cualquier tecla para saltar',
+      loading: 'Cargando NORMUN OS...',
+    },
+    screensaver: {
+      aria: 'Protector de pantalla 3D Pipes',
+      hint: 'mueve el mouse o presiona cualquier tecla para volver',
     },
     player: {
       title: 'WINDOWS MEDIA PLAYER // MIX RETRO',

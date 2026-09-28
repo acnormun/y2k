@@ -48,6 +48,18 @@
       </div>
 
       <button
+        class="icon-button icon-button--text"
+        :class="{ 'icon-button--active': isSceneEnabled }"
+        type="button"
+        :aria-label="t('navbar.toggle3d')"
+        :aria-pressed="isSceneEnabled"
+        :title="t('navbar.toggle3d')"
+        @click="emit('toggle-scene')"
+      >
+        3D
+      </button>
+
+      <button
         class="icon-button"
         :class="{ 'icon-button--active': isDarkMode }"
         type="button"
@@ -68,10 +80,12 @@ import type { AppLocale } from '../i18n'
 const emit = defineEmits<{
   (e: 'open-modal', modal: 'about' | 'contact' | 'terminal'): void
   (e: 'toggle-dark-mode'): void
+  (e: 'toggle-scene'): void
 }>()
 
 defineProps<{
   isDarkMode: boolean
+  isSceneEnabled: boolean
 }>()
 
 const { t, locale } = useI18n()
@@ -210,6 +224,19 @@ onBeforeUnmount(() => {
 
 .icon-button--active img {
   filter: brightness(0) invert(1);
+}
+
+.icon-button--text {
+  font-family: var(--font-tertiary);
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #111;
+}
+
+.icon-button--text.icon-button--active {
+  background: linear-gradient(135deg, #ff66d9 0%, #b300b3 55%, #00ccff 100%);
+  color: #fffef6;
+  text-shadow: 1px 1px 0 #000;
 }
 
 .icon-button img {

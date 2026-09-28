@@ -26,7 +26,7 @@
           @click="redirectTo(project.link)"
         >
           <span class="file-manager__icon-frame" :class="`file-manager__icon-frame--${project.variant}`">
-            <span class="file-manager__icon-card">
+            <span v-tilt="{ max: 18, scale: 1.08 }" class="file-manager__icon-card">
               <span class="file-manager__icon-badge">{{ project.badge }}</span>
             </span>
           </span>
@@ -45,6 +45,7 @@
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import Modal from './Modal.vue'
+import { vTilt } from '../directives/tilt'
 
 defineProps<{
   isOpen: boolean
@@ -211,6 +212,7 @@ function redirectTo(link: string) {
 }
 
 .file-manager__icon-card {
+  position: relative;
   display: grid;
   place-items: center;
   width: 76px;

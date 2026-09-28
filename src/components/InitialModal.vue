@@ -11,7 +11,7 @@
     @close="emit('close')"
   >
     <section class="initial-modal">
-      <div class="initial-modal__media">
+      <div v-tilt="{ max: 14 }" class="initial-modal__media">
         <img :src="heroImage" :alt="t('welcome.portraitAlt')" class="initial-modal__portrait">
         <span class="initial-modal__tag">{{ t('welcome.liveTag') }}</span>
       </div>
@@ -43,6 +43,7 @@
 import { useI18n } from 'vue-i18n'
 import Modal from './Modal.vue';
 import UiButton from './UiButton.vue';
+import { vTilt } from '../directives/tilt';
 
 defineProps<{
   isOpen: boolean

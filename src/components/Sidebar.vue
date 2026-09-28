@@ -43,17 +43,22 @@ defineProps<{
 
 const { t } = useI18n()
 const emit = defineEmits<{
-  (e: 'open-modal', modal: 'media-player'): void
+  (e: 'open-modal', modal: 'media-player' | 'screensaver'): void
 }>()
 
 const items = computed(() => [
   { label: t('sidebar.desktop'), icon: new URL('../assets/computer.svg', import.meta.url).href, glyph: '', action: 'desktop', section: 'desktop' as const },
   { label: t('sidebar.player'), icon: '', glyph: '<>', action: 'media-player', section: 'player' as const },
+  { label: t('sidebar.saver'), icon: '', glyph: '✦', action: 'screensaver', section: 'saver' as const },
 ])
 
 const handleSelect = (action: string) => {
   if (action === 'media-player') {
     emit('open-modal', 'media-player')
+  }
+
+  if (action === 'screensaver') {
+    emit('open-modal', 'screensaver')
   }
 }
 </script>
@@ -202,17 +207,24 @@ const handleSelect = (action: string) => {
   .sidebar__list {
     flex-direction: row;
     justify-content: flex-end;
-    gap: 0.75rem;
+    gap: 0.4rem;
   }
 
   .sidebar__item {
+    flex: 1 1 0;
     width: auto;
+    min-width: 0;
+    max-width: 96px;
   }
 
   .sidebar__link {
     min-height: 0;
-    min-width: 88px;
-    padding: 0.55rem;
+    min-width: 0;
+    padding: 0.5rem 0.25rem;
+  }
+
+  .sidebar__link .sidebar__text {
+    font-size: 0.72rem;
   }
 }
 </style>

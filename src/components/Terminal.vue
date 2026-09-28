@@ -73,7 +73,7 @@
 import { computed, nextTick, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-type ModalTarget = 'welcome' | 'my-work' | 'about' | 'resume' | 'contact' | 'snake'
+type ModalTarget = 'welcome' | 'my-work' | 'about' | 'resume' | 'contact' | 'snake' | 'screensaver' | 'reboot'
 type LineTone = 'boot' | 'success' | 'command' | 'info' | 'error' | 'accent'
 type TerminalLine = {
   id: number
@@ -109,6 +109,7 @@ const shortcuts = computed(() => [
   { label: t('terminal.shortcuts.resume'), command: 'open resume' },
   { label: t('terminal.shortcuts.contact'), command: 'open contact' },
   { label: t('terminal.shortcuts.snake'), command: 'run snake' },
+  { label: t('terminal.shortcuts.pipes'), command: 'run pipes' },
 ])
 
 const command = ref('')
@@ -199,6 +200,18 @@ const executeCommand = (rawCommand: string) => {
 
   if (normalized === 'run snake' || normalized === 'open snake' || normalized === 'play snake') {
     openSection('snake', t('terminal.labels.snake'))
+    return
+  }
+
+  if (normalized === 'run pipes' || normalized === 'pipes' || normalized === 'screensaver') {
+    pushLine(t('terminal.responses.screensaver'), 'accent')
+    emit('open-modal', 'screensaver')
+    return
+  }
+
+  if (normalized === 'reboot' || normalized === 'restart') {
+    pushLine(t('terminal.responses.reboot'), 'accent')
+    emit('open-modal', 'reboot')
     return
   }
 

@@ -1,4 +1,5 @@
 <template>
+  <Transition name="window3d" appear>
     <div v-if="isOpen" class="modal-overlay" @click.self="emit('close')">
         <article class="modal">
             <header class="modal__header">
@@ -40,6 +41,7 @@
             </footer>
         </article>
     </div>
+  </Transition>
 </template>
 
 <script lang="ts" setup name="Modal">
@@ -94,6 +96,8 @@ const emit = defineEmits<{
 }
 
 .modal__header {
+    position: relative;
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -102,6 +106,16 @@ const emit = defineEmits<{
     border-bottom: 2px solid #000;
     background: linear-gradient(90deg, #b300b3 0%, #ff66d9 100%);
     color: #fff;
+}
+
+.modal__header::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(105deg, transparent 38%, rgba(255, 255, 255, 0.5) 48%, rgba(255, 255, 255, 0) 58%);
+    transform: translateX(-120%);
+    animation: modal-sheen 6s ease-in-out 1s infinite;
+    pointer-events: none;
 }
 
 .modal__title-wrap {
@@ -234,6 +248,74 @@ const emit = defineEmits<{
 .modal__status-lock {
     font-size: 0.9rem;
     line-height: 1;
+}
+
+/* 3D "window pop": the overlay animation spans the longest child animation so Vue waits for it. */
+.window3d-enter-active {
+    animation: window3d-overlay 480ms ease both;
+}
+
+.window3d-leave-active {
+    animation: window3d-overlay 240ms ease reverse both;
+}
+
+.window3d-enter-active .modal {
+    animation: window3d-open 480ms cubic-bezier(0.2, 0.9, 0.25, 1.12) both;
+}
+
+.window3d-leave-active .modal {
+    animation: window3d-close 240ms ease-in both;
+}
+
+@keyframes window3d-overlay {
+    from {
+        background-color: rgba(17, 17, 17, 0);
+    }
+}
+
+@keyframes window3d-open {
+    0% {
+        opacity: 0;
+        transform: perspective(1400px) translate3d(0, 48px, -320px) rotateX(26deg) rotateY(-14deg) scale(0.86);
+        filter: hue-rotate(120deg) saturate(2);
+    }
+
+    55% {
+        opacity: 1;
+        filter: none;
+    }
+
+    100% {
+        transform: none;
+    }
+}
+
+@keyframes window3d-close {
+    to {
+        opacity: 0;
+        transform: perspective(1400px) translate3d(0, 28px, -220px) rotateX(-18deg) scale(0.9);
+    }
+}
+
+@keyframes modal-sheen {
+    0%,
+    72% {
+        transform: translateX(-120%);
+    }
+
+    100% {
+        transform: translateX(120%);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .window3d-enter-active,
+    .window3d-leave-active,
+    .window3d-enter-active .modal,
+    .window3d-leave-active .modal,
+    .modal__header::after {
+        animation: none;
+    }
 }
 
 @media (max-width: 720px) {

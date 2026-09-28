@@ -16,6 +16,17 @@ This project presents Ana Clara Noronha inside a navigable "operating system" st
 - Snake mini-game with keyboard controls, pause, restart, and high score tracking.
 - Responsive layout for desktop and mobile devices.
 
+## 3D Effects (Three.js)
+
+- **3D wallpaper**: a liquid-chrome iridescent blob with orbiting rings, floating floppy disks, CDs, sparkle stars, hearts and butterflies over a synthwave grid with a striped retro sun.
+- **Two moods**: a pastel chrome scene in light mode and a neon synthwave night scene in dark mode, switched with a CRT glitch.
+- **Post-processing**: bloom, chromatic aberration, scanlines, a rolling refresh band, film grain and a tinted vignette.
+- **Interactive**: pointer parallax; click the blob for a shockwave, click objects to spin them, click the floor for a neon ripple and anywhere else for a sparkle burst.
+- **Boot screen**: a "NORMUN OS Millennium Edition" boot with BIOS lines and a waving 3D logo (once per session, skippable).
+- **3D Pipes screensaver**: a tribute to the Windows 9x classic, including the rare teapot joint. Starts after 90s idle, from the `3D_PIPES` sidebar item or with `run pipes` in the terminal.
+- **CSS 3D touches**: windows open in perspective, holographic tilt on the portrait and project icons, spinning desktop icons.
+- **Performance and accessibility**: three.js is lazy-loaded in its own chunk, quality drops on touch/small screens, rendering pauses in background tabs, the `3D` navbar button turns the scene off (persisted), and `prefers-reduced-motion` gets a static frame with no boot or idle screensaver.
+
 ## Tech Stack
 
 - Vue 3
@@ -23,6 +34,7 @@ This project presents Ana Clara Noronha inside a navigable "operating system" st
 - Vite
 - Vue Router
 - Vue I18n
+- Three.js
 
 ## Getting Started
 
@@ -92,7 +104,9 @@ yarn preview
 src/
   assets/        visual files and icons
   components/    UI building blocks and modal windows
+  directives/    reusable template directives (holographic tilt)
   i18n/          language configuration and translations
+  three/         Three.js scenes: wallpaper, boot logo, pipes screensaver, shaders
   router/        application routes
   views/         main screens
 ```

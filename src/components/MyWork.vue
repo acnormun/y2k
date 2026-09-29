@@ -3,7 +3,7 @@
     :title="t('myWork.title')"
     :icon="windowIcon"
     :isOpen="isOpen"
-    @close="emit('close')"
+    @close="emit('close')" @minimize="emit('minimize')"
   >
     <section class="file-manager" :aria-label="t('myWork.aria')">
       <header class="file-manager__toolbar">
@@ -53,6 +53,7 @@ defineProps<{
 
 const emit = defineEmits<{
   (e: 'close'): void
+  (e: 'minimize'): void
 }>()
 
 const { t } = useI18n()

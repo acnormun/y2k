@@ -117,8 +117,8 @@ export class BootScene {
           varying vec2 vUv;
           void main() {
             float d = length(vUv - 0.5) * 2.0;
-            float glow = pow(max(1.0 - d, 0.0), 2.4);
-            gl_FragColor = vec4(mix(vec3(0.2, 0.05, 0.9), vec3(1.0, 0.1, 0.8), glow) * glow * uOpacity, 1.0);
+            float glow = pow(max(1.0 - d, 0.0), 2.4) * uOpacity;
+            gl_FragColor = vec4(mix(vec3(0.2, 0.05, 0.9), vec3(1.0, 0.1, 0.8), glow) * glow, glow);
             #include <colorspace_fragment>
           }
         `,

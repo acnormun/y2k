@@ -15,7 +15,7 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import type { PipesScene } from '../three/pipesScene'
+import type { BubblesScene } from '../three/bubblesScene'
 import { detectQuality, isWebGLAvailable } from '../three/utils'
 
 const emit = defineEmits<{
@@ -28,7 +28,7 @@ const MOVE_THRESHOLD_PX = 14
 
 const { t } = useI18n()
 const sceneRef = ref<HTMLElement | null>(null)
-let scene: PipesScene | null = null
+let scene: BubblesScene | null = null
 let isUnmounted = false
 let armedAt = 0
 let origin: { x: number; y: number } | null = null
@@ -74,10 +74,10 @@ onMounted(async () => {
   }
 
   try {
-    const { PipesScene } = await import('../three/pipesScene')
+    const { BubblesScene } = await import('../three/bubblesScene')
 
     if (!isUnmounted && sceneRef.value) {
-      scene = new PipesScene(sceneRef.value, detectQuality())
+      scene = new BubblesScene(sceneRef.value, detectQuality())
     }
   } catch (error) {
     console.warn('[y2k] screensaver disabled:', error)
@@ -97,7 +97,6 @@ onBeforeUnmount(() => {
   position: fixed;
   inset: 0;
   z-index: 190;
-  background: #000;
   cursor: none;
   animation: screensaver-in 600ms ease both;
 }
@@ -107,7 +106,7 @@ onBeforeUnmount(() => {
   inset: 0;
 }
 
-.screensaver__scene :deep(.pipes-scene__canvas) {
+.screensaver__scene :deep(.bubbles-scene__canvas) {
   display: block;
   width: 100%;
   height: 100%;

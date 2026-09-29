@@ -8,7 +8,7 @@
     cpuUsage="2.4%"
     ramUsage="4.1GB/16GB"
     :shellLabel="t('welcome.shellLabel')"
-    @close="emit('close')"
+    @close="emit('close')" @minimize="emit('minimize')"
   >
     <section class="initial-modal">
       <div v-tilt="{ max: 14 }" class="initial-modal__media">
@@ -51,6 +51,7 @@ defineProps<{
 
 const emit = defineEmits<{
   (e: 'close'): void
+  (e: 'minimize'): void
   (e: 'openMyWork'): void
   (e: 'openAbout'): void
 }>()

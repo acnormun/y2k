@@ -8,7 +8,7 @@
     :cpu-usage="`SCORE: ${score.toString().padStart(3, '0')}`"
     :ram-usage="`HIGH: ${highScore.toString().padStart(3, '0')}`"
     :shell-label="shellLabel"
-    @close="emit('close')"
+    @close="emit('close')" @minimize="emit('minimize')"
   >
     <section class="snake-modal" :aria-label="t('snake.aria')">
       <div class="snake-modal__shell">
@@ -101,6 +101,7 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   (e: 'close'): void
+  (e: 'minimize'): void
 }>()
 
 const { t } = useI18n()

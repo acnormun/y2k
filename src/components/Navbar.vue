@@ -8,12 +8,12 @@
       <ul class="navbar__list">
         <li><a href="/">{{ t('navbar.home') }}</a></li>
         <li>
-          <button type="button" class="navbar__link-button" @click="emit('open-modal', 'terminal')">
+          <button type="button" class="navbar__link-button" @click="desktop.openTerminal()">
             {{ t('navbar.terminal') }}
           </button>
         </li>
         <li>
-          <button type="button" class="navbar__link-button" @click="emit('open-modal', 'contact')">
+          <button type="button" class="navbar__link-button" @click="desktop.openWindow('contact')">
             {{ t('navbar.contact') }}
           </button>
         </li>
@@ -49,22 +49,23 @@
 
       <button
         class="icon-button icon-button--text"
-        :class="{ 'icon-button--active': isSceneEnabled }"
+        :class="{ 'icon-button--active': desktop.state.isSceneEnabled }"
         type="button"
         :aria-label="t('navbar.toggle3d')"
-        :aria-pressed="isSceneEnabled"
+        :aria-pressed="desktop.state.isSceneEnabled"
         :title="t('navbar.toggle3d')"
-        @click="emit('toggle-scene')"
+        @click="desktop.toggleScene()"
       >
         3D
       </button>
 
       <button
         class="icon-button"
-        :class="{ 'icon-button--active': isDarkMode }"
+        :class="{ 'icon-button--active': desktop.state.isDarkMode }"
         type="button"
         :aria-label="t('navbar.toggleMode')"
-        @click="emit('toggle-dark-mode')"
+        :aria-pressed="desktop.state.isDarkMode"
+        @click="desktop.toggleDarkMode()"
       >
         <img src="../assets/on.svg" alt="">
       </button>
@@ -76,17 +77,7 @@
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import type { AppLocale } from '../i18n'
-
-const emit = defineEmits<{
-  (e: 'open-modal', modal: 'about' | 'contact' | 'terminal'): void
-  (e: 'toggle-dark-mode'): void
-  (e: 'toggle-scene'): void
-}>()
-
-defineProps<{
-  isDarkMode: boolean
-  isSceneEnabled: boolean
-}>()
+import { desktop } from '../stores/desktop'
 
 const { t, locale } = useI18n()
 const isLanguageMenuOpen = ref(false)

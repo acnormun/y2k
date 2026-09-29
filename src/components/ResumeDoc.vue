@@ -1,5 +1,5 @@
 <template>
-  <Modal :title="t('resume.title')" :icon="modalIcon" :is-open="isOpen" @close="emit('close')">
+  <Modal :title="t('resume.title')" :icon="modalIcon" :is-open="isOpen" @close="emit('close')" @minimize="emit('minimize')">
     <section class="resume-viewer" :aria-label="t('resume.aria')">
       <header class="resume-viewer__toolbar">
         <div class="resume-viewer__menu">
@@ -106,6 +106,7 @@ defineProps<{
 
 const emit = defineEmits<{
   (e: 'close'): void
+  (e: 'minimize'): void
 }>()
 
 type ResumeCapability = {

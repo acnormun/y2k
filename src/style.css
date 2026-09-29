@@ -74,6 +74,11 @@ body.theme-dark .theme-exempt canvas {
   filter: none;
 }
 
+/* Elements that must keep their true colours inside the inverted app (e.g. the yellow assistant balloon). */
+body.theme-dark .theme-reinvert {
+  filter: invert(1) hue-rotate(180deg);
+}
+
 h1,
 h2,
 h3,

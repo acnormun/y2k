@@ -36,29 +36,27 @@
 <script setup lang="ts" name="Sidebar">
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { desktop } from '../stores/desktop'
 
 defineProps<{
   activeSection: 'desktop' | 'player'
 }>()
 
 const { t } = useI18n()
-const emit = defineEmits<{
-  (e: 'open-modal', modal: 'media-player' | 'screensaver'): void
-}>()
-
 const items = computed(() => [
   { label: t('sidebar.desktop'), icon: new URL('../assets/computer.svg', import.meta.url).href, glyph: '', action: 'desktop', section: 'desktop' as const },
   { label: t('sidebar.player'), icon: '', glyph: '<>', action: 'media-player', section: 'player' as const },
-  { label: t('sidebar.saver'), icon: '', glyph: '✦', action: 'screensaver', section: 'saver' as const },
+  { label: t('sidebar.saver'), icon: '', glyph: '◎', action: 'screensaver', section: 'saver' as const },
 ])
 
 const handleSelect = (action: string) => {
-  if (action === 'media-player') {
-    emit('open-modal', 'media-player')
-  }
-
-  if (action === 'screensaver') {
-    emit('open-modal', 'screensaver')
+  if (action === 'desktop') {
+    // "Show desktop": minimize whatever window is on top.
+    if (desktop.state.activeWindow) {
+      desktop.minimizeWindow(desktop.state.activeWindow)
+    }
+  } else if (action === 'media-player' || action === 'screensaver') {
+    desktop.run(action)
   }
 }
 </script>
@@ -172,59 +170,10 @@ const handleSelect = (action: string) => {
   filter: brightness(0) invert(1);
 }
 
+/* On phones the Start menu takes over navigation. */
 @media (max-width: 720px) {
   .sidebar {
-    position: absolute;
-    top: 0.75rem;
-    left: 0.75rem;
-    right: 0.75rem;
-    z-index: 12;
-    width: auto;
-    min-height: 0;
-    flex-direction: row;
-    align-items: stretch;
-    justify-content: space-between;
-    padding: 0.75rem;
-    border: 2px solid #000;
-    box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.14);
-  }
-
-  .sidebar__brand {
-    width: auto;
-    min-width: 72px;
-    padding: 0;
-  }
-
-  .sidebar__logo {
-    width: 48px;
-  }
-
-  .sidebar__nav {
-    width: auto;
-    flex: 1;
-  }
-
-  .sidebar__list {
-    flex-direction: row;
-    justify-content: flex-end;
-    gap: 0.4rem;
-  }
-
-  .sidebar__item {
-    flex: 1 1 0;
-    width: auto;
-    min-width: 0;
-    max-width: 96px;
-  }
-
-  .sidebar__link {
-    min-height: 0;
-    min-width: 0;
-    padding: 0.5rem 0.25rem;
-  }
-
-  .sidebar__link .sidebar__text {
-    font-size: 0.72rem;
+    display: none;
   }
 }
 </style>

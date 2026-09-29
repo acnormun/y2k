@@ -1,17 +1,36 @@
 <template>
   <Transition name="window3d" appear>
-    <div v-if="isOpen" class="modal-overlay" @click.self="emit('close')">
-        <article class="modal">
-            <header class="modal__header">
+    <div
+      v-if="isOpen"
+      class="modal-overlay"
+      :class="{
+        'modal-overlay--maximized': isMaximized,
+        'modal-overlay--minimizing': isMinimizing,
+      }"
+      @click.self="emit('close')"
+    >
+        <div class="modal-frame" :class="{ 'modal-frame--wide': wide }" :style="frameStyle">
+        <article class="modal" :class="{ 'modal--dragging': isDragging }" role="dialog" :aria-label="title">
+            <header
+              class="modal__header"
+              @pointerdown="startDrag"
+              @dblclick="handleHeaderDoubleClick"
+            >
                 <div class="modal__title-wrap">
                     <img :src="icon" alt="" class="modal__icon">
                     <h2 class="modal__title">{{ title }}</h2>
                 </div>
                 <div class="modal__actions" :aria-label="t('modal.windowActions')">
-                    <button class="modal__action modal__action--minimize" type="button" :aria-label="t('modal.minimize')">
+                    <button class="modal__action modal__action--minimize" type="button" :aria-label="t('modal.minimize')" @click="minimize">
                         <span />
                     </button>
-                    <button class="modal__action modal__action--maximize" type="button" :aria-label="t('modal.maximize')">
+                    <button
+                      class="modal__action"
+                      :class="isMaximized ? 'modal__action--restore' : 'modal__action--maximize'"
+                      type="button"
+                      :aria-label="isMaximized ? t('modal.restore') : t('modal.maximize')"
+                      @click="toggleMaximize"
+                    >
                         <span />
                     </button>
                     <button class="modal__action modal__action--close" type="button" :aria-label="t('modal.close')" @click="emit('close')">
@@ -40,16 +59,18 @@
                 </div>
             </footer>
         </article>
+        </div>
     </div>
   </Transition>
 </template>
 
 <script lang="ts" setup name="Modal">
+import { computed, nextTick, onBeforeUnmount, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
     title: string
     icon: string
     isOpen: boolean
@@ -58,17 +79,112 @@ withDefaults(defineProps<{
     cpuUsage?: string
     ramUsage?: string
     shellLabel?: string
+    wide?: boolean
 }>(), {
     showStatusBar: false,
     statusLabel: 'ONLINE',
     cpuUsage: '2.4%',
     ramUsage: '4.1GB/16GB',
     shellLabel: 'SECURE_SHELL',
+    wide: false,
 })
 
 const emit = defineEmits<{
     (e: 'close'): void
+    (e: 'minimize'): void
 }>()
+
+const MOBILE_BREAKPOINT = 720
+
+// Window position survives minimize / reopen, like a real desktop.
+const offset = ref({ x: 0, y: 0 })
+const isMaximized = ref(false)
+const isMinimizing = ref(false)
+const isDragging = ref(false)
+
+let dragStart = { pointerX: 0, pointerY: 0, x: 0, y: 0, left: 0, top: 0, width: 0 }
+
+const frameStyle = computed(() =>
+    isMaximized.value ? undefined : { transform: `translate3d(${offset.value.x}px, ${offset.value.y}px, 0)` },
+)
+
+const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value))
+
+const handleDragMove = (event: PointerEvent) => {
+    const dx = event.clientX - dragStart.pointerX
+    const dy = event.clientY - dragStart.pointerY
+    // Keep enough of the title bar on screen to grab it again.
+    const minDx = -dragStart.left - dragStart.width + 140
+    const maxDx = window.innerWidth - dragStart.left - 140
+    const minDy = -dragStart.top
+    const maxDy = window.innerHeight - dragStart.top - 72
+
+    offset.value = {
+        x: dragStart.x + clamp(dx, minDx, maxDx),
+        y: dragStart.y + clamp(dy, minDy, maxDy),
+    }
+}
+
+const stopDrag = () => {
+    isDragging.value = false
+    window.removeEventListener('pointermove', handleDragMove)
+    window.removeEventListener('pointerup', stopDrag)
+}
+
+const startDrag = (event: PointerEvent) => {
+    const target = event.target as HTMLElement
+
+    if (event.button !== 0 || isMaximized.value || window.innerWidth <= MOBILE_BREAKPOINT || target.closest('button')) {
+        return
+    }
+
+    const header = event.currentTarget as HTMLElement
+    const rect = header.getBoundingClientRect()
+    dragStart = {
+        pointerX: event.clientX,
+        pointerY: event.clientY,
+        x: offset.value.x,
+        y: offset.value.y,
+        left: rect.left,
+        top: rect.top,
+        width: rect.width,
+    }
+    isDragging.value = true
+    event.preventDefault()
+    window.addEventListener('pointermove', handleDragMove)
+    window.addEventListener('pointerup', stopDrag)
+}
+
+const toggleMaximize = () => {
+    isMaximized.value = !isMaximized.value
+}
+
+const handleHeaderDoubleClick = (event: MouseEvent) => {
+    if (!(event.target as HTMLElement).closest('button')) {
+        toggleMaximize()
+    }
+}
+
+const minimize = async () => {
+    // Render the flag before closing: a leaving element keeps the classes of its last render,
+    // so this is what makes the leave transition play the "genie" animation toward the taskbar.
+    isMinimizing.value = true
+    await nextTick()
+    emit('minimize')
+}
+
+watch(
+    () => props.isOpen,
+    (isOpen) => {
+        if (isOpen) {
+            isMinimizing.value = false
+        } else {
+            stopDrag()
+        }
+    },
+)
+
+onBeforeUnmount(stopDrag)
 </script>
 
 <style scoped>
@@ -79,14 +195,41 @@ const emit = defineEmits<{
     display: grid;
     place-items: center;
     background: rgba(17, 17, 17, 0.18);
-    padding: 1.5rem;
+    padding: 1.5rem 1.5rem calc(1.5rem + var(--taskbar-height, 0px));
     overflow: auto;
 }
 
-.modal {
+.modal-frame {
+    display: flex;
+    justify-content: center;
     width: min(960px, 100%);
+}
+
+.modal-frame--wide {
+    width: min(1180px, 100%);
+}
+
+.modal-overlay--maximized {
+    padding: 0 0 var(--taskbar-height, 0px);
+}
+
+.modal-overlay--maximized .modal-frame {
+    width: 100%;
+    height: 100%;
+}
+
+.modal-overlay--maximized .modal {
+    width: 100%;
+    height: 100%;
+    max-height: none;
+    border-width: 0 0 2px;
+    box-shadow: none;
+}
+
+.modal {
+    width: 100%;
     min-height: 360px;
-    max-height: calc(100dvh - 3rem);
+    max-height: calc(100dvh - 3rem - var(--taskbar-height, 0px));
     border: 2px solid #000;
     background: #fefee5;
     box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.18);
@@ -98,6 +241,9 @@ const emit = defineEmits<{
 .modal__header {
     position: relative;
     overflow: hidden;
+    cursor: grab;
+    user-select: none;
+    touch-action: none;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -116,6 +262,18 @@ const emit = defineEmits<{
     transform: translateX(-120%);
     animation: modal-sheen 6s ease-in-out 1s infinite;
     pointer-events: none;
+}
+
+.modal--dragging .modal__header {
+    cursor: grabbing;
+}
+
+.modal--dragging {
+    box-shadow: 14px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.modal-overlay--maximized .modal__header {
+    cursor: default;
 }
 
 .modal__title-wrap {
@@ -171,6 +329,39 @@ const emit = defineEmits<{
     width: 12px;
     height: 12px;
     border: 2px solid #111;
+}
+
+.modal__action--restore span {
+    width: 12px;
+    height: 12px;
+}
+
+.modal__action--restore span::before,
+.modal__action--restore span::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border: 2px solid #111;
+    background: #fefee5;
+}
+
+.modal__action--restore span::before {
+    top: 0;
+    right: 0;
+}
+
+.modal__action--restore span::after {
+    bottom: 0;
+    left: 0;
+}
+
+.modal__action:hover {
+    filter: brightness(1.08);
+}
+
+.modal__action:active {
+    box-shadow: inset -1px -1px 0 #fff, inset 1px 1px 0 rgba(0, 0, 0, 0.22);
 }
 
 .modal__action--close {
@@ -267,6 +458,15 @@ const emit = defineEmits<{
     animation: window3d-close 240ms ease-in both;
 }
 
+.window3d-leave-active.modal-overlay--minimizing {
+    animation-duration: 380ms;
+}
+
+.window3d-leave-active.modal-overlay--minimizing .modal {
+    transform-origin: 20% 100%;
+    animation: window3d-minimize 380ms cubic-bezier(0.55, 0, 0.8, 0.4) both;
+}
+
 @keyframes window3d-overlay {
     from {
         background-color: rgba(17, 17, 17, 0);
@@ -297,6 +497,14 @@ const emit = defineEmits<{
     }
 }
 
+@keyframes window3d-minimize {
+    to {
+        opacity: 0;
+        transform: translate3d(-18vw, 55vh, 0) scale(0.08, 0.04) skewX(12deg);
+        filter: blur(2px);
+    }
+}
+
 @keyframes modal-sheen {
     0%,
     72% {
@@ -313,6 +521,7 @@ const emit = defineEmits<{
     .window3d-leave-active,
     .window3d-enter-active .modal,
     .window3d-leave-active .modal,
+    .window3d-leave-active.modal-overlay--minimizing .modal,
     .modal__header::after {
         animation: none;
     }
@@ -320,15 +529,19 @@ const emit = defineEmits<{
 
 @media (max-width: 720px) {
     .modal-overlay {
-        padding: 0.75rem;
+        padding: 0.75rem 0.75rem calc(0.75rem + var(--taskbar-height, 0px));
         align-items: stretch;
     }
 
     .modal {
         width: 100%;
-        min-height: calc(100dvh - 1.5rem);
-        max-height: calc(100dvh - 1.5rem);
+        min-height: calc(100dvh - 1.5rem - var(--taskbar-height, 0px));
+        max-height: calc(100dvh - 1.5rem - var(--taskbar-height, 0px));
         box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.16);
+    }
+
+    .modal__header {
+        cursor: default;
     }
 
     .modal__header {

@@ -155,7 +155,7 @@ const openItem = (id: string) => {
     gap: 1rem;
     align-content: start;
     overflow-y: auto;
-    padding: 6.25rem 1rem 1rem;
+    padding: 1rem;
     pointer-events: auto;
   }
 }

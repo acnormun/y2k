@@ -8,10 +8,10 @@
     cpuUsage="2.4%"
     ramUsage="4.1GB/16GB"
     :shellLabel="t('welcome.shellLabel')"
-    @close="emit('close')"
+    @close="emit('close')" @minimize="emit('minimize')"
   >
     <section class="initial-modal">
-      <div class="initial-modal__media">
+      <div v-tilt="{ max: 14 }" class="initial-modal__media">
         <img :src="heroImage" :alt="t('welcome.portraitAlt')" class="initial-modal__portrait">
         <span class="initial-modal__tag">{{ t('welcome.liveTag') }}</span>
       </div>
@@ -43,6 +43,7 @@
 import { useI18n } from 'vue-i18n'
 import Modal from './Modal.vue';
 import UiButton from './UiButton.vue';
+import { vTilt } from '../directives/tilt';
 
 defineProps<{
   isOpen: boolean
@@ -50,6 +51,7 @@ defineProps<{
 
 const emit = defineEmits<{
   (e: 'close'): void
+  (e: 'minimize'): void
   (e: 'openMyWork'): void
   (e: 'openAbout'): void
 }>()

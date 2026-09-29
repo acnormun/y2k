@@ -48,6 +48,7 @@ const dragThreshold = 8
 const itemStyle = computed(() => ({
   left: `${props.x}px`,
   top: `${props.y}px`,
+  '--desktop-accent': props.accent,
 }))
 
 const iconSrc = computed(() => {
@@ -168,6 +169,24 @@ onBeforeUnmount(() => {
   box-shadow: 4px 4px 0 0 rgba(0, 0, 0, 0.12);
 }
 
+.desktop-item__icon {
+  transition: transform 700ms cubic-bezier(0.2, 0.8, 0.2, 1.15), box-shadow 300ms ease, background 300ms ease;
+}
+
+.desktop-item:hover .desktop-item__icon,
+.desktop-item:focus-visible .desktop-item__icon {
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow:
+    4px 4px 0 0 rgba(0, 0, 0, 0.12),
+    0 0 0 2px var(--desktop-accent),
+    0 0 22px var(--desktop-accent);
+  transform: perspective(320px) translateZ(10px) rotateY(360deg);
+}
+
+.desktop-item.desktop-item--dragging .desktop-item__icon {
+  transform: perspective(320px) translateZ(18px) rotateX(12deg) rotateZ(-4deg);
+}
+
 .desktop-item__label {
   padding: 0 0.3rem;
   background: #111;
@@ -284,6 +303,15 @@ onBeforeUnmount(() => {
   border-top: 5px solid transparent;
   border-bottom: 5px solid transparent;
   border-left: 8px solid var(--desktop-accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .desktop-item__icon,
+  .desktop-item:hover .desktop-item__icon,
+  .desktop-item.desktop-item--dragging .desktop-item__icon {
+    transform: none;
+    transition: none;
+  }
 }
 
 @media (max-width: 720px) {

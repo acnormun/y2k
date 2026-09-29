@@ -1,109 +1,146 @@
 <template>
   <div class="app-shell">
-    <Navbar
-      :is-dark-mode="isDarkMode"
-      @open-modal="openModal"
-      @toggle-dark-mode="isDarkMode = !isDarkMode"
-    />
+    <Navbar />
     <div class="main">
       <Sidebar
-        v-if="isSidebarOpen"
-        :active-section="activeModal === 'media-player' ? 'player' : 'desktop'"
-        @open-modal="openModal"
+        :active-section="desktop.state.activeWindow === 'media-player' ? 'player' : 'desktop'"
       />
       <RouterView v-slot="{ Component }">
-        <component :is="Component" @open-modal="openModal" />
+        <component
+          :is="Component"
+          :is-dark-mode="desktop.state.isDarkMode"
+          :scene-enabled="desktop.state.isSceneEnabled"
+          :scene-paused="desktop.state.overlay !== null"
+          @open-modal="desktop.run"
+        />
       </RouterView>
     </div>
-    <PaperclipMascot />
-    <Footer
-      @toggle-sidebar="isSidebarOpen = !isSidebarOpen"
-      @open-modal="openModal"
-    />
+    <OfficeAssistant />
+    <Taskbar />
     <InitialModal
-      :is-open="activeModal === 'welcome'"
-      @open-my-work="openModal('my-work')"
-      @open-about="openModal('about')"
-      @close="closeModal"
+      :is-open="isWindowOpen('welcome') && desktop.state.overlay !== 'boot'"
+      @open-my-work="desktop.openWindow('my-work')"
+      @open-about="desktop.openWindow('about')"
+      @close="desktop.closeWindow('welcome')"
+      @minimize="desktop.minimizeWindow('welcome')"
     />
     <MyWork
-      :is-open="activeModal === 'my-work'"
-      @close="closeModal"
+      :is-open="isWindowOpen('my-work')"
+      @close="desktop.closeWindow('my-work')"
+      @minimize="desktop.minimizeWindow('my-work')"
     />
     <AboutMe
-      :is-open="activeModal === 'about'"
-      @close="closeModal"
+      :is-open="isWindowOpen('about')"
+      @close="desktop.closeWindow('about')"
+      @minimize="desktop.minimizeWindow('about')"
     />
     <ResumeDoc
-      :is-open="activeModal === 'resume'"
-      @close="closeModal"
+      :is-open="isWindowOpen('resume')"
+      @close="desktop.closeWindow('resume')"
+      @minimize="desktop.minimizeWindow('resume')"
     />
     <Contact
-      :is-open="activeModal === 'contact'"
-      @close="closeModal"
+      :is-open="isWindowOpen('contact')"
+      @close="desktop.closeWindow('contact')"
+      @minimize="desktop.minimizeWindow('contact')"
     />
     <Snake
-      :is-open="activeModal === 'snake'"
-      @close="closeModal"
+      :is-open="isWindowOpen('snake')"
+      @close="desktop.closeWindow('snake')"
+      @minimize="desktop.minimizeWindow('snake')"
     />
     <MediaPlayer
-      :is-open="activeModal === 'media-player'"
-      @close="closeModal"
+      :is-open="isWindowOpen('media-player')"
+      @close="desktop.closeWindow('media-player')"
+      @minimize="desktop.minimizeWindow('media-player')"
     />
     <Terminal
-      :is-open="isTerminalOpen"
-      @close="closeTerminal"
-      @open-modal="openModal"
+      :is-open="desktop.state.isTerminalOpen"
+      @close="desktop.closeTerminal"
+    />
+    <ShutdownDialog v-if="desktop.state.overlay === 'shutdown-dialog'" />
+    <ShutdownScreen v-if="desktop.state.overlay === 'shutdown'" />
+    <BlueScreen v-if="desktop.state.overlay === 'bsod'" />
+    <Screensaver
+      v-if="desktop.state.overlay === 'screensaver'"
+      @exit="exitScreensaver"
+    />
+    <BootScreen
+      v-if="desktop.state.overlay === 'boot'"
+      @done="finishBoot"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue';
+import { onBeforeUnmount, onMounted, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AboutMe from './components/AboutMe.vue';
+import BlueScreen from './components/BlueScreen.vue';
+import BootScreen from './components/BootScreen.vue';
 import Contact from './components/Contact.vue';
-import Footer from './components/Footer.vue';
+import InitialModal from './components/InitialModal.vue';
+import MediaPlayer from './components/MediaPlayer.vue';
 import MyWork from './components/MyWork.vue';
-import ResumeDoc from './components/ResumeDoc.vue';
 import Navbar from './components/Navbar.vue';
-import PaperclipMascot from './components/PaperclipMascot.vue';
+import OfficeAssistant from './components/OfficeAssistant.vue';
+import ResumeDoc from './components/ResumeDoc.vue';
+import Screensaver from './components/Screensaver.vue';
+import ShutdownDialog from './components/ShutdownDialog.vue';
+import ShutdownScreen from './components/ShutdownScreen.vue';
 import Sidebar from './components/Sidebar.vue';
 import Snake from './components/Snake.vue';
-import MediaPlayer from './components/MediaPlayer.vue';
+import Taskbar from './components/Taskbar.vue';
 import Terminal from './components/Terminal.vue';
-import InitialModal from './components/InitialModal.vue';
 import { LOCALE_STORAGE_KEY } from './i18n';
+import { desktop, type WindowId } from './stores/desktop';
+import { prefersReducedMotion } from './three/utils';
 
-const MOBILE_BREAKPOINT = 720
-const THEME_STORAGE_KEY = 'portfolio-dark-mode'
-const isSidebarOpen = ref(true)
-const isTerminalOpen = ref(false)
-const activeModal = ref<'welcome' | 'my-work' | 'about' | 'resume' | 'contact' | 'snake' | 'media-player' | null>('welcome')
-const isDarkMode = ref(false)
+const IDLE_TIMEOUT_MS = 120_000
+const IDLE_CHECK_MS = 5_000
+const ACTIVITY_EVENTS = ['pointermove', 'pointerdown', 'keydown', 'wheel', 'touchstart'] as const
+
 const { locale } = useI18n()
 
-const openModal = (modal: 'welcome' | 'my-work' | 'about' | 'resume' | 'contact' | 'snake' | 'media-player' | 'terminal') => {
-  if (modal === 'terminal') {
-    isTerminalOpen.value = true
+let lastActivityAt = Date.now()
+let idleTimer: number | null = null
+
+const isWindowOpen = (id: WindowId) => desktop.state.activeWindow === id
+
+const markActivity = () => {
+  lastActivityAt = Date.now()
+}
+
+const finishBoot = () => {
+  desktop.finishBoot()
+  markActivity()
+}
+
+const exitScreensaver = () => {
+  desktop.setOverlay(null)
+  markActivity()
+}
+
+const checkIdle = () => {
+  if (!desktop.state.isSceneEnabled || desktop.state.overlay !== null || document.hidden || prefersReducedMotion()) {
     return
   }
 
-  activeModal.value = modal
-}
-
-const closeModal = () => {
-  activeModal.value = null
-}
-
-const closeTerminal = () => {
-  isTerminalOpen.value = false
+  if (Date.now() - lastActivityAt >= IDLE_TIMEOUT_MS) {
+    desktop.setOverlay('screensaver')
+  }
 }
 
 onMounted(() => {
-  if (typeof window !== 'undefined') {
-    isSidebarOpen.value = window.innerWidth > MOBILE_BREAKPOINT
-    isDarkMode.value = window.localStorage.getItem(THEME_STORAGE_KEY) === 'true'
+  ACTIVITY_EVENTS.forEach((type) => window.addEventListener(type, markActivity, { passive: true }))
+  idleTimer = window.setInterval(checkIdle, IDLE_CHECK_MS)
+})
+
+onBeforeUnmount(() => {
+  ACTIVITY_EVENTS.forEach((type) => window.removeEventListener(type, markActivity))
+
+  if (idleTimer !== null) {
+    window.clearInterval(idleTimer)
   }
 })
 
@@ -122,16 +159,10 @@ watch(
 )
 
 watch(
-  isDarkMode,
+  () => desktop.state.isDarkMode,
   (value) => {
-    if (typeof window !== 'undefined') {
-      window.localStorage.setItem(THEME_STORAGE_KEY, String(value))
-    }
-
-    if (typeof document !== 'undefined') {
-      document.body.classList.toggle('theme-dark', value)
-      document.documentElement.style.colorScheme = value ? 'dark' : 'light'
-    }
+    document.body.classList.toggle('theme-dark', value)
+    document.documentElement.style.colorScheme = value ? 'dark' : 'light'
   },
   { immediate: true },
 )

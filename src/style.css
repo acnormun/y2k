@@ -69,6 +69,16 @@ body.theme-dark canvas {
   filter: invert(1) hue-rotate(180deg);
 }
 
+/* Full-screen 3D overlays (boot, screensaver) live outside #app, so their canvas must not be re-inverted. */
+body.theme-dark .theme-exempt canvas {
+  filter: none;
+}
+
+/* Elements that must keep their true colours inside the inverted app (e.g. the yellow assistant balloon). */
+body.theme-dark .theme-reinvert {
+  filter: invert(1) hue-rotate(180deg);
+}
+
 h1,
 h2,
 h3,
@@ -141,6 +151,36 @@ button:focus-visible,
 a:focus-visible {
   outline: 2px solid var(--color-tertiary);
   outline-offset: 3px;
+}
+
+.tilt-3d {
+  transform: perspective(900px) rotateX(var(--tilt-rx, 0deg)) rotateY(var(--tilt-ry, 0deg)) scale(var(--tilt-scale, 1));
+  transition: transform 500ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: transform;
+}
+
+.tilt-3d--active {
+  transition-duration: 90ms;
+}
+
+.tilt-3d::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at var(--tilt-mx, 50%) var(--tilt-my, 50%), rgba(255, 255, 255, 0.6), transparent 42%),
+    linear-gradient(115deg, transparent 18%, rgba(255, 0, 255, 0.45) 34%, rgba(0, 255, 255, 0.45) 50%, rgba(255, 255, 0, 0.4) 66%, transparent 82%);
+  background-size: 100% 100%, 260% 260%;
+  background-position: center, var(--tilt-mx, 50%) var(--tilt-my, 50%);
+  mix-blend-mode: overlay;
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+
+.tilt-3d--active::after {
+  opacity: 0.85;
 }
 
 ::selection {

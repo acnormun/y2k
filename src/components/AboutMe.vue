@@ -3,7 +3,7 @@
     :title="t('about.title')"
     :icon="modalIcon"
     :is-open="isOpen"
-    @close="emit('close')"
+    @close="emit('close')" @minimize="emit('minimize')"
   >
     <section class="about-dump" :aria-label="t('about.aria')">
       <header class="about-dump__header">
@@ -66,7 +66,7 @@
         <div class="about-dump__log-content">
           <p class="about-dump__log-title">{{ t('about.logTitle') }}</p>
           <div class="about-dump__channels">
-            <a class="about-dump__channel about-dump__channel--email" href="mailto:anaclaranoronha.@gmail.com">
+            <a class="about-dump__channel about-dump__channel--email" href="mailto:anaclaranoronha.m@gmail.com">
               <span class="about-dump__channel-icon" aria-hidden="true">[]</span>
               anaclaranoronha.m@gmail.com
             </a>
@@ -94,6 +94,7 @@ defineProps<{
 
 const emit = defineEmits<{
   (e: 'close'): void
+  (e: 'minimize'): void
 }>()
 
 const { t } = useI18n()

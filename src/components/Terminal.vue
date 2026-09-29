@@ -72,6 +72,8 @@
 <script setup lang="ts">
 import { computed, nextTick, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { desktop } from '../stores/desktop'
+import { player } from '../stores/player'
 
 type ModalTarget = 'welcome' | 'my-work' | 'about' | 'resume' | 'contact' | 'snake'
 type LineTone = 'boot' | 'success' | 'command' | 'info' | 'error' | 'accent'
@@ -88,7 +90,6 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   (e: 'close'): void
-  (e: 'open-modal', modal: ModalTarget): void
 }>()
 
 const { t, locale } = useI18n()
@@ -109,6 +110,7 @@ const shortcuts = computed(() => [
   { label: t('terminal.shortcuts.resume'), command: 'open resume' },
   { label: t('terminal.shortcuts.contact'), command: 'open contact' },
   { label: t('terminal.shortcuts.snake'), command: 'run snake' },
+  { label: t('terminal.shortcuts.bubbles'), command: 'run bubbles' },
 ])
 
 const command = ref('')
@@ -138,7 +140,7 @@ const scrollToBottom = async () => {
 }
 
 const openSection = (target: ModalTarget, label: string) => {
-  emit('open-modal', target)
+  desktop.openWindow(target)
   pushLine(t('terminal.responses.opening', { label }), 'success')
   void scrollToBottom()
 }
@@ -199,6 +201,42 @@ const executeCommand = (rawCommand: string) => {
 
   if (normalized === 'run snake' || normalized === 'open snake' || normalized === 'play snake') {
     openSection('snake', t('terminal.labels.snake'))
+    return
+  }
+
+  if (normalized === 'run bubbles' || normalized === 'bubbles' || normalized === 'screensaver') {
+    pushLine(t('terminal.responses.screensaver'), 'accent')
+    desktop.run('screensaver')
+    return
+  }
+
+  if (normalized === 'reboot' || normalized === 'restart') {
+    pushLine(t('terminal.responses.reboot'), 'accent')
+    desktop.run('reboot')
+    return
+  }
+
+  if (normalized === 'shutdown' || normalized === 'shut down') {
+    pushLine(t('terminal.responses.shutdown'), 'accent')
+    desktop.run('shutdown-dialog')
+    return
+  }
+
+  if (normalized === 'crash' || normalized === 'bsod') {
+    desktop.run('bsod')
+    return
+  }
+
+  if (normalized === 'clippy' || normalized === 'help me') {
+    pushLine(t('terminal.responses.clippy'), 'accent')
+    desktop.run('assistant')
+    return
+  }
+
+  if (normalized === 'play' || normalized === 'play music' || normalized === 'music') {
+    pushLine(t('terminal.responses.music', { track: player.track.value.title }), 'success')
+    player.play()
+    desktop.openWindow('media-player')
     return
   }
 

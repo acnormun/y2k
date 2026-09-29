@@ -1,16 +1,24 @@
 <template>
-  <section class="desktop" :aria-label="t('desktop.aria')">
-    <DesktopItem
-      v-for="item in localizedDesktopItems"
-      :key="item.id"
-      :accent="item.accent"
-      :kind="item.kind"
-      :label="item.label"
-      :x="item.x"
-      :y="item.y"
-      @activate="openItem(item.id)"
-      @update:position="updateItemPosition(item.id, $event)"
+  <section class="desktop" :class="{ 'desktop--3d': sceneEnabled }" :aria-label="t('desktop.aria')">
+    <Y2KScene
+      v-if="sceneEnabled"
+      :is-dark-mode="isDarkMode"
+      :paused="scenePaused"
     />
+
+    <div class="desktop__icons">
+      <DesktopItem
+        v-for="item in localizedDesktopItems"
+        :key="item.id"
+        :accent="item.accent"
+        :kind="item.kind"
+        :label="item.label"
+        :x="item.x"
+        :y="item.y"
+        @activate="openItem(item.id)"
+        @update:position="updateItemPosition(item.id, $event)"
+      />
+    </div>
   </section>
 </template>
 
@@ -18,6 +26,7 @@
 import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import DesktopItem from '../components/DesktopItem.vue'
+import Y2KScene from '../components/Y2KScene.vue'
 
 type DesktopEntry = {
   accent: string
@@ -26,6 +35,16 @@ type DesktopEntry = {
   x: number
   y: number
 }
+
+withDefaults(defineProps<{
+  isDarkMode?: boolean
+  sceneEnabled?: boolean
+  scenePaused?: boolean
+}>(), {
+  isDarkMode: false,
+  sceneEnabled: true,
+  scenePaused: false,
+})
 
 const { t } = useI18n()
 
@@ -114,14 +133,30 @@ const openItem = (id: string) => {
   pointer-events: none;
 }
 
+.desktop--3d::before {
+  display: none;
+}
+
+.desktop__icons {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.desktop__icons > * {
+  pointer-events: auto;
+}
+
 @media (max-width: 720px) {
-  .desktop {
+  .desktop__icons {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1rem;
     align-content: start;
     overflow-y: auto;
-    padding: 6.25rem 1rem 1rem;
+    padding: 1rem;
+    pointer-events: auto;
   }
 }
 </style>

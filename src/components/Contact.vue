@@ -3,7 +3,7 @@
     :title="t('contact.title')"
     :icon="modalIcon"
     :isOpen="isOpen"
-    @close="emit('close')"
+    @close="emit('close')" @minimize="emit('minimize')"
   >
     <section class="contact-terminal" :aria-label="t('contact.aria')">
       <aside class="contact-terminal__rail">
@@ -54,6 +54,13 @@
               <span>{{ message.time }}</span>
             </div>
             <p>{{ message.text }}</p>
+            <a
+              v-if="message.mailto"
+              class="contact-terminal__mail-action"
+              :href="message.mailto"
+            >
+              {{ t('contact.sendViaEmail') }} →
+            </a>
           </article>
         </div>
 
@@ -130,11 +137,13 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   (e: 'close'): void
+  (e: 'minimize'): void
 }>()
 
 const { t, locale } = useI18n()
 const modalIcon = new URL('../assets/contact.svg', import.meta.url).href
 const avatar = new URL('../assets/hero.jpeg', import.meta.url).href
+const CONTACT_EMAIL = 'anaclaranoronha.m@gmail.com'
 
 const contactNodes = computed(() => [
   {
@@ -159,6 +168,7 @@ type ChatMessage = {
   author: string
   time: string
   text: string
+  mailto?: string
 }
 
 const createInitialMessages = (): ChatMessage[] => [
@@ -219,14 +229,19 @@ async function scrollMessagesToBottom() {
   }
 }
 
-function queueSystemReply() {
+// The chat is a front-end toy, so the reply hands the message to the visitor's mail app
+// instead of pretending it was delivered.
+function queueSystemReply(text: string) {
+  const mailto = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(t('contact.emailSubject'))}&body=${encodeURIComponent(text)}`
+
   window.setTimeout(async () => {
     messages.value.push({
       id: Date.now() + 1,
       role: 'system',
       author: t('contact.systemUser'),
       time: getCurrentTime(),
-      text: t('contact.autoReply')
+      text: t('contact.autoReply'),
+      mailto,
     })
 
     await scrollMessagesToBottom()
@@ -250,7 +265,7 @@ async function sendMessage() {
 
   draftMessage.value = ''
   await scrollMessagesToBottom()
-  queueSystemReply()
+  queueSystemReply(text)
 }
 
 const resetMessages = () => {
@@ -451,6 +466,28 @@ watch(
   font-family: var(--font-secondary);
   font-size: 0.92rem;
   line-height: 1.45;
+}
+
+.contact-terminal__mail-action {
+  display: inline-flex;
+  align-self: flex-start;
+  margin-top: 0.7rem;
+  padding: 0.45rem 0.8rem;
+  border: 2px solid #000;
+  background: linear-gradient(180deg, #d900d9 0%, #a300a3 100%);
+  box-shadow: 3px 3px 0 #000;
+  color: #fffef6;
+  font-family: var(--font-secondary);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.contact-terminal__mail-action:hover {
+  color: #fffef6;
+  filter: brightness(1.1);
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 #000;
 }
 
 .contact-terminal__composer {

@@ -626,6 +626,10 @@ onBeforeUnmount(() => {
     flex-direction: column;
   }
 
+  .snake-modal__keys {
+    display: none;
+  }
+
   .snake-modal__stats {
     justify-content: flex-start;
   }

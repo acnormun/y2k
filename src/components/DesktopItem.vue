@@ -318,9 +318,9 @@ onBeforeUnmount(() => {
   .desktop-item {
     position: static;
     width: 100%;
-    min-height: 112px;
+    min-height: 96px;
     justify-content: center;
-    padding: 0.85rem 0.5rem;
+    padding: 0.7rem 0.4rem;
     border: 2px solid #000;
     background: rgba(255, 254, 229, 0.88);
     box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.12);
@@ -329,6 +329,7 @@ onBeforeUnmount(() => {
 
   .desktop-item__label {
     text-align: center;
+    font-size: 0.8rem;
   }
 }
 </style>

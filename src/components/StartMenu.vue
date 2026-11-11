@@ -379,6 +379,14 @@ onBeforeUnmount(() => {
     overflow-y: auto;
   }
 
+  .start-menu__banner {
+    display: none;
+  }
+
+  .start-menu__item {
+    min-height: 44px;
+  }
+
   .start-menu__submenu {
     position: static;
     min-width: 0;

@@ -477,6 +477,7 @@ onBeforeUnmount(() => {
   .taskbar {
     gap: 0.4rem;
     padding: 0.4rem;
+    padding-bottom: calc(0.4rem + env(safe-area-inset-bottom, 0px));
   }
 
   .taskbar__quick,
@@ -488,10 +489,15 @@ onBeforeUnmount(() => {
     display: none;
   }
 
+  .taskbar__start {
+    height: 44px;
+  }
+
   .taskbar__window {
     flex: 0 0 auto;
     justify-content: center;
-    width: 40px;
+    width: 44px;
+    height: 44px;
     padding: 0;
   }
 

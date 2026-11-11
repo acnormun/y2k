@@ -1000,8 +1000,16 @@ const handleClose = () => {
 
 @media (max-width: 720px) {
   .headspace__stage {
-    min-height: 340px;
+    min-height: clamp(220px, 38dvh, 320px);
     border-radius: 24px;
+  }
+
+  .headspace__tabs {
+    grid-template-columns: 1fr;
+  }
+
+  .headspace__tabs button:last-child {
+    display: none;
   }
 
   .headspace__deck {

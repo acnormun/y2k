@@ -307,4 +307,11 @@ onBeforeUnmount(() => {
     opacity: 0;
   }
 }
+
+@media (max-width: 720px) {
+  .boot-screen__bios {
+    font-size: clamp(0.6rem, 2.8vw, 0.78rem);
+    white-space: pre-wrap;
+  }
+}
 </style>

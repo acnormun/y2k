@@ -151,7 +151,7 @@ const openItem = (id: string) => {
 @media (max-width: 720px) {
   .desktop__icons {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
     gap: 1rem;
     align-content: start;
     overflow-y: auto;

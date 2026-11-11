@@ -155,4 +155,29 @@ const heroImage = new URL('../assets/hero.jpeg', import.meta.url).href;
     max-width: 220px;
   }
 }
+
+@media (max-width: 720px) {
+  .initial-modal {
+    gap: 1.1rem;
+  }
+
+  .initial-modal__media {
+    max-width: 160px;
+  }
+
+  .initial-modal__title {
+    font-size: clamp(2rem, 9vw, 3rem);
+  }
+
+  .initial-modal__description {
+    font-size: 1rem;
+    line-height: 1.45;
+  }
+
+  .initial-modal__actions {
+    width: 100%;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+}
 </style>

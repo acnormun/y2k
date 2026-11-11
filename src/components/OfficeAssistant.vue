@@ -1247,17 +1247,7 @@ onBeforeUnmount(() => {
 
 @media (max-width: 720px) {
   .office-assistant {
-    right: 8px;
-    width: 92px;
-  }
-
-  .office-assistant__character {
-    width: 92px;
-    height: 122px;
-  }
-
-  .assistant-balloon {
-    right: 0;
+    display: none;
   }
 }
 </style>

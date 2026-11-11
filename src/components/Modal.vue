@@ -529,14 +529,14 @@ onBeforeUnmount(stopDrag)
 
 @media (max-width: 720px) {
     .modal-overlay {
-        padding: 0.75rem 0.75rem calc(0.75rem + var(--taskbar-height, 0px));
+        padding: 0.5rem 0.5rem calc(0.5rem + var(--taskbar-height, 0px));
         align-items: stretch;
     }
 
     .modal {
         width: 100%;
-        min-height: calc(100dvh - 1.5rem - var(--taskbar-height, 0px));
-        max-height: calc(100dvh - 1.5rem - var(--taskbar-height, 0px));
+        min-height: calc(100dvh - 1rem - var(--taskbar-height, 0px));
+        max-height: calc(100dvh - 1rem - var(--taskbar-height, 0px));
         box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.16);
     }
 
@@ -566,6 +566,11 @@ onBeforeUnmount(stopDrag)
     .modal__status-right {
         flex-wrap: wrap;
         gap: 0.6rem;
+    }
+
+    .modal__action {
+        width: 36px;
+        height: 36px;
     }
 }
 </style>

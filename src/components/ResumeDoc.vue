@@ -695,6 +695,23 @@ const saveAsPdf = () => {
     margin: -0.75rem;
   }
 
+  .resume-viewer__menu,
+  .resume-viewer__chip,
+  .resume-viewer__icon {
+    display: none;
+  }
+
+  .resume-viewer__toolbar {
+    flex-direction: row;
+    justify-content: flex-end;
+    padding: 0.4rem 0.6rem;
+  }
+
+  .resume-viewer__save {
+    min-height: 40px;
+    font-size: 0.8rem;
+  }
+
   .resume-viewer__canvas {
     padding: 0.9rem;
   }

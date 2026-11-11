@@ -187,3 +187,22 @@ a:focus-visible {
   background: var(--color-tertiary);
   color: var(--color-text);
 }
+
+/* Mobile only: no grey tap flash, no pull-to-refresh fighting window scroll, and
+   100dvh so the address bar never covers the taskbar. */
+@media (max-width: 720px) {
+  html,
+  body {
+    height: 100dvh;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    overscroll-behavior: none;
+  }
+
+  a,
+  button {
+    -webkit-tap-highlight-color: transparent;
+  }
+}

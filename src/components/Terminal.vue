@@ -523,7 +523,11 @@ watch(locale, () => {
   }
 
   .terminal-window__folders {
-    grid-template-columns: 1fr;
+    display: none;
+  }
+
+  .terminal-window__input {
+    font-size: 16px;
   }
 
   .terminal-window__output {

@@ -728,6 +728,10 @@ watch(
     gap: 0;
   }
 
+  .contact-terminal__main {
+    order: -1;
+  }
+
   .contact-terminal__rail,
   .contact-terminal__profile {
     border-right: 0;
@@ -824,6 +828,7 @@ watch(
   .contact-terminal__input-wrap textarea {
     min-height: 110px;
     padding: 0.8rem 0.85rem;
+    font-size: 16px;
   }
 
   .contact-terminal__send {

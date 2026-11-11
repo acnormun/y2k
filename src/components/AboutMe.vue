@@ -368,5 +368,9 @@ const secondaryMetrics = computed(() => [
   .about-dump__log {
     grid-template-columns: 1fr;
   }
+
+  .about-dump__log-title {
+    font-size: 0.8rem;
+  }
 }
 </style>

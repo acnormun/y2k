@@ -316,25 +316,32 @@ function redirectTo(link: string) {
 
 @media (max-width: 720px) {
   .file-manager__toolbar {
-    grid-template-columns: 1fr;
-  }
-
-  .file-manager__address {
-    grid-template-columns: 1fr;
-  }
-
-  .file-manager__go {
-    justify-self: end;
+    display: none;
   }
 
   .file-manager__content {
     grid-template-columns: repeat(auto-fit, minmax(88px, 1fr));
-    gap: 1.4rem 0.8rem;
-    min-height: 320px;
+    gap: 1.2rem 0.8rem;
+    min-height: 0;
+    padding: 1rem 0.9rem;
+  }
+
+  .file-manager__item {
+    align-items: center;
   }
 
   .file-manager__tooltip {
-    width: min(220px, calc(100vw - 3rem));
+    position: static;
+    width: 100%;
+    margin-top: 0.35rem;
+    box-shadow: none;
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+  }
+
+  .file-manager__tooltip::after {
+    display: none;
   }
 }
 </style>

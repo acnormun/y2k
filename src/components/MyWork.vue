@@ -328,6 +328,8 @@ function redirectTo(link: string) {
 
   .file-manager__item {
     align-items: center;
+    min-width: 0;
+    overflow-wrap: anywhere;
   }
 
   .file-manager__tooltip {

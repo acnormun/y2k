@@ -542,24 +542,25 @@ onBeforeUnmount(stopDrag)
 
     .modal__header {
         cursor: default;
-    }
-
-    .modal__header {
         padding: 0.65rem 0.75rem;
     }
 
     .modal__title {
-        font-size: 0.9rem;
+        font-size: clamp(0.72rem, 3vw, 0.9rem);
+        line-height: 1.25;
+        overflow-wrap: anywhere;
     }
 
     .modal__body {
         padding: 0.75rem;
+        overflow-wrap: anywhere;
     }
 
     .modal__status {
-        flex-direction: column;
-        align-items: flex-start;
-        font-size: 0.72rem;
+        flex-wrap: wrap;
+        row-gap: 0.35rem;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.68rem;
     }
 
     .modal__status-left,

@@ -758,20 +758,15 @@ watch(
   }
 
   .contact-terminal__main {
-    min-height: 380px;
-    max-height: 55dvh;
+    min-height: 0;
   }
 
-  .contact-terminal__composer-row {
-    grid-template-columns: 1fr;
+  .contact-terminal__messages {
+    height: clamp(280px, 45dvh, 440px);
   }
 
   .contact-terminal__composer-actions {
-    flex-wrap: wrap;
-  }
-
-  .contact-terminal__send {
-    min-width: 0;
+    display: none;
   }
 
   .contact-terminal__message {
@@ -826,16 +821,14 @@ watch(
   }
 
   .contact-terminal__input-wrap textarea {
-    min-height: 110px;
+    min-height: 72px;
     padding: 0.8rem 0.85rem;
     font-size: 16px;
   }
 
   .contact-terminal__send {
-    min-height: 54px;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
+    min-width: 72px;
+    min-height: 48px;
   }
 
   .contact-terminal__profile {
